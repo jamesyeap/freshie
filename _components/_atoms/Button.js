@@ -81,7 +81,7 @@ export const Checkbox = ({label, ...props}) => {
 
 	return (
 		<CheckboxContainer>
-			<PaperCheckbox.Android status={checked ? "checked" : "unchecked"} onPress={() => setChecked(!checked)} />
+			<PaperCheckbox.Android status={checked ? "checked" : "unchecked"} onPress={() => setChecked(!checked)} testID="checkbox" />
 			{label && <CheckboxText>{label}</CheckboxText>}
 		</CheckboxContainer>
 		)

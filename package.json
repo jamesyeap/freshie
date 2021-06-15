@@ -6,7 +6,7 @@
     "ios": "expo start --ios",
     "web": "expo start --web",
     "eject": "expo eject",
-    "test": "jest"
+    "test": "jest --watchAll"
   },
   "dependencies": {
     "@chakra-ui/react": "^1.6.3",
@@ -37,14 +37,13 @@
   },
   "devDependencies": {
     "@babel/core": "^7.9.0",
+    "@testing-library/jest-native": "^4.0.1",
     "jest-expo": "^41.0.0",
+    "jest-styled-components": "^7.0.4",
     "react-test-renderer": "^17.0.2"
   },
   "private": true,
   "jest": {
-    "preset": "jest-expo",
-    "transformIgnorePatterns": [
-      "node_modules/(?!(jest-)?react-native|react-clone-referenced-element|@react-native-community|expo(nent)?|@expo(nent)?/.*|react-navigation|@react-navigation/.*|@unimodules/.*|unimodules|sentry-expo|native-base|@sentry/.*)"
-    ]
+    "preset": "jest-expo"
   }
 }

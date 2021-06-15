@@ -26,6 +26,7 @@ export default function LoginPage(props) {
 			<TextInput
 			label="Email Address"
 			feedbackMessage="Must be a valid email"
+			placeholder="jack@email.com"
 			value={"test"}
 			/>
 
