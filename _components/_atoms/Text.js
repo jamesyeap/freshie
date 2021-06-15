@@ -1,13 +1,7 @@
 import React from 'react';
-import { Text } from "@chakra-ui/react";
-import styled from "styled-components";
+import styled from "styled-components/native";
+import { useFonts, Inter_900Black } from '@expo-google-fonts/inter';
 
-export function HeadingBig(props) {
-	return (
-		<Text
-		fontSize="2xl"
-		>
-			{props.children}
-		</Text>
-	)
-}
+export const HeadingBig = styled.Text`
+	fontFamily: 'Inter_900Black'
+`;
