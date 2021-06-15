@@ -5,7 +5,7 @@ import styled from "styled-components";
 export function HeadingBig(props) {
 	return (
 		<Text
-		fontSize="6xl"
+		fontSize="2xl"
 		>
 			{props.children}
 		</Text>
