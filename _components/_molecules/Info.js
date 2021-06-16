@@ -6,9 +6,9 @@ const Container = styled.View``;
 
 const ValuesContainer = styled.View`
 	flexDirection: row;
-	justifyContent: space-between;
+	justifyContent: flex-start;
 	alignItems: center;
-	width: 50px;
+	width: 100px;
 `;
 
 export const InfoLabelText = styled(SemiBoldText)`
@@ -27,12 +27,14 @@ export const InfoUnitText = styled(RegularText)`
 	fontSize: 12;
 	lineHeight: 16;
 	color: #9E8D8D
+	marginLeft: 1.5px;
+	marginTop: 3px;
 `;
 
 export const Info = ({label, value, unit, ...props}) => {
 	return (
 		<Container>
-			<InfoLabelText>{label}</InfoLabelText>	
+			{label && <InfoLabelText>{label}</InfoLabelText>}	
 			<ValuesContainer>
 				<InfoValueText>{value}</InfoValueText>
 				<InfoUnitText>{unit}</InfoUnitText>

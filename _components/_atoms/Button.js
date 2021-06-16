@@ -4,11 +4,99 @@ import { Checkbox as PaperCheckbox } from 'react-native-paper';
 import { SemiBoldText } from './Text';
 
 /* List of Buttons
+	- Extra Small Button
+	- Small Button
+	- Medium Button
 	- Big Button
 	- Text Button
 	- Checkbox
 	- Section Button
 */
+
+// EXTRA SMALL BUTTON 
+const ExtraSmallButtonContainer = styled.TouchableOpacity`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;
+	backgroundColor: ${props => props.state === "default" 
+					? "#319795"
+					: props.state === "active"
+						? "#285E61"
+						: props.state === "disabled"
+							? "#319795" 
+							: "#319795" 
+			};
+	height: 21px;
+	borderRadius: 6px;
+	margin: ${props => props.margin ? props.margin : 0};
+	padding: 2.5px 8px;
+`;
+
+export const ExtraSmallButtonText = styled(SemiBoldText)`
+	fontSize: 12;
+	lineHeight: 16;
+	color: #FFFFFF;
+`;
+
+export const ExtraSmallButton = ({label, state, onPress,...props}) => {
+	return (<ExtraSmallButtonContainer margin={props.margin} state={state} onPress={onPress}>
+			<ExtraSmallButtonText>{label}</ExtraSmallButtonText>
+		</ExtraSmallButtonContainer>);
+}
+
+// SMALL BUTTON 
+const SmallButtonContainer = styled.TouchableOpacity`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;
+	backgroundColor: ${props => props.state === "default" 
+					? "#319795"
+					: props.state === "active"
+						? "#285E61"
+						: props.state === "disabled"
+							? "#319795" 
+							: "#319795" 
+			};
+	height: 32px;
+	borderRadius: 6px;
+	margin: ${props => props.margin ? props.margin : "0px"};
+`;
+
+export const SmallButtonText = styled(SemiBoldText)`
+	fontSize: 14;
+	lineHeight: 20;
+	color: #FFFFFF;
+`;
+
+export const SmallButton = ({label, state, onPress,...props}) => {
+	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress}>
+			<SmallButtonText>{label}</SmallButtonText>
+		</SmallButtonContainer>);
+}
+
+// MEDIUM BUTTON 
+const MediumButtonContainer = styled.TouchableOpacity`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;
+	backgroundColor: ${props => props.backgroundColor ? props.backgroundColor : "#D53F8C"} 
+	height: 48px;
+	borderRadius: 6px;
+	margin: ${props => props.margin ? props.margin : "0px"};
+	padding: 10px 24px;
+`;
+
+export const MediumButtonText = styled(SemiBoldText)`
+	fontSize: 18;
+	lineHeight: 28;
+	color: #FFFFFF;
+`;
+
+export const MediumButton = ({label, backgroundColor, onPress,...props}) => {
+	return (<MediumButtonContainer margin={props.margin} backgroundColor={backgroundColor} onPress={onPress}>
+			<MediumButtonText>{label}</MediumButtonText>
+		</MediumButtonContainer>);
+}
 
 // BIG BUTTON 
 const BigButtonContainer = styled.TouchableOpacity`
@@ -50,14 +138,14 @@ const TextButtonContainer = styled.TouchableOpacity`
 `;
 
 export const TextButtonText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: ${props => props.size === "xs" ? 12 : 14};
+	lineHeight: ${props => props.size === "xs" ? 16 : 20};
 	color: #000000;
 `;
 
-export const TextButton = ({label, state, onPress,...props}) => {
+export const TextButton = ({label, state, onPress, size,...props}) => {
 	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} {...props}>
-			<TextButtonText>{label}</TextButtonText>
+			<TextButtonText size={size} >{label}</TextButtonText>
 		</TextButtonContainer>);
 }
 
