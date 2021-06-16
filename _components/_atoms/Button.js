@@ -26,9 +26,10 @@ const BigButtonContainer = styled.TouchableOpacity`
 	height: 48px;
 	width: 300px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : 0};
+	marginTop: ${props => props.marginTop ? props.marginTop : 0};
 `;
 
+{/*}	margin: ${props => props.margin ? props.margin : 0};*/}
 export const BigButtonText = styled(SemiBoldText)`
 	fontSize: 18;
 	lineHeight: 28;
@@ -36,7 +37,7 @@ export const BigButtonText = styled(SemiBoldText)`
 `;
 
 export const BigButton = ({label, state, onPress,...props}) => {
-	return (<BigButtonContainer state={state} onPress={onPress}>
+	return (<BigButtonContainer marginTop= {props.marginTop} state={state} onPress={onPress}>
 			<BigButtonText>{label}</BigButtonText>
 		</BigButtonContainer>);
 }

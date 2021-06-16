@@ -6,6 +6,7 @@ const TextInputContainer = styled.View`
 	flexDirection: column;
 	justifyContent: center;
 	margin: 18px;
+	marginTop: ${props => props.stacked ? 0 : 18}
 `;
 
 const TextInputBox = styled.TextInput`
@@ -27,7 +28,7 @@ export const InputFeedbackText = styled(RegularText)`
 
 export const TextInput = (props) => {
 	return (
-		<TextInputContainer>
+		<TextInputContainer stacked= {props.stacked}>
 			<InputLabelText>{props.label}</InputLabelText>
 			<TextInputBox
 			value={props.value}
