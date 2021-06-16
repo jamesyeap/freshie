@@ -2,13 +2,13 @@ import React from 'react';
 import styled from 'styled-components';
 import { RegularText, SemiBoldText } from '../_atoms/Text';
 
-const Container = styled.View``;
+const Container = styled.View`
+`;
 
 const ValuesContainer = styled.View`
 	flexDirection: row;
 	justifyContent: flex-start;
 	alignItems: center;
-	width: 100px;
 `;
 
 export const InfoLabelText = styled(SemiBoldText)`

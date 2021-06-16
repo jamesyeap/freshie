@@ -1,6 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
-import { RegularText, MediumText, SemiBoldText } from '../_atoms/Text';
+import { SemiBoldText } from '../_atoms/Text';
 import { ExtraSmallButton, TextButton } from '../_atoms/Button';
 import { Divider, IconButton } from 'react-native-paper';
 import { Info } from './Info';
@@ -13,11 +13,13 @@ const FoodItemContainer = styled.TouchableOpacity`
 	borderRadius: 10px;
 	borderWidth: 1px;
 	borderColor: #E6F2FC;
+	backgroundColor: #FFFFFF;
+	margin: 12.5px;
 `;
 
 const FoodItemInfoContainer = styled.View`
 	flexDirection: column;
-	marginLeft: 33px;
+	marginRight: 30px;
 `;
 
 const FoodItemNameText = styled(SemiBoldText)`
@@ -29,7 +31,7 @@ const ButtonsContainer = styled.View`
 	flexDirection: column;
 	alignItems: flex-end;
 	justifyContent: center;
-	marginLeft: auto;
+	marginLeft: 30px;
 	marginRight: 12px;
 `;
 
@@ -49,7 +51,7 @@ export const FoodItem = (props) => {
 			/>
 			</FoodItemInfoContainer>
 
-			<Divider style={{ width: 1, height: 48 }} />
+			<Divider style={{ width: 1, height: 48, marginLeft: auto }} />
 
 			<ButtonsContainer>
 				<ExtraSmallButton 

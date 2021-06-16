@@ -6,7 +6,10 @@ import { Container } from '../../_atoms/Container';
 // import { Info } from '../../_molecules/Info';
 // import { CalorieTracker } from '../../_organisms/CalorieTracker';
 // import { InfoPanel } from '../../_organisms/InfoPanel';
-import { FoodItem } from '../../_molecules/FoodItem';
+// import { FoodItem } from '../../_molecules/FoodItem';
+// import { MealPlan } from '../../_molecules/MealPlan';
+import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
+import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
 
 const infoOne = {
 	label: "Height",
@@ -17,7 +20,7 @@ const infoOne = {
 export default function PrototypePage(props) {
 	return (
 		<Container>
-			<FoodItem />
+			<CustomMealsSection />
 		</Container>
 	)
 }

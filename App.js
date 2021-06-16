@@ -18,8 +18,8 @@ export default function App() {
   return (
     // <LoginPage />
     // <HomePage />
-    // <PrototypePage />
-    <AccountPage />
+    <PrototypePage />
+    // <AccountPage />
   )
 }
 
