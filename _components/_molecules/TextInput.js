@@ -15,14 +15,14 @@ export const InputLabelText = styled(MediumText)`
 	fontSize: 16;
 	lineHeight: 24;
 	color: #2D3748;
-	marginBottom: 8;
+	marginBottom: 8px;
 `;
 
 export const InputFeedbackText = styled(RegularText)`
 	fontSize: 14;
 	lineHeight: 20;
 	color: #E53E3E;
-	marginTop: 8;
+	marginTop: 8px;
 `;
 
 export const TextInput = (props) => {

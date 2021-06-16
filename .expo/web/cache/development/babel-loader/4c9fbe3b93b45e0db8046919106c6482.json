@@ -1,0 +1,1 @@
+{"ast":null,"code":"export { default as LoginPage } from \"../pages/LoginPage/LoginPage\";","map":{"version":3,"sources":["/Users/jamesyeap1/freshie/_components/pages/index.js"],"names":["default","LoginPage"],"mappings":"AAAA,SAAQA,OAAO,IAAIC,SAAnB","sourcesContent":["export {default as LoginPage} from '../pages/LoginPage/LoginPage';"]},"metadata":{},"sourceType":"module"}

@@ -7,8 +7,8 @@ const Container = styled.View`
 	flexDirection: column;
 	alignItems: center;
 	justifyContent: center;
-	marginTop: 77;
-	marginBottom: 31;
+	marginTop: 77px;
+	marginBottom: 31px;
 `;
 
 export const Header = ({headerText, subheaderText,...props}) => {

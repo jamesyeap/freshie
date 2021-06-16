@@ -23,9 +23,9 @@ const BigButtonContainer = styled.TouchableOpacity`
 							? "#319795" 
 							: "#319795" 
 			};
-	height: 48;
-	width: 300;
-	borderRadius: 6;
+	height: 48px;
+	width: 300px;
+	borderRadius: 6px;
 	margin: ${props => props.margin ? props.margin : 0};
 `;
 
@@ -71,7 +71,7 @@ export const CheckboxText = styled(SemiBoldText)`
 	fontSize: 14;
 	lineHeight: 20;
 	color: #000000;
-	marginRight: 9;
+	marginRight: 9px;
 `;
 
 // Checkbox
