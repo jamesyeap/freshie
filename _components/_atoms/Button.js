@@ -7,7 +7,7 @@ import { SemiBoldText } from './Text';
 	- Big Button
 	- Text Button
 	- Checkbox
-
+	- Section Button
 */
 
 // BIG BUTTON 
@@ -26,7 +26,7 @@ const BigButtonContainer = styled.TouchableOpacity`
 	height: 48px;
 	width: 300px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : 0};
+	margin: ${props => props.margin ? props.margin : "0px"};
 `;
 
 export const BigButtonText = styled(SemiBoldText)`
@@ -36,7 +36,7 @@ export const BigButtonText = styled(SemiBoldText)`
 `;
 
 export const BigButton = ({label, state, onPress,...props}) => {
-	return (<BigButtonContainer state={state} onPress={onPress}>
+	return (<BigButtonContainer margin={props.margin} state={state} onPress={onPress}>
 			<BigButtonText>{label}</BigButtonText>
 		</BigButtonContainer>);
 }
@@ -46,7 +46,7 @@ const TextButtonContainer = styled.TouchableOpacity`
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
-	margin: ${props => props.margin ? props.margin : 0};
+	margin: ${props => props.margin ? props.margin : "0px"};
 `;
 
 export const TextButtonText = styled(SemiBoldText)`
@@ -55,8 +55,8 @@ export const TextButtonText = styled(SemiBoldText)`
 	color: #000000;
 `;
 
-export const TextButton = ({label, state, onPress, margin,...props}) => {
-	return (<TextButtonContainer state={state} onPress={onPress} {...props}>
+export const TextButton = ({label, state, onPress,...props}) => {
+	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} {...props}>
 			<TextButtonText>{label}</TextButtonText>
 		</TextButtonContainer>);
 }
@@ -87,6 +87,48 @@ export const Checkbox = ({label, ...props}) => {
 		)
 }
 
+// Section Button
+const SectionButtonContainer = styled.TouchableOpacity`
+	flexDirection: column;
+	justifyContent: flex-end;
+	alignItems: flex-end;
+	backgroundColor: ${props => props.backgroundColor ? props.backgroundColor : "#583AAB"}
+	width: 310px;
+	height: 120px;
+	borderRadius: 10px;
+	margin: ${props => props.margin ? props.margin : "0px"};
+	padding: 15px;
+`;
+
+const SectionButtonTextContainer = styled.View`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: flex-start;
+	alignSelf: flex-start;
+`;
+
+export const SectionButtonMainText = styled(SemiBoldText)`
+	fontSize: 30;
+	lineHeight: 36;
+	color: #FFFFFF;
+`;
+
+export const SectionButtonSubText = styled(SemiBoldText)`
+	fontSize: 14;
+	lineHeight: 20;
+	color: #9277DB;
+`;
+
+export const SectionButton = ({mainText, subText, onPress, ...props}) => {
+	return (
+		<SectionButtonContainer margin={props.margin} backgroundColor={props.backgroundColor} onPress={onPress}>
+			<SectionButtonTextContainer>
+				<SectionButtonMainText>{mainText}</SectionButtonMainText>
+				<SectionButtonSubText>{subText}</SectionButtonSubText>
+			</SectionButtonTextContainer>
+		</SectionButtonContainer>
+		);
+}
 
 
 

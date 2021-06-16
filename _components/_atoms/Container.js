@@ -2,6 +2,7 @@ import React from 'react';
 import styled from 'styled-components' 
 
 export const Container = styled.SafeAreaView`
+	flex: 1;
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
