@@ -41,7 +41,7 @@ export default function LoginPage(props) {
 				<TextButton label="Forgot Password?" />
 			</OptionsContainer>
 
-			<BigButton label="Sign In" state="default" />
+			<BigButton label="Sign In" state="active" />
 
 			<TextButton label="Don't have an account?"/>
 		</Container>

@@ -6,3 +6,18 @@ export const Container = styled.SafeAreaView`
 	justifyContent: center;
 	alignItems: center;
 `;
+
+export const BigComponentContainer = styled.View`
+	width: 310px;
+	height: 247px;
+	borderRadius: 10px;
+`;
+
+export const MediumComponentContainer = styled.View`
+	width: 310px;
+	height: 120px;
+	borderRadius: 10px;
+`;
+
+
+
