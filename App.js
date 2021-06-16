@@ -8,10 +8,10 @@ export default function App() {
   const [isLoaded, error] = useFonts({Inter_400Regular, Inter_500Medium, Inter_600SemiBold});
 
   if (!isLoaded) {
+    // shows error with loading fonts in the terminal, if any
     if (error) {
       console.log(error)
     }
-
     return <AppLoading />;
   }
 
