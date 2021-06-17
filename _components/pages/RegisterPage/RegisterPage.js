@@ -15,7 +15,7 @@ const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
 });
 
-export default class WizardScreen extends Component {
+export default class RegisterPage extends Component {
   constructor(props) {
     super(props);
 
@@ -145,12 +145,12 @@ export default class WizardScreen extends Component {
                 <HeaderMediumText>Registration</HeaderMediumText>
             </View>
             <ScrollView contentContainerStyle={styles.scrollView}>
-            <TextInput stacked= {true} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={userName} />
-            <TextInput stacked= {true} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
-            <TextInput stacked= {true} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
-            <TextInput stacked= {true} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={emailAddress}/>
-            <TextInput stacked= {true} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPasswordEntered} value={password}/>
-            <TextInput stacked= {true} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPasswordConfirm} value={passwordConfirmed}/>
+            <TextInput stacked= {0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={userName} />
+            <TextInput stacked= {0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
+            <TextInput stacked= {0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
+            <TextInput stacked= {0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={emailAddress}/>
+            <TextInput stacked= {0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPasswordEntered} value={password}/>
+            <TextInput stacked= {0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPasswordConfirm} value={passwordConfirmed}/>
             </ScrollView>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             {this.renderNextButton()}
@@ -222,10 +222,10 @@ export default class WizardScreen extends Component {
           <HeaderMediumText>Just a few more questions...</HeaderMediumText> 
         </View>
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <TextInput stacked= {true} label="Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {true} label="Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {true} label="Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {true} label="Question 1" placeholder={"Answer here"}/>
+          <TextInput stacked= {0} label="Question 1" placeholder={"Answer here"}/>
+          <TextInput stacked= {0} label="Question 1" placeholder={"Answer here"}/>
+          <TextInput stacked= {0} label="Question 1" placeholder={"Answer here"}/>
+          <TextInput stacked= {0} label="Question 1" placeholder={"Answer here"}/>
         </ScrollView> 
         <View marginB-72>
           <View>

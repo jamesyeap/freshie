@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Checkbox as PaperCheckbox } from 'react-native-paper';
 import { SemiBoldText } from './Text';
+import { TouchableOpacity } from 'react-native';
 
 /* List of Buttons
 	- Big Button
@@ -88,6 +89,31 @@ export const Checkbox = ({label, ...props}) => {
 		)
 }
 
+export const EditButtonContainer = styled(TouchableOpacity)`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;	
+	backgroundColor: ${props => props.color ? props.color : "#000000"}
+	borderRadius: 6px;
+	width: 88px;
+	height: 32px;
+	margin: ${props => props.margin ? props.margin : 0}
+`
+export const EditButtonText = styled(SemiBoldText)`
+	fontSize: 18;
+	lineHeight: 28;
+	color: #FFFFFF;
+`;
+
+//export const EditButtonIcon = styled()
+
+export const EditButton = ({label, state, color, onPress, margin,...props}) => {
+	return (
+		<EditButtonContainer color= {color} margin= {margin} state= {state} onPress= {onPress}>
+			<EditButtonText>{label}</EditButtonText>
+		</EditButtonContainer>
+	)	
+}
 
 
 
