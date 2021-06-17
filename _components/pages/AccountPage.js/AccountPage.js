@@ -49,7 +49,6 @@ const InfoFive = {
 const InfoSix = {
 	label: "Activity Level",
 	value: "Slightly Active",
-	unit: "(2x)"
 }
 
 const InfoSeven = {
@@ -71,6 +70,11 @@ export default function AccountPage(props) {
 			/>
 
 			<InfoPanel
+			labelColor="#9A8EBA"
+			valueColor="#FFFFFF"
+			unitColor="#9A8EBA"
+			backgroundColor="#583AAB"
+
 			infoOne={InfoFive}
 			infoTwo={InfoSix}
 			infoThree={InfoSeven}

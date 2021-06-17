@@ -47,6 +47,11 @@ const InfoContainer = styled.View`
 	paddingTop: 15px;
 `;
 
+const CalorieText = styled(RegularText)`
+	fontSize: 14px;
+	lineHeight: 20px;
+`;
+
 const FoodItemListContainer = styled.View`
 	flexDirection: column;
 	marginBottom: 55px;
@@ -74,10 +79,7 @@ export const MealPlan = ({ id, open, setVisible }) => {
 				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
 
 				<InfoContainer>
-					<Info
-					value={600}
-					unit="kcal"
-					/>
+					<CalorieText>600 kcal</CalorieText>
 					
 					<IconButton
 					icon={open !== id ? "chevron-down" : "chevron-up"}

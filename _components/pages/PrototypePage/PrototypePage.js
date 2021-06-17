@@ -8,8 +8,10 @@ import { Container } from '../../_atoms/Container';
 // import { InfoPanel } from '../../_organisms/InfoPanel';
 // import { FoodItem } from '../../_molecules/FoodItem';
 // import { MealPlan } from '../../_molecules/MealPlan';
-import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
-import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
+// import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
+// import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
+// import { ClientItem } from '../../_molecules/ClientItem';
+import { ClientsDashboardSection } from '../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
 
 const infoOne = {
 	label: "Height",
@@ -20,7 +22,7 @@ const infoOne = {
 export default function PrototypePage(props) {
 	return (
 		<Container>
-			<CustomMealsSection />
+			<ClientsDashboardSection />
 		</Container>
 	)
 }

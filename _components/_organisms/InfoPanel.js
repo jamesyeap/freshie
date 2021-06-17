@@ -31,6 +31,9 @@ export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour, ...props}) => 
 				label={infoOne.label}
 				value={infoOne.value}
 				unit={infoOne.unit}
+				labelColor={props.labelColor}
+				valueColor={props.valueColor}
+				unitColor={props.unitColor}
 				/>
 			}
 
@@ -39,6 +42,9 @@ export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour, ...props}) => 
 				label={infoTwo.label}
 				value={infoTwo.value}
 				unit={infoTwo.unit}
+				labelColor={props.labelColor}
+				valueColor={props.valueColor}
+				unitColor={props.unitColor}
 				/>
 			}
 		</InfoRowContainer>
@@ -49,6 +55,9 @@ export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour, ...props}) => 
 				label={infoThree.label}
 				value={infoThree.value}
 				unit={infoThree.unit}
+				labelColor={props.labelColor}
+				valueColor={props.valueColor}
+				unitColor={props.unitColor}
 				/>
 			}
 
@@ -57,6 +66,9 @@ export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour, ...props}) => 
 				label={infoFour.label}
 				value={infoFour.value}
 				unit={infoFour.unit}
+				labelColor={props.labelColor}
+				valueColor={props.valueColor}
+				unitColor={props.unitColor}
 				/>
 			}
 		</InfoRowContainer>
