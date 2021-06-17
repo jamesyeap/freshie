@@ -1,4 +1,5 @@
 import React from 'react';
+import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
 import { ExtraSmallButton, TextButton } from '../_atoms/Button';
@@ -14,7 +15,7 @@ const FoodItemContainer = styled.TouchableOpacity`
 	borderWidth: 1px;
 	borderColor: #E6F2FC;
 	backgroundColor: #FFFFFF;
-	margin: 12.5px;
+	margin: ${props => props.margin ? props.margin : "12.5px"};
 `;
 
 const FoodItemInfoContainer = styled.View`
@@ -37,21 +38,21 @@ const ButtonsContainer = styled.View`
 
 export const FoodItem = (props) => {
 	return (
-		<FoodItemContainer>
-			<IconButton
-			 icon="pizza"
-			 style={{ height: 50, width: 50, marginLeft: 21 }}
-			 onPress={() => console.log("Pressed")}
-			/>
+		<FoodItemContainer margin={props.margin} >
+			<Image 
+			source={require('../../assets/taco.png')}
+			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33}}
+			/>		
+
 			<FoodItemInfoContainer>
-			<FoodItemNameText>Taco</FoodItemNameText>
-			<Info
-			 value={200}
-			 unit="kcal"
-			/>
+				<FoodItemNameText>Taco</FoodItemNameText>
+				<Info
+				value={200}
+				unit="kcal"
+				/>
 			</FoodItemInfoContainer>
 
-			<Divider style={{ width: 1, height: 48, marginLeft: auto }} />
+			<Divider style={{ width: 1, height: 48, marginLeft: "auto" }} />
 
 			<ButtonsContainer>
 				<ExtraSmallButton 
