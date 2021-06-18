@@ -16,7 +16,7 @@ const MediumComponentContainer = styled(ParentContainer)`
 	alignItems: center;
 	justifyContent: center;
 	marginTop: 12.5px;
-	marginBottom: ${props => props.isOpen ? "0px" : "2px"};
+	marginBottom: ${props => props.isOpen ? 0 : 2};
 `;
 
 const MealTextContainer = styled.View`
@@ -91,9 +91,9 @@ export const MealPlan = ({ id, open, setVisible }) => {
 
 			<Collapsible collapsed={open !== id}>
 				<FoodItemListContainer>
-					<FoodItem margin="0px"/>
-					<FoodItem margin="0px"/>
-					<FoodItem margin="0px"/>
+					<FoodItem margin={0}/>
+					<FoodItem margin={0}/>
+					<FoodItem margin={0}/>
 				</FoodItemListContainer>
 			</Collapsible>
 		</Wrapper>

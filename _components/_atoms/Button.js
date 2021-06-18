@@ -63,7 +63,7 @@ const SmallButtonContainer = styled.TouchableOpacity`
 			};
 	height: 32px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 `;
 
 export const SmallButtonText = styled(SemiBoldText)`
@@ -86,7 +86,7 @@ const MediumButtonContainer = styled.TouchableOpacity`
 	backgroundColor: ${props => props.backgroundColor ? props.backgroundColor : "#D53F8C"} 
 	height: 48px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 	padding: 10px 24px;
 `;
 
@@ -118,7 +118,7 @@ const BigButtonContainer = styled.TouchableOpacity`
 	height: 48px;
 	width: 300px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 	marginTop: ${props => props.marginTop ? props.marginTop : 0};
 `;
 
@@ -140,7 +140,7 @@ const TextButtonContainer = styled.TouchableOpacity`
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 `;
 
 export const TextButtonText = styled(SemiBoldText)`
@@ -190,7 +190,7 @@ const SectionButtonContainer = styled.TouchableOpacity`
 	width: 310px;
 	height: 120px;
 	borderRadius: 10px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 	padding: 15px;
 `;
 
