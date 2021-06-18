@@ -19,24 +19,7 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      {/* <EditMealPlanPage /> */}
-      {/* <RootStackScreen /> */}
-      {/* <MealsPage /> */}
-
-     {/* <LoginPage /> */}
-     {/* <HomePage /> */}
-     {/* <PrototypePage /> */}
-     {/* <AccountPage /> */}
-     {/* <MealsPage /> */}
-     <DashboardPage />
-     {/* <EatingHistoryPage /> */}
-     {/* <EditRecipePage/> */}
-     {/* <SignupPage /> */}
-     {/* <RegisterPage /> */}
-     {/* <ClientPage /> */}
-     {/* <EditMealPlanPage /> */}
-    </NavigationContainer>
+      <MealsPage /> 
   )
 }
 
@@ -44,7 +27,7 @@ export default function App() {
     // <HomePage />
     // <PrototypePage />
     // <AccountPage />
-    // <MealsPage />
+     <MealsPage />
     // <DashboardPage />
     // <EatingHistoryPage />
     // <RecipeEditPage/>

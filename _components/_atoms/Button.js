@@ -276,6 +276,7 @@ export const EditButtonText = styled(SemiBoldText)`
 export const EditButton = ({label, state, color, onPress, margin,...props}) => {
 	return (
 		<EditButtonContainer color= {color} margin= {margin} state= {state} onPress= {onPress}>
+			<Ionicons name={props.name} size={24}></Ionicons>
 			<EditButtonText>{label}</EditButtonText>
 		</EditButtonContainer>
 	)	

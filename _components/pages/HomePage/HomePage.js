@@ -1,11 +1,13 @@
 import React from 'react';
 import styled from 'styled-components';
+import { View } from 'react-native';
 import { Container } from '../../_atoms/Container';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../_atoms/Text';
 import { FAB, Provider } from '../../_molecules/FAB';
 import { CalorieTracker } from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
+import { WeeklyChart } from '../../_molecules/WeeklyChart';
 
 const WelcomeText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -20,10 +22,11 @@ const WelcomeText = styled(HeaderMediumText)`
 export default function HomePage(props) {
 	return (
 		<Container>
-			<NavigationHeader icon="account" goBack={() => props.navigation.goBack()} />
-			<WelcomeText>{`Welcome home, \nAh Beng`}</WelcomeText>
-
+			<NavigationHeader icon="account" />
+			<WelcomeText style= {{marginTop: -5}}>{`Welcome home, \nAh Beng`}</WelcomeText>
+			<View style={{borderWidth: 1, marginTop: -5}}>
 			<CalorieTracker />
+			</View>
 
 			<SectionButton
 			mainText="Eating History"
