@@ -4,6 +4,7 @@ import { Checkbox as PaperCheckbox } from 'react-native-paper';
 import { SemiBoldText } from './Text';
 import { Ionicons } from '@expo/vector-icons';
 // see list of icons available at "https://icons.expo.fyi"
+import { TouchableOpacity } from 'react-native';
 
 /* List of Buttons
 	- Extra Small Button
@@ -118,8 +119,10 @@ const BigButtonContainer = styled.TouchableOpacity`
 	width: 300px;
 	borderRadius: 6px;
 	margin: ${props => props.margin ? props.margin : "0px"};
+	marginTop: ${props => props.marginTop ? props.marginTop : 0};
 `;
 
+{/*}	margin: ${props => props.margin ? props.margin : 0};*/}
 export const BigButtonText = styled(SemiBoldText)`
 	fontSize: 18;
 	lineHeight: 28;
@@ -127,7 +130,7 @@ export const BigButtonText = styled(SemiBoldText)`
 `;
 
 export const BigButton = ({label, state, onPress,...props}) => {
-	return (<BigButtonContainer margin={props.margin} state={state} onPress={onPress}>
+	return (<BigButtonContainer marginTop= {props.marginTop} margin={props.margin} state={state} onPress={onPress}>
 			<BigButtonText>{label}</BigButtonText>
 		</BigButtonContainer>);
 }
@@ -252,6 +255,31 @@ export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonL
 	)
 }
 
+export const EditButtonContainer = styled(TouchableOpacity)`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;	
+	backgroundColor: ${props => props.color ? props.color : "#000000"}
+	borderRadius: 6px;
+	width: 88px;
+	height: 32px;
+	margin: ${props => props.margin ? props.margin : 0}
+`
+export const EditButtonText = styled(SemiBoldText)`
+	fontSize: 18;
+	lineHeight: 28;
+	color: #FFFFFF;
+`;
+
+//export const EditButtonIcon = styled()
+
+export const EditButton = ({label, state, color, onPress, margin,...props}) => {
+	return (
+		<EditButtonContainer color= {color} margin= {margin} state= {state} onPress= {onPress}>
+			<EditButtonText>{label}</EditButtonText>
+		</EditButtonContainer>
+	)	
+}
 
 
 

@@ -6,4 +6,6 @@ export {default as AccountPage} from './AccountPage/AccountPage';
 export {default as MealsPage} from '../pages/MealsPage/MealsPage';
 export {default as DashboardPage} from '../pages/_TrainerPages/DashboardPage/DashboardPage';
 export {default as EatingHistoryPage} from '../pages/EatingHistoryPage/EatingHistoryPage';
-
+export {default as SignupPage} from '../pages/SignupPage/SignupPage';
+export {default as RegisterPage} from '../pages/RegisterPage/RegisterPage';
+export {default as RecipeEditPage} from '../pages/RecipeEditPage/RecipeEditPage';

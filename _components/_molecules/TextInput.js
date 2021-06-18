@@ -6,6 +6,7 @@ const TextInputContainer = styled.View`
 	flexDirection: column;
 	justifyContent: center;
 	margin: 18px;
+	marginTop: ${props => props.stacked ? props.stacked : 18}
 `;
 
 const TextInputBox = styled.TextInput`
@@ -34,7 +35,9 @@ export const TextInput = (props) => {
 			placeholder={props.placeholder}
 			onChangeText={props.onChangeText}
 			keyboardType={props.keyboardType}
-			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, width: 320, height: 40, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'center' }}
+			width={props.width ? props.width : 320}
+			height={props.height ? props.height : 40}
+			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'center' }}
 			/>
 			{props.feedbackMessage && <InputFeedbackText>{props.feedbackMessage}</InputFeedbackText>}
 		</TextInputContainer>
