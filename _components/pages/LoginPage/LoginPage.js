@@ -41,7 +41,7 @@ export default function LoginPage(props) {
 				<TextButton label="Forgot Password?" />
 			</OptionsContainer>
 
-			<BigButton label="Sign In" state="active" />
+			<BigButton label="Sign In" state="active" onPress={() => props.navigation.push("Client")} />
 
 			<TextButton label="Don't have an account?"/>
 		</Container>

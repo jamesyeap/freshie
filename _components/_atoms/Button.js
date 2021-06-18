@@ -241,9 +241,9 @@ const IconButtonText = styled(SemiBoldText)`
 	marginLeft: 8px; 
 `;
 
-export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, buttonStyle, ...props }) => {
+export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, buttonStyle, onPress,...props }) => {
 	return (
-		<IconButtonContainer color={buttonColor} style={buttonStyle} >
+		<IconButtonContainer color={buttonColor} style={buttonStyle} onPress={onPress} >
 			<Ionicons
 			name={iconName}
 			size={iconSize}

@@ -42,12 +42,12 @@ const TabButtonContainer = styled.TouchableOpacity`
 	width: 91px;
 	padding: 8px;
 	borderBottomColor: ${props => props.isSelected ? "#2B6CB0" : "#CCD7E0"}
-	borderBottomWidth: ${props => props.isSelected ? "1px" : "0px"};
+	borderBottomWidth: ${props => props.isSelected ? "1px" : "0px" };
 `;
 
 const TabButtonText = styled(RegularText)`
-	fontSize: 16;
-	lineHeight: 24;
+	fontSize: 16px;
+	lineHeight: 24px;
 	color: ${props => props.isSelected ? "#2B6CB0" : "#4A5568"};
 `;
 

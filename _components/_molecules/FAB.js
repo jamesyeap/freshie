@@ -1,7 +1,8 @@
+import { propNames } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FAB as ParentFAB, Portal, Provider } from 'react-native-paper';
 
-export const FAB = () => {
+export const FAB = (props) => {
   const [state, setState] = useState({ open: false });
 
   const onStateChange = ({ open }) => setState({ open });
@@ -23,13 +24,13 @@ export const FAB = () => {
             {
               icon: 'silverware-fork-knife',
               label: 'Restaurants',
-              onPress: () => console.log('Pressed restaurants'),
-	      small: false,
+              onPress: () => console.log("Hello"),
+              small: false,
             },
             {
               icon: 'plus',
               label: 'Add a meal',
-              onPress: () => console.log('Pressed add meal'),
+              onPress: () => props.gotoMeals(),
               small: false,
             },
           ]}

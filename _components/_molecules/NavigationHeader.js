@@ -26,6 +26,7 @@ export const NavigationHeader = (props) => {
 			iconColor="black"
 			buttonColor="white"
 			buttonStyle={{ marginLeft: 30 }}
+			onPress={() => props.goBack()}
 			/>
 			<BrandHeaderText>freshie</BrandHeaderText>
 		</NavigationHeaderContainer>

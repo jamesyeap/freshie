@@ -6,6 +6,7 @@ export const Container = styled.SafeAreaView`
 	flexDirection: column;
 	justifyContent: flex-start;
 	alignItems: center;
+	backgroundColor: #FFFFFF;
 `;
 
 export const BigComponentContainer = styled.View`

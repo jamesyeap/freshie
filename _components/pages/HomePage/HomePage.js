@@ -20,7 +20,7 @@ const WelcomeText = styled(HeaderMediumText)`
 export default function HomePage(props) {
 	return (
 		<Container>
-			<NavigationHeader icon="account" />
+			<NavigationHeader icon="account" goBack={() => props.navigation.goBack()} />
 			<WelcomeText>{`Welcome home, \nAh Beng`}</WelcomeText>
 
 			<CalorieTracker />
@@ -31,7 +31,9 @@ export default function HomePage(props) {
 			margin="21px"
 			/>
 			
-			<FAB />
+			<FAB 
+			gotoMeals={() => props.navigation.push("Meals")}
+			/>
 		</Container>
 	
 	)

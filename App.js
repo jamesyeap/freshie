@@ -1,7 +1,10 @@
 import React, { useState, useEffect } from 'react';
-import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPage, EatingHistoryPage, SignupPage, RegisterPage, RecipeEditPage, ClientPage, EditMealPlanPage } from './_components/pages/index';
+import { NavigationContainer } from '@react-navigation/native';
+import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPage, EatingHistoryPage, SignupPage, RegisterPage, EditRecipePage, ClientPage, EditMealPlanPage } from './_components/pages/index';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
+
+import { RootStackScreen } from './_navigation/RootStackScreen';
 
 export default function App() {
   // On start-up, app needs to load the fonts files first.
@@ -16,6 +19,27 @@ export default function App() {
   }
 
   return (
+    <NavigationContainer>
+      {/* <EditMealPlanPage /> */}
+      {/* <RootStackScreen /> */}
+      {/* <MealsPage /> */}
+
+     {/* <LoginPage /> */}
+     {/* <HomePage /> */}
+     {/* <PrototypePage /> */}
+     {/* <AccountPage /> */}
+     {/* <MealsPage /> */}
+     <DashboardPage />
+     {/* <EatingHistoryPage /> */}
+     {/* <EditRecipePage/> */}
+     {/* <SignupPage /> */}
+     {/* <RegisterPage /> */}
+     {/* <ClientPage /> */}
+     {/* <EditMealPlanPage /> */}
+    </NavigationContainer>
+  )
+}
+
     // <LoginPage />
     // <HomePage />
     // <PrototypePage />
@@ -27,8 +51,5 @@ export default function App() {
     // <SignupPage />
     // <RegisterPage />
     // <ClientPage />
-    <EditMealPlanPage />
-  )
-}
-
+    // <EditMealPlanPage />
 
