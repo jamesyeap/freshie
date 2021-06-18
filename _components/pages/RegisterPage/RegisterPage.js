@@ -10,6 +10,7 @@ import { HeaderMediumText, MediumText, SubHeaderText } from '../../_atoms/Text';
 import { Header } from '../../_molecules/Header';
 import { InputLabelText, TextInput } from '../../_molecules/TextInput';
 import { startDetecting } from 'react-native/Libraries/Utilities/PixelRatio';
+import { border } from '@chakra-ui/react';
 
 const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
@@ -144,13 +145,13 @@ export default class RegisterPage extends Component {
             <View style= {{paddingRight: 220, marginVertical:20}}>
                 <HeaderMediumText>Registration</HeaderMediumText>
             </View>
-            <ScrollView contentContainerStyle={styles.scrollView}>
-            <TextInput stacked= {0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={userName} />
-            <TextInput stacked= {0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
-            <TextInput stacked= {0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
-            <TextInput stacked= {0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={emailAddress}/>
-            <TextInput stacked= {0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPasswordEntered} value={password}/>
-            <TextInput stacked= {0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPasswordConfirm} value={passwordConfirmed}/>
+            <ScrollView contentContainerStyle={styles.scrollView, {height: 700}}>
+              <TextInput stacked= {0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={userName} />
+              <TextInput stacked= {0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
+              <TextInput stacked= {0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
+              <TextInput stacked= {0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={emailAddress}/>
+              <TextInput stacked= {0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPasswordEntered} value={password}/>
+              <TextInput stacked= {0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPasswordConfirm} value={passwordConfirmed}/>
             </ScrollView>
             <View style={{flexDirection: 'row', justifyContent: 'center'}}>
             {this.renderNextButton()}

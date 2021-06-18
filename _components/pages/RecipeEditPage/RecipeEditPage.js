@@ -22,7 +22,7 @@ export default RecipeEditPage = () => {
             <TextInput stacked= "0" placeholder="title"/>
             <TextInput stacked= "-15" placeholder="calories"/>
             <MultiLineTextInput placeholder= "Ingredients"></MultiLineTextInput>
-            <MultiLineTextInput marginTop={10} placeholder= "Instructions"></MultiLineTextInput>
+            <MultiLineTextInput marginTop="10px" placeholder= "Instructions"></MultiLineTextInput>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
                 <EditButtonGroup/>  
