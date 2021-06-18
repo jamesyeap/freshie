@@ -11,6 +11,7 @@ import { Header } from '../../_molecules/Header';
 import { InputLabelText, TextInput } from '../../_molecules/TextInput';
 import { startDetecting } from 'react-native/Libraries/Utilities/PixelRatio';
 import { border } from '@chakra-ui/react';
+import { StatusBar } from 'expo-status-bar';
 
 const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
@@ -260,8 +261,8 @@ export default class RegisterPage extends Component {
     const {activeIndex, allTypesIndex, toastMessage} = this.state;
 
     return (
-        <View useSafeArea flex>
-            
+        <View useSafeArea flex backgroundColor="white">
+            <StatusBar style="dark"></StatusBar>
             <View style={styles.container}>
                 <Wizard testID={'uilib.wizard'} activeIndex={activeIndex} onActiveIndexChanged={this.onActiveIndexChanged}>
                 <Wizard.Step state={this.getStepState(0)} label={'Account details'}/>
