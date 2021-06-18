@@ -229,8 +229,6 @@ const IconButtonContainer = styled.TouchableOpacity`
 	padding: 6px;
 	backgroundColor: ${props => props.color ? props.color : "#319795"}
 	borderRadius: 6px;
-	minWidth: 80px;
-	margin: ${props => props.margin ? props.margin : "5px"}
 `;
 
 const IconButtonText = styled(SemiBoldText)`
@@ -240,9 +238,9 @@ const IconButtonText = styled(SemiBoldText)`
 	marginLeft: 8px; 
 `;
 
-export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, ...props }) => {
+export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, buttonStyle, ...props }) => {
 	return (
-		<IconButtonContainer color={buttonColor} >
+		<IconButtonContainer color={buttonColor} style={buttonStyle} >
 			<Ionicons
 			name={iconName}
 			size={iconSize}

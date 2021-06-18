@@ -11,11 +11,11 @@ const Container = styled.View`
 	marginBottom: 31px;
 `;
 
-export const Header = ({headerText, subheaderText,...props}) => {
+export const Header = ({containerStyle, headerText, headerStyle, subheaderText, subHeaderStyle,...props}) => {
 	return (
-		<Container>
-			<HeaderMediumText>{headerText}</HeaderMediumText>
-			{subheaderText && <SubHeaderText>{subheaderText}</SubHeaderText>}
+		<Container style={containerStyle}>
+			<HeaderMediumText style={headerStyle}>{headerText}</HeaderMediumText>
+			{subheaderText && <SubHeaderText style={subHeaderStyle} >{subheaderText}</SubHeaderText>}
 		</Container>
 	)
 }

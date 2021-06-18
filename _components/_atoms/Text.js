@@ -16,18 +16,18 @@ export const SemiBoldText = styled.Text`
 /* TEXT COMPONENTS */
 // Display Text Styles
 export const BrandHeaderText = styled(MediumText)`
-	fontSize: 20;
-	lineHeight: 28;
+	fontSize: 20px;
+	lineHeight: 28px;
 `;
 
 export const HeaderMediumText = styled(MediumText)`
-	fontSize: 24;
-	lineHeight: 32;
+	fontSize: 24px;
+	lineHeight: 32px;
 `;
 
 export const SubHeaderText = styled(MediumText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #989898;
 `;
 
