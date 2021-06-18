@@ -16,12 +16,14 @@ export const InfoLabelText = styled(SemiBoldText)`
 	fontSize: 14;
 	lineHeight: 20;
 	color: ${props => props.labelColor ? props.labelColor : "#9E8D8D"};
+	flexWrap: wrap;
 `;
 
 export const InfoValueText = styled(SemiBoldText)`
 	fontSize: 16;
 	lineHeight: 24;
 	color: ${props => props.valueColor ? props.valueColor : "#000000"};
+	flexWrap: wrap;
 `;
 
 export const InfoUnitText = styled(RegularText)`
@@ -30,6 +32,7 @@ export const InfoUnitText = styled(RegularText)`
 	color: ${props => props.unitColor ? props.unitColor : "#9E8D8D"};
 	marginLeft: 1.5px;
 	marginTop: 3px;
+	flexWrap: wrap;
 `;
 
 export const Info = ({label, value, unit, labelColor, valueColor, unitColor, ...props}) => {

@@ -28,7 +28,7 @@ export const InputFeedbackText = styled(RegularText)`
 export const TextInput = (props) => {
 	return (
 		<TextInputContainer>
-			<InputLabelText>{props.label}</InputLabelText>
+			{props.label && <InputLabelText>{props.label}</InputLabelText>}
 			<TextInputBox
 			value={props.value}
 			placeholder={props.placeholder}

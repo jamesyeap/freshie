@@ -7,6 +7,7 @@ import { TabView, SceneMap } from 'react-native-tab-view';
 import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
 import { MealPlansDashboardSection } from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection';
 import { MealsDashboardSection } from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection';
+import { ReferralCode } from '../../../_molecules/ReferralCode';
 
 const renderScene = SceneMap({
 	first: ClientsDashboardSection,
@@ -22,6 +23,7 @@ const Container = styled.SafeAreaView`
 	flex: 1;
 	flexDirection: column;
 	justifyContent: center;
+	alignItems: center;
 	backgroundColor: #CCD7E0;
 `;
 
@@ -88,6 +90,7 @@ export default function DashboardPage(prop) {
 			onIndexChange={setIndex}
 			sceneContainerStyle={{ alignItems: "center" }}
 			/>
+			<ReferralCode />
 		</Container>
 	)
 }

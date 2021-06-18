@@ -11,7 +11,8 @@ import { Container } from '../../_atoms/Container';
 // import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
 // import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
 // import { ClientItem } from '../../_molecules/ClientItem';
-import { ClientsDashboardSection } from '../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
+// import { ClientsDashboardSection } from '../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
+import { ReferralCode } from '../../_molecules/ReferralCode';
 
 const infoOne = {
 	label: "Height",
@@ -22,7 +23,7 @@ const infoOne = {
 export default function PrototypePage(props) {
 	return (
 		<Container>
-			<ClientsDashboardSection />
+			<ReferralCode />
 		</Container>
 	)
 }

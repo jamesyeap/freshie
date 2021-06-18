@@ -19,8 +19,8 @@ export default function App() {
     // <LoginPage />
     // <HomePage />
     // <PrototypePage />
-    // <AccountPage />
-    <MealsPage />
+    <AccountPage />
+    // <MealsPage />
     // <DashboardPage />
   )
 }

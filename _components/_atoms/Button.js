@@ -2,6 +2,8 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Checkbox as PaperCheckbox } from 'react-native-paper';
 import { SemiBoldText } from './Text';
+import { Ionicons } from '@expo/vector-icons';
+// see list of icons available at "https://icons.expo.fyi"
 
 /* List of Buttons
 	- Extra Small Button
@@ -11,6 +13,7 @@ import { SemiBoldText } from './Text';
 	- Text Button
 	- Checkbox
 	- Section Button
+	- Icon Button
 */
 
 // EXTRA SMALL BUTTON 
@@ -217,6 +220,40 @@ export const SectionButton = ({mainText, subText, onPress, ...props}) => {
 		</SectionButtonContainer>
 		);
 }
+
+// ICON BUTTON 
+const IconButtonContainer = styled.TouchableOpacity`
+	flexDirection: row;
+	justifyContent: center;
+	alignItems: center;
+	padding: 6px;
+	backgroundColor: ${props => props.color ? props.color : "#319795"}
+	borderRadius: 6px;
+	minWidth: 80px;
+	margin: ${props => props.margin ? props.margin : "5px"}
+`;
+
+const IconButtonText = styled(SemiBoldText)`
+	fontSize: 12;
+	lineHeight: 16;
+	color: #FFFFFF;
+	marginLeft: 8px; 
+`;
+
+export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, ...props }) => {
+	return (
+		<IconButtonContainer color={buttonColor} >
+			<Ionicons
+			name={iconName}
+			size={iconSize}
+			color={iconColor ? iconColor : "#FFFFFF"}
+			/>
+
+			{buttonLabel && <IconButtonText>{buttonLabel}</IconButtonText>}
+		</IconButtonContainer>
+	)
+}
+
 
 
 

@@ -5,6 +5,7 @@ import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../_atoms/Text';
 import { MediumButton } from '../../_atoms/Button';
 import { InfoPanel } from '../../_organisms/InfoPanel';
+import { TrainerPanel } from '../../_organisms/TrainerPanel';
 
 const NameText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -52,6 +53,12 @@ const InfoSix = {
 }
 
 const InfoSeven = {
+	label: "Today's Calories",
+	value: 500,
+	unit: "kcal"
+}
+
+const InfoEight = {
 	label: "Target Calories",
 	value: 2500,
 	unit: "kcal"
@@ -78,6 +85,10 @@ export default function AccountPage(props) {
 			infoOne={InfoFive}
 			infoTwo={InfoSix}
 			infoThree={InfoSeven}
+			infoFour={InfoEight}
+			/>
+
+			<TrainerPanel
 			/>
 
 			<MediumButton
