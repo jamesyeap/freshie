@@ -6,7 +6,7 @@ import { ExtraSmallButton, TextButton } from '../_atoms/Button';
 import { Divider, IconButton } from 'react-native-paper';
 import { Info } from './Info';
 
-const FoodItemContainer = styled.TouchableOpacity`
+const FoodItemContainer = styled.View`
 	flexDirection: row;
 	alignItems: center
 	width: 310px;
