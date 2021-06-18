@@ -51,7 +51,7 @@ export const WeeklyChart = (props) => {
                 withInnerLines={false}
                 withCustomBarColorFromData={true}
                 flatColor={true}
-                style={{ borderWidth: 1, borderColor: "#E2E8F0", paddingRight: 40, paddingVertical: 10, borderRadius: 10}}
+                style={{ borderWidth: 1, borderColor: "#E2E8F0", paddingRight: 40, paddingBottom: 5, borderRadius: 10}}
             />
         </View>
         </SafeAreaView>

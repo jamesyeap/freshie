@@ -19,15 +19,16 @@ export default function App() {
   }
 
   return (
-      <MealsPage /> 
-  )
-}
+    <NavigationContainer>
+      <RootStackScreen /> 
+  </NavigationContainer>
+)}
 
     // <LoginPage />
     // <HomePage />
     // <PrototypePage />
     // <AccountPage />
-     <MealsPage />
+    // <MealsPage />
     // <DashboardPage />
     // <EatingHistoryPage />
     // <RecipeEditPage/>

@@ -52,18 +52,6 @@ export default class RegisterPage extends Component {
     }, 2000);
   };
 
-  reset = () => {
-    const {customerName, selectedFlavor} = this.state;
-
-    this.setState({
-      activeIndex: 0,
-      completedStepIndex: undefined,
-      selectedFlavor: initialFlavor,
-      customerName: undefined,
-      toastMessage: `${customerName}, you bought some ${selectedFlavor.toLowerCase()}`
-    },
-    this.closeToast);
-  };
 
   goToPrevStep = () => {
     const {activeIndex: prevActiveIndex} = this.state;
@@ -100,9 +88,9 @@ export default class RegisterPage extends Component {
     */
 
     const {activeIndex: prevActiveIndex, completedStepIndex: prevCompletedStepIndex} = this.state;
-    const reset = prevActiveIndex === 2;
-    if (reset) {
-      this.reset();
+    const createAccount = prevActiveIndex === 2;
+    if (createAccount) {
+      this.createAccount;
       return;
     }
 
@@ -117,15 +105,17 @@ export default class RegisterPage extends Component {
     }
   };
 
+  createAccount = () => this.props.navigation.push("Client")
+
   renderNextButton = disabled => {
     const {activeIndex} = this.state;
-    const label = activeIndex === 2 ? 'done & reset' : 'Next';
+    const label = activeIndex === 2 ? 'Create Account' : 'Next';
     return (
         <View>  
             <BigButton
             testID={'uilib.nextAndResetButton'}
             label={label}
-            onPress={this.goToNextStep}
+            onPress={activeIndex === 2 ? this.createAccount : this.goToNextStep}
             disabled={disabled}
             />
         </View>  
