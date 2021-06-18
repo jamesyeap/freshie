@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPage, EatingHistoryPage } from './_components/pages/index';
-import { LoginPage, SignupPage, RegisterPage, RecipeEditPage } from './_components/pages/index';
+import { SignupPage, RegisterPage, RecipeEditPage, WeeklyChart } from './_components/pages/index';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
 
@@ -21,10 +21,10 @@ export default function App() {
     // <HomePage />
     // <PrototypePage />
     // <AccountPage />
-    // <MealsPage />
+     <MealsPage />
     // <DashboardPage />
     // <EatingHistoryPage />
-    <RecipeEditPage/>
+    // <RecipeEditPage/>
   )
 }
 

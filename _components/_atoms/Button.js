@@ -243,7 +243,7 @@ const IconButtonText = styled(SemiBoldText)`
 
 export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, buttonStyle, ...props }) => {
 	return (
-		<IconButtonContainer color={buttonColor} style={buttonStyle} >
+		<IconButtonContainer color={buttonColor} style={buttonStyle}>
 			<Ionicons
 			name={iconName}
 			size={iconSize}
@@ -276,6 +276,7 @@ export const EditButtonText = styled(SemiBoldText)`
 export const EditButton = ({label, state, color, onPress, margin,...props}) => {
 	return (
 		<EditButtonContainer color= {color} margin= {margin} state= {state} onPress= {onPress}>
+			<Ionicons name={props.name} size={24}></Ionicons>
 			<EditButtonText>{label}</EditButtonText>
 		</EditButtonContainer>
 	)	

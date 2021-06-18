@@ -1,3 +1,4 @@
+import { useProps } from '@chakra-ui/react';
 import React from 'react';
 import styled from 'styled-components';
 import { RegularText, MediumText } from '../_atoms/Text';
@@ -28,7 +29,7 @@ export const InputFeedbackText = styled(RegularText)`
 
 export const TextInput = (props) => {
 	return (
-		<TextInputContainer>
+		<TextInputContainer style={props.containerStyle} stacked= {props.stacked} >
 			{props.label && <InputLabelText>{props.label}</InputLabelText>}
 			<TextInputBox
 			value={props.value}
@@ -37,7 +38,7 @@ export const TextInput = (props) => {
 			keyboardType={props.keyboardType}
 			width={props.width ? props.width : 320}
 			height={props.height ? props.height : 40}
-			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'center' }}
+			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'left' }}
 			/>
 			{props.feedbackMessage && <InputFeedbackText>{props.feedbackMessage}</InputFeedbackText>}
 		</TextInputContainer>
