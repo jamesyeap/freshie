@@ -6,7 +6,6 @@ import { ExtraSmallButton, TextButton } from '../_atoms/Button';
 import { RegularText } from '../_atoms/Text';
 import { Divider, IconButton } from 'react-native-paper';
 import { Info } from './Info';
-import { Avatar } from 'react-native-elements';
 
 const ClientItemContainer = styled.TouchableOpacity`
 	flexDirection: row;

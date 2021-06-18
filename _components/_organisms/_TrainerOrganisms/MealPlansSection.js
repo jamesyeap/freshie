@@ -1,8 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components';
-import { MealPlan } from '../_molecules/MealPlan';
-import { FoodItem } from '../_molecules/FoodItem';
+import { ClientMealPlan } from '../../_molecules/ClientMealPlan'
 
 // mock example
 const data = [
@@ -21,26 +20,16 @@ const data = [
 
 ]
 
-export const TrainerMealsSection = (props) => {
-	const [open, setOpen] = useState(null);
+export const MealPlansSection = (props) => {
 	const styles = props.style ? props.style : { backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }
-
-	const setVisible = (id) => {
-		if (id === open) {
-			setOpen(null);
-		} else {
-			setOpen(id);
-		}
-	} 
 
 	return (
 		<FlatList
 		 data={data}
-		 renderItem={({item}) => <MealPlan id={item.id} open={open} setVisible={setVisible} />}
+		 renderItem={({item}) => <ClientMealPlan id={item.id} />}
 		 style={styles}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}
 		/>
 	)
 }
-

@@ -37,7 +37,7 @@ export const TextInput = (props) => {
 			keyboardType={props.keyboardType}
 			width={props.width ? props.width : 320}
 			height={props.height ? props.height : 40}
-			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'center' }}
+			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, padding: 8, textAlign: 'left' }}
 			/>
 			{props.feedbackMessage && <InputFeedbackText>{props.feedbackMessage}</InputFeedbackText>}
 		</TextInputContainer>

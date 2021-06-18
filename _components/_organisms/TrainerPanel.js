@@ -35,9 +35,9 @@ export const TrainerPanel = (props) => {
 			/>
 
 			<ButtonGroup>
-				<IconButton iconName="call" buttonLabel="Call" buttonStyle={{ width: 90, margin: 9 }}/>
-				<IconButton iconName="chatbox-ellipses" buttonLabel="Chat" buttonStyle={{ width: 90, margin: 9 }} />
-				<IconButton iconName="md-mail" buttonLabel="Email" buttonStyle={{ width: 90, margin: 9 }} />
+				<IconButton iconName="call" buttonLabel="Call" buttonStyle={{ width: 90, margin: 5 }}/>
+				<IconButton iconName="chatbox-ellipses" buttonLabel="Chat" buttonStyle={{ width: 90, margin: 5 }} />
+				<IconButton iconName="md-mail" buttonLabel="Email" buttonStyle={{ width: 90, margin: 5 }} />
 			</ButtonGroup>
 		</MediumComponentContainer>
 	)

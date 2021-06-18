@@ -9,3 +9,5 @@ export {default as EatingHistoryPage} from '../pages/EatingHistoryPage/EatingHis
 export {default as SignupPage} from '../pages/SignupPage/SignupPage';
 export {default as RegisterPage} from '../pages/RegisterPage/RegisterPage';
 export {default as RecipeEditPage} from '../pages/RecipeEditPage/RecipeEditPage';
+export {default as ClientPage} from '../pages/_TrainerPages/ClientPage/ClientPage';
+export {default as EditMealPlanPage} from '../pages/_TrainerPages/EditMealPlanPage/EditMealPlanPage';
