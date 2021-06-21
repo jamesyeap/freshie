@@ -1,26 +1,64 @@
-export const URL = "http://freshie-api.herokuapp.com/"
+export const URL = "http://freshie-api.herokuapp.com"
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
-import { getToken, saveToken, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
-import { stripPrefix } from 'xml2js/lib/processors';
+import { getToken, saveUser, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
 
-// Log user in
-export async function loginAsync() {
+// LOG IN
+export async function loginAsync(values) {
     try {
+        console.log(values);
         store.dispatch(loading(true));
+
         const response = await axios({
             method: 'post',
             url: `${URL}/login/`,
             data: values
-        })
-        store.dispatch(saveToken(response.key));
+        });
+
+        console.log(response.data)
+        store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
-        console.log(e)
-        alert(e);
         store.dispatch(loading(false));
+        console.log(e)
+        alert(e.response.status);
     }
 }
+
+// SIGN UP
+export async function signupAsync(values) {
+    try {
+        console.log(values);
+        store.dispatch(loading(true));
+
+        const response = await axios({
+            method: 'post',
+            url: `${URL}/register/`,
+            data: values
+        });
+
+        console.log(response.data);
+        store.dispatch(saveUser(response.data));
+        store.dispatch(loading(false));
+    } catch (e) {
+        store.dispatch(loading(false));
+        console.log(e)
+        alert(e.response.status);
+    }
+}
+
+/* LOG OUT (in progress)
+export async function logoutAsync(values) {
+    try {
+        store.dispatch(loading(true));
+
+    } catch (e) {
+
+    }
+}
+*/
+
+
 
 /* EXAMPLE FROM 
 	https://blog.logrocket.com/patterns-for-data-fetching-in-react-981ced7e5c56/

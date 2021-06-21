@@ -7,7 +7,6 @@ import { TextInput } from '../../_molecules/TextInput';
 import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { store } from '../../../_redux/store/store';
 import { loginAsync } from '../../../_utilities/_api/Auth';
 
 const OptionsContainer = styled.View`
@@ -19,8 +18,7 @@ const OptionsContainer = styled.View`
 `;
 
 const LoginSchema = Yup.object().shape({
-	email : Yup.string()
-		   .email('nice what kind of email is this')
+	username: Yup.string()
 		   .required('hello sir your email is required hor.'),
 	password: Yup.string()
 		     .required('nice one no password then how to secure sia')
@@ -29,17 +27,16 @@ const LoginSchema = Yup.object().shape({
 
 export default function LoginPage(props) {
 
-	const handleLogin = (data) => {
-		console.log(store.getState().token);
-		loginAsync(data)
-		console.log(store.getState().token);
+	const handleLogin = (values) => {
+		console.log(values);
+		loginAsync(values);
 	}
 
 	return (
 		<Formik
-		 initialValues={{ email: '', password: '' }}
+		 initialValues={{ username: '', password: '' }}
 		 validationSchema={LoginSchema}
-		 onSubmit={values => alert(values)}
+		 onSubmit={values => handleLogin(values)}
 		>
 		{({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
 		<Container>
@@ -50,13 +47,14 @@ export default function LoginPage(props) {
 			/>
 
 			<TextInput
-			label="Email Address"
-			placeholder="jack@email.com"
-			onChangeText={handleChange('email')}
-			onBlur={handleBlur('email')}
-			value={values.email}
-			feedbackMessage={errors.email}
-			touched={touched.email}
+			label="Username"
+			placeholder="ahBengWithBang"
+			onChangeText={handleChange('username')}
+			onBlur={handleBlur('username')}
+			value={values.username}
+			feedbackMessage={errors.username}
+			touched={touched.username}
+			autoCapitalize="none"
 			/>
 
 			<TextInput
@@ -66,6 +64,7 @@ export default function LoginPage(props) {
 			value={values.password}
 			feedbackMessage={errors.password}
 			touched={touched.password}
+			autoCapitalize="none"
 			secureTextEntry
 			/>
 
@@ -75,7 +74,7 @@ export default function LoginPage(props) {
 			</OptionsContainer>
 
 			{/* <BigButton label="Sign In" state="active" onPress={() => props.navigation.push("Client")}/> */}
-			<BigButton label="Sign In" state="active" onPress={handleLogin}/>
+			<BigButton label="Sign In" state="active" onPress={handleSubmit}/>
 
 			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")}/>
 		</Container>

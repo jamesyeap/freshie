@@ -7,9 +7,9 @@ export const getToken = () => ({
     token,
 });
 
-export const saveToken = token => ({
-    type: 'SAVE_TOKEN',
-    token
+export const saveUser = response => ({
+    type: 'SAVE_USER',
+    payload: response
 });
 
 export const removeToken = () => ({

@@ -15,6 +15,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { column } from 'stylis';
 import * as ImagePicker from 'expo-image-picker';
+import { signupAsync } from '../../../_utilities/_api/Auth';
 
 
 const stepTypes = _.map(Wizard.States, state => {
@@ -29,12 +30,12 @@ export default class RegisterPage extends Component {
       activeIndex: 0,
       completedStepIndex: undefined,
       allTypesIndex: 0,
-      userName: undefined,
+      username: undefined,
       firstName: undefined,
       lastName: undefined,
-      emailAddress: undefined,
-      password: undefined,
-      passwordConfirmed: undefined,
+      email: undefined,
+      password1: undefined,
+      password2: undefined,
       hasPersonalTrainer: undefined,
       personalTrainerCert: undefined,
       personalTrainerRef: undefined,
@@ -109,7 +110,10 @@ export default class RegisterPage extends Component {
     }
   };
 
-  createAccount = () => this.props.navigation.push("Trainer")
+  createAccount = () => {
+    this.props.navigation.push("Trainer")
+    signupAsync(this.state);
+  }
 
   renderNextButton = disabled => {
     const {activeIndex} = this.state;
@@ -127,12 +131,12 @@ export default class RegisterPage extends Component {
   };
 
   renderCustomerDetails = () => {
-    const {userName} = this.state
+    const {username} = this.state
     const {firstName} = this.state
     const {lastName} = this.state
-    const {emailAddress} = this.state
-    const {password} = this.state
-    const {passwordConfirmed} = this.state
+    const {email} = this.state
+    const {password1} = this.state
+    const {password2} = this.state
     
     return (
       <Container>
@@ -140,12 +144,12 @@ export default class RegisterPage extends Component {
               <HeaderMediumText>Registration</HeaderMediumText>
           </View>
           <ScrollView contentContainerStyle={styles.scrollView, {height: 700}}>
-            <TextInput stacked= {0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={userName} />
-            <TextInput stacked= {0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
-            <TextInput stacked= {0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
-            <TextInput stacked= {0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={emailAddress}/>
-            <TextInput stacked= {0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPasswordEntered} value={password}/>
-            <TextInput stacked= {0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPasswordConfirm} value={passwordConfirmed}/>
+            <TextInput stacked={0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={username} />
+            <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
+            <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
+            <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={email}/>
+            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPassword1} value={password1}/>
+            <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2}/>
           </ScrollView>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           {this.renderNextButton()}
@@ -154,8 +158,8 @@ export default class RegisterPage extends Component {
     );
   };
 
-  onUserNameEntered = userName => {
-    this.setState({userName});
+  onUserNameEntered = username => {
+    this.setState({username});
   };
 
   onFirstNameEntered = firstName => {
@@ -166,16 +170,16 @@ export default class RegisterPage extends Component {
     this.setState({lastName});
   };
 
-  onEmailEntered = emailAddress => {
-    this.setState({emailAddress});
+  onEmailEntered = email => {
+    this.setState({email});
   };
   
-  onPasswordEntered = password => {
-    this.setState({password})
+  onPassword1 = password1 => {
+    this.setState({password1})
   }
 
-  onPasswordConfirm = passwordConfirmed => {
-    this.setState({passwordConfirmed}) 
+  onPassword2 = password2 => {
+    this.setState({password2}) 
   }
 
   onImageUpload = personalTrainerCert => {
