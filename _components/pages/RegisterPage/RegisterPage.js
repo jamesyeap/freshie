@@ -11,6 +11,7 @@ import { Header } from '../../_molecules/Header';
 import { InputLabelText, TextInput } from '../../_molecules/TextInput';
 import { startDetecting } from 'react-native/Libraries/Utilities/PixelRatio';
 import { border } from '@chakra-ui/react';
+import { StatusBar } from 'expo-status-bar';
 
 const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
@@ -52,18 +53,6 @@ export default class RegisterPage extends Component {
     }, 2000);
   };
 
-  reset = () => {
-    const {customerName, selectedFlavor} = this.state;
-
-    this.setState({
-      activeIndex: 0,
-      completedStepIndex: undefined,
-      selectedFlavor: initialFlavor,
-      customerName: undefined,
-      toastMessage: `${customerName}, you bought some ${selectedFlavor.toLowerCase()}`
-    },
-    this.closeToast);
-  };
 
   goToPrevStep = () => {
     const {activeIndex: prevActiveIndex} = this.state;
@@ -100,9 +89,9 @@ export default class RegisterPage extends Component {
     */
 
     const {activeIndex: prevActiveIndex, completedStepIndex: prevCompletedStepIndex} = this.state;
-    const reset = prevActiveIndex === 2;
-    if (reset) {
-      this.reset();
+    const createAccount = prevActiveIndex === 2;
+    if (createAccount) {
+      this.createAccount;
       return;
     }
 
@@ -117,15 +106,17 @@ export default class RegisterPage extends Component {
     }
   };
 
+  createAccount = () => this.props.navigation.push("Client")
+
   renderNextButton = disabled => {
     const {activeIndex} = this.state;
-    const label = activeIndex === 2 ? 'done & reset' : 'Next';
+    const label = activeIndex === 2 ? 'Create Account' : 'Next';
     return (
         <View>  
             <BigButton
             testID={'uilib.nextAndResetButton'}
             label={label}
-            onPress={this.goToNextStep}
+            onPress={activeIndex === 2 ? this.createAccount : this.goToNextStep}
             disabled={disabled}
             />
         </View>  
@@ -270,8 +261,8 @@ export default class RegisterPage extends Component {
     const {activeIndex, allTypesIndex, toastMessage} = this.state;
 
     return (
-        <View useSafeArea flex>
-            
+        <View useSafeArea flex backgroundColor="white">
+            <StatusBar style="dark"></StatusBar>
             <View style={styles.container}>
                 <Wizard testID={'uilib.wizard'} activeIndex={activeIndex} onActiveIndexChanged={this.onActiveIndexChanged}>
                 <Wizard.Step state={this.getStepState(0)} label={'Account details'}/>

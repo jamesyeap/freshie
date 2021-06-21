@@ -30,7 +30,7 @@ export default function App() {
     // <HomePage />
     // <PrototypePage />
     // <AccountPage />
-     // <MealsPage />
+    // <MealsPage />
     // <DashboardPage />
     // <EatingHistoryPage />
     // <RecipeEditPage/>
