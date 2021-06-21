@@ -24,7 +24,6 @@ export const NavigationHeader = (props) => {
 			iconName="arrow-back"
 			iconSize={25}
 			iconColor="black"
-			buttonColor="white"
 			buttonStyle={{ marginLeft: 30 }}
 			onPress={() => props.goBack()}
 			/>

@@ -230,7 +230,7 @@ const IconButtonContainer = styled.TouchableOpacity`
 	justifyContent: center;
 	alignItems: center;
 	padding: 6px;
-	backgroundColor: ${props => props.color ? props.color : "#319795"}
+	backgroundColor: ${props => props.color ? props.color : "transparent"}
 	borderRadius: 6px;
 `;
 

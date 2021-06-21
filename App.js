@@ -19,7 +19,10 @@ export default function App() {
   }
 
   return (
-      <MealsPage /> 
+    <NavigationContainer>
+      {/* <RegisterPage /> */}
+      <RootStackScreen />
+    </NavigationContainer>
   )
 }
 
@@ -27,7 +30,7 @@ export default function App() {
     // <HomePage />
     // <PrototypePage />
     // <AccountPage />
-     <MealsPage />
+     // <MealsPage />
     // <DashboardPage />
     // <EatingHistoryPage />
     // <RecipeEditPage/>
