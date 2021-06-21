@@ -36,7 +36,7 @@ export default class RegisterPage extends Component {
       email: undefined,
       password1: undefined,
       password2: undefined,
-      hasPersonalTrainer: undefined,
+      hasPersonalTrainer: true,
       personalTrainerCert: undefined,
       personalTrainerRef: undefined,
       toastMessage: undefined
@@ -144,12 +144,12 @@ export default class RegisterPage extends Component {
               <HeaderMediumText>Registration</HeaderMediumText>
           </View>
           <ScrollView contentContainerStyle={styles.scrollView, {height: 700}}>
-            <TextInput stacked={0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={username} />
-            <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
-            <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
-            <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={email}/>
-            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPassword1} value={password1}/>
-            <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2}/>
+            <TextInput stacked={0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={username} autoCapitalize="none"/>
+            <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName} autoCapitalize="none"/>
+            <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName} autoCapitalize="none"/>
+            <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={email} autoCapitalize="none"/>
+            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPassword1} value={password1} secureTextEntry autoCapitalize="none"/>
+            <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2} secureTextEntry autoCapitalize="none"/>
           </ScrollView>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           {this.renderNextButton()}
@@ -266,9 +266,9 @@ export default class RegisterPage extends Component {
     }
   };
 
-  onHasPersonalTrainer = (hasPersonalTrainer) => {
-    console.log(this.state.hasPersonalTrainer)
-    this.setState({hasPersonalTrainer: true})
+  onHasPersonalTrainer = (bool) => {
+    console.log(bool)
+    this.setState({hasPersonalTrainer: bool})
     console.log(this.state.hasPersonalTrainer)
   }
 
