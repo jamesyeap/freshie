@@ -6,6 +6,7 @@ const initialState = {
 	email: null,
 	loading: false,
 	error: null,
+	username: null,
 };
 
 export const authReducer = (state = initialState, action) => {
