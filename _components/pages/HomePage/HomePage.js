@@ -23,7 +23,7 @@ const WelcomeText = styled(HeaderMediumText)`
 export default function HomePage(props) {
 	return (
 		<Container>
-			<NavigationHeader icon="account" />
+			<NavigationHeader icon="account" goBack= {() => props.navigation.goBack()}/>
 			<View style={{flexDirection: 'column', alignContent: 'flex-start'}}>
 			<View style={{flex: 0.7, flexDirection: 'column', alignItems: 'center'}}>
 				<WelcomeText style= {{ borderWidth: 0, marginTop: -5}}>{`Welcome home, \nAh Beng`}</WelcomeText>
@@ -35,6 +35,7 @@ export default function HomePage(props) {
 				mainText="Eating History"
 				subText="See what you've been eating"
 				margin="21px"
+				onPress= {() => props.navigation.push("EatingHistory")}
 				/>
 			</View>
 			<View style={{flex: 0.3,marginTop: 100}}>
