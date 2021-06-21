@@ -25,7 +25,7 @@ const HeaderContainer = styled.TouchableOpacity`
 export default function EatingHistoryPage(props) {
 	return (
 		<Container>
-			<NavigationHeader  goTo={() => props.navigation.goBack()} />
+			<NavigationHeader goTo={() => props.navigation.goBack()} />
 			<HeaderContainer>
 				<Ionicons
 				name="md-calendar"
@@ -39,8 +39,7 @@ export default function EatingHistoryPage(props) {
 				subheaderText="17 January 2021"
 				/>
 			</HeaderContainer>
-
-			<EatenMealsSection />
+			<EatenMealsSection navigation={props.navigation} />
 		</Container>
 	)
 }

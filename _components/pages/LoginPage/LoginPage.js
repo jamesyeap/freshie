@@ -5,6 +5,10 @@ import { BrandHeaderText } from '../../_atoms/Text';
 import { Header } from '../../_molecules/Header';
 import { TextInput } from '../../_molecules/TextInput';
 import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
+import { Formik } from 'formik';
+import * as Yup from 'yup';
+import { store } from '../../../_redux/store/store';
+import { loginAsync } from '../../../_utilities/_api/Auth';
 
 const OptionsContainer = styled.View`
 	flexDirection: row;
@@ -14,8 +18,30 @@ const OptionsContainer = styled.View`
 	margin: 12px;
 `;
 
+const LoginSchema = Yup.object().shape({
+	email : Yup.string()
+		   .email('nice what kind of email is this')
+		   .required('hello sir your email is required hor.'),
+	password: Yup.string()
+		     .required('nice one no password then how to secure sia')
+
+})
+
 export default function LoginPage(props) {
+
+	const handleLogin = (data) => {
+		console.log(store.getState().token);
+		loginAsync(data)
+		console.log(store.getState().token);
+	}
+
 	return (
+		<Formik
+		 initialValues={{ email: '', password: '' }}
+		 validationSchema={LoginSchema}
+		 onSubmit={values => alert(values)}
+		>
+		{({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
 		<Container>
 			<BrandHeaderText>freshie</BrandHeaderText>
 			<Header
@@ -25,15 +51,22 @@ export default function LoginPage(props) {
 
 			<TextInput
 			label="Email Address"
-			feedbackMessage="Must be a valid email"
 			placeholder="jack@email.com"
-			value={"test"}
+			onChangeText={handleChange('email')}
+			onBlur={handleBlur('email')}
+			value={values.email}
+			feedbackMessage={errors.email}
+			touched={touched.email}
 			/>
 
 			<TextInput
 			label="Password"
-			feedbackMessage="Password is required"
-			value={"test"}
+			onChangeText={handleChange('password')}
+			onBlur={handleBlur('password')}
+			value={values.password}
+			feedbackMessage={errors.password}
+			touched={touched.password}
+			secureTextEntry
 			/>
 
 			<OptionsContainer>
@@ -41,9 +74,12 @@ export default function LoginPage(props) {
 				<TextButton label="Forgot Password?" />
 			</OptionsContainer>
 
-			<BigButton label="Sign In" state="active" onPress={() => props.navigation.push("Client")}/>
+			{/* <BigButton label="Sign In" state="active" onPress={() => props.navigation.push("Client")}/> */}
+			<BigButton label="Sign In" state="active" onPress={handleLogin}/>
 
 			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")}/>
 		</Container>
+		)}
+		</Formik>
 	)
 }

@@ -10,7 +10,7 @@ export const FavoriteMealsSection = (props) => {
 	return (
 		<FlatList
 		 data={data}
-		 renderItem={FoodItem}
+		 renderItem={() => <FoodItem navigation={props.navigation}/>}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>

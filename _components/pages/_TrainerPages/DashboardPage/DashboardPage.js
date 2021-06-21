@@ -9,12 +9,6 @@ import { MealPlansDashboardSection } from '../../../_organisms/_TrainerOrganisms
 import { MealsDashboardSection } from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection';
 import { ReferralCode } from '../../../_molecules/ReferralCode';
 
-const renderScene = SceneMap({
-	first: ClientsDashboardSection,
-	second: MealPlansDashboardSection,
-	third: MealsDashboardSection
-})
-
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
 	TabView component to not render at all.
@@ -72,7 +66,7 @@ const TabBar = (props) => {
 }
       
 
-export default function DashboardPage(prop) {
+export default function DashboardPage(props) {
 	const [index, setIndex] = useState(0);
 	const [routes] = useState([
 		{ key: 'first', title: 'First' },
@@ -80,9 +74,19 @@ export default function DashboardPage(prop) {
 		{ key: 'third', title: 'Third' }
 	      ]);
 
+	const firstRoute = () => <ClientsDashboardSection navigation={props.navigation} />;
+	const secondRoute = () => <MealPlansDashboardSection navigation={props.navigation} />;
+	const thirdRoute = () => <MealsDashboardSection navigation={props.navigation} />;
+
+	const renderScene = SceneMap({
+		first: firstRoute,
+		second: secondRoute,
+		third: thirdRoute
+	})
+
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}

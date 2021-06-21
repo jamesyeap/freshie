@@ -7,8 +7,8 @@ import { Header as ParentHeader } from '../../_molecules/Header'
 import { BigButton, TextButton } from '../../_atoms/Button'
 
 const HeaderContainer = styled.View`
-    marginLeft: 21;
-    marginRight: 21;
+    marginLeft: 21px;
+    marginRight: 21px;
 `;
 const Header = styled(ParentHeader)`
     textAlign: center;

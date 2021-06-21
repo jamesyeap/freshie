@@ -35,7 +35,7 @@ export default function HomePage(props) {
 				mainText="Eating History"
 				subText="See what you've been eating"
 				margin="21px"
-				onPress= {() => props.navigation.push("EatingHistory")}
+				onPress={() => props.navigation.push("EatingHistory")}
 				/>
 			</View>
 			<View style={{flex: 0.3,marginTop: 100}}>

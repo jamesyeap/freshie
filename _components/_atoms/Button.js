@@ -149,9 +149,9 @@ export const TextButtonText = styled(SemiBoldText)`
 	color: #000000;
 `;
 
-export const TextButton = ({label, state, onPress, size,...props}) => {
-	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} {...props}>
-			<TextButtonText size={size} >{label}</TextButtonText>
+export const TextButton = ({label, state, onPress, size, buttonStyle, textStyle, ...props}) => {
+	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} style={buttonStyle}>
+			<TextButtonText size={size} style={textStyle}>{label}</TextButtonText>
 		</TextButtonContainer>);
 }
 

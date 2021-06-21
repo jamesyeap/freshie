@@ -37,6 +37,30 @@ const ButtonsContainer = styled.View`
 `;
 
 export const FoodItem = (props) => {
+	/* 
+		There are 3 variations of this button.
+
+		- client-trainer
+		- client-custom
+		- client-favorites
+
+		
+	*/ 
+
+	const options = () => {
+		<ButtonsContainer>
+			<ExtraSmallButton 
+			label="Consume"
+			onPress={() => props.navigation.navigate("Home")}
+			/>
+			<TextButton 
+			label="Edit"
+			size="xs"
+			onPress={() => props.navigation.push("EditRecipe")}
+			/>	
+		</ButtonsContainer>
+	}
+
 	return (
 		<FoodItemContainer margin={props.margin} >
 			<Image 
@@ -57,10 +81,12 @@ export const FoodItem = (props) => {
 			<ButtonsContainer>
 				<ExtraSmallButton 
 				label="Consume"
+				onPress={() => props.navigation.navigate("Home")}
 				/>
 				<TextButton 
 				label="Edit"
 				size="xs"
+				onPress={() => props.navigation.push("EditRecipe")}
 				/>
 			</ButtonsContainer>
 		</FoodItemContainer>

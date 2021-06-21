@@ -26,7 +26,7 @@ export const MealPlansSection = (props) => {
 	return (
 		<FlatList
 		 data={data}
-		 renderItem={({item}) => <ClientMealPlan id={item.id} />}
+		 renderItem={({item}) => <ClientMealPlan id={item.id} goTo={() => props.navigation.push("EditMealPlan")} />}
 		 style={styles}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}

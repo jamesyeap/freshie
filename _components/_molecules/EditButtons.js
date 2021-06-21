@@ -3,12 +3,12 @@ import { View } from 'react-native'
 import { IconButton } from '../_atoms/Button'
 import { StyleSheet } from 'react-native'
 
-export const EditButtonGroup = () => {
+export const EditButtonGroup = (props) => {
     return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash"></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy"></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save"></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
         </View>
     )
 }

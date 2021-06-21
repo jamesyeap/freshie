@@ -8,11 +8,7 @@ import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
 import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
 import { FavoriteMealsSection } from '../../_organisms/FavoriteMealsSection';
 
-const renderScene = SceneMap({
-	first: TrainerMealsSection,
-	second: CustomMealsSection,
-	third: FavoriteMealsSection
-})
+
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -77,10 +73,20 @@ export default function MealsPage(props) {
 		{ key: 'second', title: 'Second' },
 		{ key: 'third', title: 'Third' }
 	      ]);
+	
+	const secondRoute = () => <CustomMealsSection navigation={props.navigation} />;
+	const firstRoute = () => <TrainerMealsSection navigation={props.navigation} />;
+	const thirdRoute = () => <FavoriteMealsSection navigation={props.navigation} />;
+
+	const renderScene = SceneMap({
+		first: firstRoute,
+		second: secondRoute,
+		third: thirdRoute
+	})
 
 	return (
 		<Container>
-			<NavigationHeader goBack = {() => props.navigation.goBack()}/>
+			<NavigationHeader goTo={() => props.navigation.goBack()}/>
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}

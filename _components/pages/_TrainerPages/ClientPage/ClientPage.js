@@ -125,7 +125,7 @@ export default function ClientPage(props) {
 
 			<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
 			<Collapsible collapsed={!showMealPlans}>
-				<MealPlansSection style={mealPlanContainerStyle} horizontal={true} />
+				<MealPlansSection style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />
 			</Collapsible>
 
 
