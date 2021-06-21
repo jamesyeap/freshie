@@ -37,7 +37,7 @@ const ClientNameText = styled(SemiBoldText)`
 
 export const ClientItem = (props) => {
 	return (
-		<ClientItemContainer margin={props.margin} >
+		<ClientItemContainer margin={props.margin} onPress={props.onPress} >
 			<Image 
 			source={require('../../assets/user.png')}
 			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33}}

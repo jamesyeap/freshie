@@ -36,7 +36,7 @@ export const TrainerMealsSection = (props) => {
 	return (
 		<FlatList
 		 data={data}
-		 renderItem={({item}) => <MealPlan id={item.id} open={open} setVisible={setVisible} />}
+		 renderItem={({item}) => <MealPlan id={item.id} open={open} setVisible={setVisible} navigation={props.navigation} />}
 		 style={styles}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}

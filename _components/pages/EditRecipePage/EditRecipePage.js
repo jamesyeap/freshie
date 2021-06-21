@@ -11,7 +11,7 @@ import { MultiLineTextInput } from '../../_molecules/MultiLineTextInput'
 import { EditButtonGroup } from '../../_molecules/EditButtons'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
 
-export default EditRecipePage = () => {
+export default EditRecipePage = (props) => {
     const [title, setTitle] = useState("")
     const [calories, setCalories] = useState("")
     const [ingredients, setIngredients] = useState("")
@@ -19,7 +19,7 @@ export default EditRecipePage = () => {
     
     return (
         <Container>
-            <NavigationHeader/>
+            <NavigationHeader goTo={() => props.navigation.goBack()} />
             <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', justifyContent: 'space-between'}}>
                 <View marginT-40 style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
@@ -32,7 +32,7 @@ export default EditRecipePage = () => {
                 </View>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                <EditButtonGroup/>  
+                <EditButtonGroup navigation={props.navigation} />  
             </View>
         </Container>
     )

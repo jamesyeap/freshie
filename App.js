@@ -20,7 +20,6 @@ export default function App() {
 
   return (
     <NavigationContainer>
-      {/* <RegisterPage /> */}
       <RootStackScreen />
     </NavigationContainer>
   )

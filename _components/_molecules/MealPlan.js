@@ -63,7 +63,7 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
-export const MealPlan = ({ id, open, setVisible }) => {
+export const MealPlan = ({ id, open, setVisible, ...props }) => {
 	return (
 		<Wrapper>
 			<MediumComponentContainer isOpen={open === id}>
@@ -91,9 +91,9 @@ export const MealPlan = ({ id, open, setVisible }) => {
 
 			<Collapsible collapsed={open !== id}>
 				<FoodItemListContainer>
-					<FoodItem margin={0}/>
-					<FoodItem margin={0}/>
-					<FoodItem margin={0}/>
+					<FoodItem margin={0} navigation={props.navigation} />
+					<FoodItem margin={0} navigation={props.navigation}  />
+					<FoodItem margin={0} navigation={props.navigation} />
 				</FoodItemListContainer>
 			</Collapsible>
 		</Wrapper>

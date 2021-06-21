@@ -106,7 +106,7 @@ export default class RegisterPage extends Component {
     }
   };
 
-  createAccount = () => this.props.navigation.push("Client")
+  createAccount = () => this.props.navigation.push("Trainer")
 
   renderNextButton = disabled => {
     const {activeIndex} = this.state;

@@ -9,7 +9,6 @@ import { Ionicons } from '@expo/vector-icons';
 const MediumComponentContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	borderWidth: 1px;
-	backgroundColor: ${props => props.isOpen ? "#C2F1FB" : "#FFFFFF"};
 	borderColor: #E6F2FC;
 	padding: 13px 18px;
 	alignItems: center;
@@ -57,10 +56,10 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
-export const ClientMealPlan = ({ id, open, setVisible }) => {
+export const ClientMealPlan = ({ id, goTo, ...props }) => {
 	return (
 		<Wrapper>
-			<MediumComponentContainer isOpen={open === id}>
+			<MediumComponentContainer onPress={goTo}>
 				<MealTextContainer>
 					<MealPlanNameText>Meal Plan 1</MealPlanNameText>
 					<PreviewTextContainer>
