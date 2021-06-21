@@ -25,7 +25,7 @@ const HeaderContainer = styled.TouchableOpacity`
 export default function EatingHistoryPage(props) {
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<HeaderContainer>
 				<Ionicons
 				name="md-calendar"

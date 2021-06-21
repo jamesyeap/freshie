@@ -21,11 +21,11 @@ export const NavigationHeader = (props) => {
 	return (
 		<NavigationHeaderContainer>
 			<IconButton
-			iconName="arrow-back"
+			iconName={props.iconName ? props.iconName : "arrow-back"}
 			iconSize={25}
 			iconColor="black"
 			buttonStyle={{ marginLeft: 30 }}
-			onPress={() => props.goBack()}
+			onPress={() => props.goTo()}
 			/>
 			<BrandHeaderText>freshie</BrandHeaderText>
 		</NavigationHeaderContainer>

@@ -67,7 +67,7 @@ const InfoEight = {
 export default function AccountPage(props) {
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader goTo={() => props.navigation.goBack()} />
 			<NameText>Tan Ah Beng</NameText>
 			<InfoPanel 
 			 infoOne={InfoOne}

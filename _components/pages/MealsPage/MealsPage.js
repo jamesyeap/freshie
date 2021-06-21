@@ -70,7 +70,7 @@ const TabBar = (props) => {
 }
       
 
-export default function MealsPage(prop) {
+export default function MealsPage(props) {
 	const [index, setIndex] = useState(0);
 	const [routes] = useState([
 		{ key: 'first', title: 'First' },
@@ -80,7 +80,7 @@ export default function MealsPage(prop) {
 
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader goTo={() => props.navigation.goBack()} />
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}

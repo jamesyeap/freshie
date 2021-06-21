@@ -9,7 +9,7 @@ import { EditMealPlanSection } from '../../../_organisms/_TrainerOrganisms/EditM
 export default function EditMealPlanPage(props) {
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<Header
 			containerStyle={{ alignItems: "flex-start", width: 310, marginTop: 20, marginBottom: 20 }}
 			headerText="Meal Plan 1"

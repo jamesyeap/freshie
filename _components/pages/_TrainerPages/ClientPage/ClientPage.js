@@ -93,7 +93,7 @@ export default function ClientPage(props) {
 	const mealPlanContainerStyle = {backgroundColor: "#FFFFFF", width: 355, height: 150, borderRadius: 10};
 	return (
 		<Container>
-			<NavigationHeader />
+			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<AccountPanel
 			/>
 			<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
