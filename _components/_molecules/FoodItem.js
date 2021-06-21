@@ -24,8 +24,8 @@ const FoodItemInfoContainer = styled.View`
 `;
 
 const FoodItemNameText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 `;
 
 const ButtonsContainer = styled.View`

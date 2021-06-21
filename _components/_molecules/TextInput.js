@@ -7,22 +7,22 @@ const TextInputContainer = styled.View`
 	flexDirection: column;
 	justifyContent: center;
 	margin: 18px;
-	marginTop: ${props => props.stacked ? props.stacked : 18}
+	marginTop: ${props => props.stacked ? props.stacked : "18px"}
 `;
 
 const TextInputBox = styled.TextInput`
 `;
 
 export const InputLabelText = styled(MediumText)`
-	fontSize: 16;
-	lineHeight: 24;
+	fontSize: 16px;
+	lineHeight: 24px;
 	color: #2D3748;
 	marginBottom: 8px;
 `;
 
 export const InputFeedbackText = styled(RegularText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #E53E3E;
 	marginTop: 8px;
 `;

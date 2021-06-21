@@ -26,13 +26,13 @@ const ClientInfoContainer = styled.View`
 `;
 
 const CaloriesText = styled(RegularText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 `;
 
 const ClientNameText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 `;
 
 export const ClientItem = (props) => {

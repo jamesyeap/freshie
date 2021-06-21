@@ -13,22 +13,22 @@ const ValuesContainer = styled.View`
 `;
 
 export const InfoLabelText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: ${props => props.labelColor ? props.labelColor : "#9E8D8D"};
 	flexWrap: wrap;
 `;
 
 export const InfoValueText = styled(SemiBoldText)`
-	fontSize: 16;
-	lineHeight: 24;
+	fontSize: 16px;
+	lineHeight: 24px;
 	color: ${props => props.valueColor ? props.valueColor : "#000000"};
 	flexWrap: wrap;
 `;
 
 export const InfoUnitText = styled(RegularText)`
-	fontSize: 12;
-	lineHeight: 16;
+	fontSize: 12px;
+	lineHeight: 16px;
 	color: ${props => props.unitColor ? props.unitColor : "#9E8D8D"};
 	marginLeft: 1.5px;
 	marginTop: 3px;

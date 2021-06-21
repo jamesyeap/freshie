@@ -28,13 +28,13 @@ const PreviewTextContainer = styled.View`
 `;
 
 const MealPlanNameText = styled(SemiBoldText)`
-	fontSize: 24;
-	lineHeight: 32;
+	fontSize: 24px;
+	lineHeight: 32px;
 `;
 
 const PreviewText = styled(RegularText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 `;
 
 const InfoContainer = styled.View`

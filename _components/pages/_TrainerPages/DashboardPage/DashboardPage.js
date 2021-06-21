@@ -48,8 +48,8 @@ const TabButtonContainer = styled.TouchableOpacity`
 `;
 
 const TabButtonText = styled(RegularText)`
-	fontSize: 16;
-	lineHeight: 24;
+	fontSize: 16px;
+	lineHeight: 24px;
 	color: ${props => props.isSelected ? "#2B6CB0" : "#4A5568"};
 `;
 

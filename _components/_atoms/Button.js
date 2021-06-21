@@ -37,8 +37,8 @@ const ExtraSmallButtonContainer = styled.TouchableOpacity`
 `;
 
 export const ExtraSmallButtonText = styled(SemiBoldText)`
-	fontSize: 12;
-	lineHeight: 16;
+	fontSize: 12px;
+	lineHeight: 16px;
 	color: #FFFFFF;
 `;
 
@@ -67,8 +67,8 @@ const SmallButtonContainer = styled.TouchableOpacity`
 `;
 
 export const SmallButtonText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #FFFFFF;
 `;
 
@@ -91,8 +91,8 @@ const MediumButtonContainer = styled.TouchableOpacity`
 `;
 
 export const MediumButtonText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 	color: #FFFFFF;
 `;
 
@@ -124,8 +124,8 @@ const BigButtonContainer = styled.TouchableOpacity`
 
 {/*}	margin: ${props => props.margin ? props.margin : 0};*/}
 export const BigButtonText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 	color: #FFFFFF;
 `;
 
@@ -144,8 +144,8 @@ const TextButtonContainer = styled.TouchableOpacity`
 `;
 
 export const TextButtonText = styled(SemiBoldText)`
-	fontSize: ${props => props.size === "xs" ? 12 : 14};
-	lineHeight: ${props => props.size === "xs" ? 16 : 20};
+	fontSize: ${props => props.size === "xs" ? "12px" : "14px"};
+	lineHeight: ${props => props.size === "xs" ? "16px" : "20px"};
 	color: #000000;
 `;
 
@@ -162,8 +162,8 @@ const CheckboxContainer = styled.View`
 `;
 
 export const CheckboxText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #000000;
 	marginRight: 9px;
 `;
@@ -202,14 +202,14 @@ const SectionButtonTextContainer = styled.View`
 `;
 
 export const SectionButtonMainText = styled(SemiBoldText)`
-	fontSize: 30;
-	lineHeight: 36;
+	fontSize: 30px;
+	lineHeight: 36px;
 	color: #FFFFFF;
 `;
 
 export const SectionButtonSubText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #9277DB;
 `;
 
@@ -235,8 +235,8 @@ const IconButtonContainer = styled.TouchableOpacity`
 `;
 
 const IconButtonText = styled(SemiBoldText)`
-	fontSize: 12;
-	lineHeight: 16;
+	fontSize: 12px;
+	lineHeight: 16px;
 	color: #FFFFFF;
 	marginLeft: 8px; 
 `;
@@ -266,8 +266,8 @@ export const EditButtonContainer = styled(TouchableOpacity)`
 	margin: ${props => props.margin ? props.margin : 0}
 `
 export const EditButtonText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 	color: #FFFFFF;
 `;
 

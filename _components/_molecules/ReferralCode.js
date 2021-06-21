@@ -31,16 +31,16 @@ const TextInputBox = styled.TextInput`
 `;
 
 const LabelText = styled(MediumText)`
-	fontSize: 16;
-	lineHeight: 24;
+	fontSize: 16px;
+	lineHeight: 24px;
 	color: #9E8D8D;
 	marginBottom: 2px;
 	textAlign: left;
 `;
 
 const FeedbackText = styled(RegularText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #000000;
 	marginTop: 2px;
 	marginRight: 12px;
