@@ -8,7 +8,7 @@ import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { store } from '../../../_redux/store/store';
-import { saveToken } from '../../../_redux/actions/Auth.actions';
+import { loginAsync } from '../../../_utilities/_api/Auth';
 
 const OptionsContainer = styled.View`
 	flexDirection: row;
@@ -29,9 +29,9 @@ const LoginSchema = Yup.object().shape({
 
 export default function LoginPage(props) {
 
-	const handleLogin = () => {
+	const handleLogin = (data) => {
 		console.log(store.getState().token);
-		store.dispatch(saveToken("Hello Worldyszzz"));
+		loginAsync(data)
 		console.log(store.getState().token);
 	}
 
@@ -39,7 +39,7 @@ export default function LoginPage(props) {
 		<Formik
 		 initialValues={{ email: '', password: '' }}
 		 validationSchema={LoginSchema}
-		 onSubmit={handleLogin}
+		 onSubmit={values => alert(values)}
 		>
 		{({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
 		<Container>

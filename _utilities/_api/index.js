@@ -1,1 +1,0 @@
-export const URL = "http://freshie-api.herokuapp.com/"

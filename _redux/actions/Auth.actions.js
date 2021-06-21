@@ -2,7 +2,7 @@ import AsyncStorage from '@react-native-async-storage/async-storage';
 import { store } from '../store/store';
 
 // ACTION-CREATORS
-export const getToken = (token) => ({
+export const getToken = () => ({
     type: 'GET_TOKEN',
     token,
 });
