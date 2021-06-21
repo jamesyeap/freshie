@@ -6,6 +6,8 @@ import { HeaderMediumText } from '../../_atoms/Text';
 import { MediumButton } from '../../_atoms/Button';
 import { InfoPanel } from '../../_organisms/InfoPanel';
 import { TrainerPanel } from '../../_organisms/TrainerPanel';
+import { store } from '../../../_redux/store/store';
+import { removeToken } from '../../../_redux/actions/Auth.actions';
 
 const NameText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -93,6 +95,7 @@ export default function AccountPage(props) {
 
 			<MediumButton
 			label="Log Out"
+			onPress={() => store.dispatch(removeToken())}
 			/>
 		</Container>
 	)

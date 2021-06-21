@@ -3,8 +3,10 @@ import { NavigationContainer } from '@react-navigation/native';
 import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPage, EatingHistoryPage, SignupPage, RegisterPage, EditRecipePage, ClientPage, EditMealPlanPage } from './_components/pages/index';
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
+import { Provider } from 'react-redux';
+import { store } from './_redux/store/store'; 
 
-import { RootStackScreen } from './_navigation/RootStackScreen';
+import RootStackScreen from './_navigation/RootStackScreen';
 
 export default function App() {
   // On start-up, app needs to load the fonts files first.
@@ -19,9 +21,11 @@ export default function App() {
   }
 
   return (
-    <NavigationContainer>
-      <RootStackScreen />
-    </NavigationContainer>
+    <Provider store={store}>
+      <NavigationContainer>
+        <RootStackScreen />
+      </NavigationContainer>
+    </Provider>
   )
 }
 
