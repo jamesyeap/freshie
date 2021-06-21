@@ -17,9 +17,9 @@ const Header = styled(ParentHeader)`
 const Icon = () => <Image source= {require('../../../assets/signuppageicon.png')} 
 style={{width: 200, height: 200, marginTop:77}}/>
 
-const YesButton = () => <BigButton label="Yep!" />
+const YesButton = (props) => <BigButton label="Yep!" onPress= {props.onPress} />
 
-const NoButton = () => <BigButton marginTop= "20px" label="Nope!" />
+const NoButton = (props) => <BigButton marginTop= "20px" onPress= {props.onPress} label="Nope!" />
 
 export default function SignupPage(props) {
     return (
@@ -29,8 +29,8 @@ export default function SignupPage(props) {
             <HeaderContainer>
                 <Header headerText="Are you registering as a personal trainer?"></Header>
             </HeaderContainer>
-            <YesButton />
-            <NoButton />
+            <YesButton onPress={ () => props.navigation.push("Register", {isPersonalTrainer: true})}/>
+            <NoButton onPress={ () => props.navigation.push("Register", {isPersonalTrainer: false})}/>
             <TextButton style= {{marginTop: 150}} label="Back to Login"></TextButton>
         </Container>
     )

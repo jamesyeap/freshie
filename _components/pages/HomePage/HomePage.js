@@ -23,11 +23,7 @@ const WelcomeText = styled(HeaderMediumText)`
 export default function HomePage(props) {
 	return (
 		<Container>
-<<<<<<< HEAD
 			<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
-=======
-			<NavigationHeader icon="account" goBack= {() => props.navigation.goBack()}/>
->>>>>>> 3747d283acda92b95303fb5e2c6b08a62d2810c6
 			<View style={{flexDirection: 'column', alignContent: 'flex-start'}}>
 			<View style={{flex: 0.7, flexDirection: 'column', alignItems: 'center'}}>
 				<WelcomeText style= {{ borderWidth: 0, marginTop: -5}}>{`Welcome home, \nAh Beng`}</WelcomeText>
