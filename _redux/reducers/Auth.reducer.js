@@ -2,6 +2,7 @@ const initialState = {
 	token: null,
 	loading: false,
 	error: null,
+	username: null,
 };
 
 export const authReducer = (state = initialState, action) => {
@@ -9,7 +10,7 @@ export const authReducer = (state = initialState, action) => {
 		case 'GET_TOKEN':
 			return { ...state, token: action.token };
 		case 'SAVE_TOKEN':
-			return { ...state, token: action.token };
+			return { ...state, token: action.payload.token };
 		case 'REMOVE_TOKEN':
 			return { ...state, token: null };
 		case 'LOADING':
