@@ -80,7 +80,7 @@ export default function MealsPage(props) {
 
 	return (
 		<Container>
-			<NavigationHeader goTo={() => props.navigation.goBack()} />
+			<NavigationHeader goBack = {() => props.navigation.goBack()}/>
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}
