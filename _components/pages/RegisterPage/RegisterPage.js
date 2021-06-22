@@ -15,7 +15,7 @@ import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
 import { column } from 'stylis';
 import * as ImagePicker from 'expo-image-picker';
-import { signupAsync } from '../../../_utilities/_api/Auth';
+import { signupAsync_API } from '../../../_utilities/_api/Auth';
 
 
 const stepTypes = _.map(Wizard.States, state => {
@@ -111,8 +111,7 @@ export default class RegisterPage extends Component {
   };
 
   createAccount = () => {
-    this.props.navigation.push("Trainer")
-    signupAsync(this.state);
+    signupAsync_API(this.state);
   }
 
   renderNextButton = disabled => {

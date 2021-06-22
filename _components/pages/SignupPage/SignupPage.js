@@ -31,7 +31,7 @@ export default function SignupPage(props) {
             </HeaderContainer>
             <YesButton onPress={ () => props.navigation.push("Register", {isPersonalTrainer: true})}/>
             <NoButton onPress={ () => props.navigation.push("Register", {isPersonalTrainer: false})}/>
-            <TextButton style= {{marginTop: 150}} label="Back to Login"></TextButton>
+            <TextButton style= {{marginTop: 150}} label="Back to Login" buttonStyle={{ marginTop: 20 }} ></TextButton>
         </Container>
     )
 }

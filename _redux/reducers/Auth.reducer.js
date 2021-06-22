@@ -4,15 +4,15 @@ const initialState = {
 	firstName: null,
 	lastName: null,
 	email: null,
+	username: null,
 	loading: false,
 	error: null,
-	username: null,
 };
 
 export const authReducer = (state = initialState, action) => {
 	switch(action.type) {
 		case 'GET_TOKEN':
-			return { ...state, token: action.token };
+			return { ...state, token: action.payload };
 		case 'SAVE_USER':
 			return { ...state, 
 				token: action.payload.key,  
@@ -24,9 +24,9 @@ export const authReducer = (state = initialState, action) => {
 		case 'REMOVE_TOKEN':
 			return { ...state, token: null };
 		case 'LOADING':
-			return { ...state, loading: action.isLoading };
+			return { ...state, loading: action.payload };
 		case 'ERROR':
-			return { ...state, error: action.error };
+			return { ...state, error: action.payload };
 		default:
 			return state;
 	}

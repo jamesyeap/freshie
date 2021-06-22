@@ -63,6 +63,15 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
+// Mock data
+const itemDetails = {
+	id: 0,
+	title: "Egg Sandwich",
+	calories: 500,
+	instructions: "Just make lah bro.",
+	ingredients: "Egg. Bread. What more do you want sia."
+};
+
 export const MealPlan = ({ id, open, setVisible, ...props }) => {
 	return (
 		<Wrapper>
@@ -91,9 +100,9 @@ export const MealPlan = ({ id, open, setVisible, ...props }) => {
 
 			<Collapsible collapsed={open !== id}>
 				<FoodItemListContainer>
-					<FoodItem margin={0} navigation={props.navigation} />
-					<FoodItem margin={0} navigation={props.navigation}  />
-					<FoodItem margin={0} navigation={props.navigation} />
+					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem} />
+					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem}/>
+					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem}/>
 				</FoodItemListContainer>
 			</Collapsible>
 		</Wrapper>

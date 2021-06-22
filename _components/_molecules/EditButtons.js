@@ -1,14 +1,32 @@
 import React from 'react'
 import { View } from 'react-native'
 import { IconButton } from '../_atoms/Button'
-import { StyleSheet } from 'react-native'
+import { StyleSheet } from 'react-native';
+import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../_utilities/_api/Recipe';
 
 export const EditButtonGroup = (props) => {
+
+    const handleSave = () => {
+        if (props.itemDetails.id !== null) {
+            editRecipe_API(props.itemDetails)
+        } else {
+            addRecipe_API(props.itemDetails)
+        }
+    }
+
+    const handleCopy = () => {
+        props.navigation.navigate("Meals");
+    };
+
+    const handleDelete = () => {
+        props.navigation.navigate("Meals");
+    };
+
     return (
         <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={() => props.navigation.navigate("Meals")} ></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy" onPress={handleCopy} ></IconButton>
+            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
         </View>
     )
 }

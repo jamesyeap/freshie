@@ -5,7 +5,7 @@ import { IconButton } from '../../_atoms/Button';
 import { Header } from '../../_molecules/Header';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { Ionicons } from '@expo/vector-icons';
-import { EatenMealsSection } from '../../_organisms/EatenMealsSection';
+import EatenMealsSection from '../../_organisms/EatenMealsSection';
 
 const Container = styled(ParentContainer)`
 	backgroundColor: #CCD7E0;

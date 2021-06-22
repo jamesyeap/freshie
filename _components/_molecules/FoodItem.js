@@ -1,16 +1,21 @@
-import React from 'react';
+import React, { useRef } from 'react';
+import { Modal } from "react-native";
 import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
 import { ExtraSmallButton, TextButton } from '../_atoms/Button';
 import { Divider, IconButton } from 'react-native-paper';
+import { Modalize } from 'react-native-modalize';
+import { Host, Portal } from 'react-native-portalize';
 import { Info } from './Info';
+import { addConsumedMeal_API } from '../../_utilities/_api/User';
+import { deleteRecipe_API } from '../../_utilities/_api/Recipe';
 
-const FoodItemContainer = styled.View`
+const FoodItemContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	alignItems: center
 	width: 310px;
-	height: 77px;
+	minHeight: 77px;
 	borderRadius: 10px;
 	borderWidth: 1px;
 	borderColor: #E6F2FC;
@@ -28,67 +33,37 @@ const FoodItemNameText = styled(SemiBoldText)`
 	lineHeight: 28px;
 `;
 
-const ButtonsContainer = styled.View`
-	flexDirection: column;
-	alignItems: flex-end;
-	justifyContent: center;
-	marginLeft: 30px;
-	marginRight: 12px;
-`;
-
 export const FoodItem = (props) => {
-	/* 
-		There are 3 variations of this button.
 
+	/* IN-PROGRESS!
+		There are a few variations of this button.
 		- client-trainer
 		- client-custom
 		- client-favorites
-
-		
+		- more...
 	*/ 
 
-	const options = () => {
-		<ButtonsContainer>
-			<ExtraSmallButton 
-			label="Consume"
-			onPress={() => props.navigation.navigate("Home")}
-			/>
-			<TextButton 
-			label="Edit"
-			size="xs"
-			onPress={() => props.navigation.push("EditRecipe")}
-			/>	
-		</ButtonsContainer>
+	const handleLoadModal = () => {
+		props.setModalVisible(true);
+		props.setSelectedFoodItem(props.itemDetails.id);
 	}
 
+	const { id, title, calories, ingredients, instructions } = props.itemDetails;
+
 	return (
-		<FoodItemContainer margin={props.margin} >
+		<FoodItemContainer margin={props.margin} onPress={handleLoadModal} >
 			<Image 
 			source={require('../../assets/taco.png')}
-			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33}}
+			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33 }}
 			/>		
 
 			<FoodItemInfoContainer>
-				<FoodItemNameText>Taco</FoodItemNameText>
+				<FoodItemNameText>{title}</FoodItemNameText>
 				<Info
-				value={200}
+				value={calories}
 				unit="kcal"
 				/>
 			</FoodItemInfoContainer>
-
-			<Divider style={{ width: 1, height: 48, marginLeft: "auto" }} />
-
-			<ButtonsContainer>
-				<ExtraSmallButton 
-				label="Consume"
-				onPress={() => props.navigation.navigate("Home")}
-				/>
-				<TextButton 
-				label="Edit"
-				size="xs"
-				onPress={() => props.navigation.push("EditRecipe")}
-				/>
-			</ButtonsContainer>
 		</FoodItemContainer>
 	);
 }

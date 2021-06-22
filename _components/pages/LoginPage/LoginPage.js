@@ -7,7 +7,7 @@ import { TextInput } from '../../_molecules/TextInput';
 import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
-import { loginAsync } from '../../../_utilities/_api/Auth';
+import { loginAsync_API } from '../../../_utilities/_api/Auth';
 
 const OptionsContainer = styled.View`
 	flexDirection: row;
@@ -29,7 +29,7 @@ export default function LoginPage(props) {
 
 	const handleLogin = (values) => {
 		console.log(values);
-		loginAsync(values);
+		loginAsync_API(values);
 	}
 
 	return (
@@ -76,7 +76,7 @@ export default function LoginPage(props) {
 			{/* <BigButton label="Sign In" state="active" onPress={() => props.navigation.push("Client")}/> */}
 			<BigButton label="Sign In" state="active" onPress={handleSubmit}/>
 
-			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")}/>
+			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")} buttonStyle={{ marginTop: 20 }}/>
 		</Container>
 		)}
 		</Formik>

@@ -9,7 +9,7 @@ import { connect } from 'react-redux';
 const RootStack = createStackNavigator();
 
 function mapStateToProps(state) {
-	const { token, loading, error } = state.token;
+	const { token, loading, error } = state.auth;
 	return { token, loading, error }
 }
 

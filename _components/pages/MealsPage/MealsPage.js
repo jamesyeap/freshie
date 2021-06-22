@@ -1,14 +1,15 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { RegularText } from '../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import { TrainerMealsSection } from '../../_organisms/TrainerMealsSection';
-import { CustomMealsSection } from '../../_organisms/CustomMealsSection';
-import { FavoriteMealsSection } from '../../_organisms/FavoriteMealsSection';
+import TrainerMealsSection from '../../_organisms/TrainerMealsSection';
+import CustomMealsSection from '../../_organisms/CustomMealsSection';
+import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection';
+import { ButtonModal } from '../../_molecules/ButtonModal';
 
-
+import { getRecipeList_API } from '../../../_utilities/_api/Recipe';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -74,9 +75,9 @@ export default function MealsPage(props) {
 		{ key: 'third', title: 'Third' }
 	      ]);
 	
-	const secondRoute = () => <CustomMealsSection navigation={props.navigation} />;
-	const firstRoute = () => <TrainerMealsSection navigation={props.navigation} />;
-	const thirdRoute = () => <FavoriteMealsSection navigation={props.navigation} />;
+	const secondRoute = () => <CustomMealsSection navigation={props.navigation}  />;
+	const firstRoute = () => <TrainerMealsSection navigation={props.navigation}  />;
+	const thirdRoute = () => <FavoriteMealsSection navigation={props.navigation}  />;
 
 	const renderScene = SceneMap({
 		first: firstRoute,
@@ -84,9 +85,13 @@ export default function MealsPage(props) {
 		third: thirdRoute
 	})
 
+	// Fetches list of recipes before rendering the page
+	useEffect(() => {getRecipeList_API()}, []);
+
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()}/>
+
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}
@@ -97,3 +102,4 @@ export default function MealsPage(props) {
 		</Container>
 	)
 }
+

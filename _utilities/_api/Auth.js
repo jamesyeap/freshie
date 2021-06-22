@@ -3,10 +3,11 @@ import axios from 'axios';
 import { store } from '../../_redux/store/store';
 import { getToken, saveUser, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
 
-// LOG IN
-export async function loginAsync(values) {
+/* Logs the user in */
+export async function loginAsync_API(values) {
     try {
         console.log(values);
+        
         store.dispatch(loading(true));
 
         const response = await axios({
@@ -20,15 +21,16 @@ export async function loginAsync(values) {
         store.dispatch(loading(false));
     } catch (e) {
         store.dispatch(loading(false));
-        console.log(e)
-        alert(e.response.status);
+        store.dispatch(error(e.response.statusMessage))
+        console.log(e.response.statusMessage);
     }
 }
 
-// SIGN UP
-export async function signupAsync(values) {
+/* Signs up a new user */
+export async function signupAsync_API(values) {
     try {
         console.log(values);
+
         store.dispatch(loading(true));
 
         const response = await axios({
@@ -42,21 +44,25 @@ export async function signupAsync(values) {
         store.dispatch(loading(false));
     } catch (e) {
         store.dispatch(loading(false));
-        console.log(e)
-        alert(e.response.status);
+        console.log(e.response.statusMessage)
+        store.dispatch(error(e.response.statusMessage))
     }
 }
 
-/* LOG OUT (in progress)
-export async function logoutAsync(values) {
+/* Logs the existing user out */
+export async function logoutAsync_API(values) {
     try {
         store.dispatch(loading(true));
-
+        store.dispatch(removeToken());
+        store.dispatch(loading(false));
     } catch (e) {
+        store.dispatch(loading(false));
+        store.dispatch(error(e.response.statusMessage))
+
 
     }
 }
-*/
+
 
 
 

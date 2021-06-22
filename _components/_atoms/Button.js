@@ -72,8 +72,8 @@ export const SmallButtonText = styled(SemiBoldText)`
 	color: #FFFFFF;
 `;
 
-export const SmallButton = ({label, state, onPress,...props}) => {
-	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress}>
+export const SmallButton = ({label, state, onPress, buttonStyle, ...props}) => {
+	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} style={buttonStyle} >
 			<SmallButtonText>{label}</SmallButtonText>
 		</SmallButtonContainer>);
 }
