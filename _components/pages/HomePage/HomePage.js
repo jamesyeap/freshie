@@ -35,13 +35,13 @@ export function HomePage(props) {
 		const today = new Date();
 		const dateArgument = {
 			day: today.getDate(),
-			month: today.getMonth(),
+			month: today.getMonth() + 1,
 			year: today.getFullYear()
 		}
 		
 		setTimeout(() => {
 			getConsumedMeals_API(dateArgument);
-			updateDailyCalories_API();
+			updateDailyCalories_API(); 
 		}, 2000);
 
 		setLoading(false);

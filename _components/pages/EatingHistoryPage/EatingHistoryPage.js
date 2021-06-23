@@ -9,6 +9,7 @@ import EatenMealsSection from '../../_organisms/EatenMealsSection';
 import { prettifyDate } from '../../../_utilities/_helperFunctions/prettifyDate';
 import { getDay } from '../../../_utilities/_helperFunctions/getDay';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { getConsumedMeals_API } from '../../../_utilities/_api/User';
 
 const Container = styled(ParentContainer)`
 	backgroundColor: #CCD7E0;
@@ -28,6 +29,14 @@ const HeaderContainer = styled.TouchableOpacity`
 /* NOTE: FORMAT TO USE WHEN QUERYING SERVER: 
 	DD-MM-YYYY 
 */
+function correctTimeZone(date) {
+	result = new Map()
+	newDate = date.toLocaleDateString("en-GB", {timeZone: "Asia/Singapore"}).split("/")
+	result.set("day", newDate[0])
+	result.set("month", newDate[1])
+	result.set("year", newDate[2])
+	return result
+}
 
 export default function EatingHistoryPage(props) {
 	const [date, setDate] = useState(new Date());
@@ -36,11 +45,19 @@ export default function EatingHistoryPage(props) {
 	const [showDatePicker, setShowDatePicker] = useState(false);
 
 	const handleConfirm = (newDate) => {
+		//let correctDate = correctTimeZone(newDate)
 		setDate(newDate);
 		setDateHeader(prettifyDate(newDate));
 		setDay(getDay(newDate));
-
+		//console.log(newDate)
+		//console.log(newerDate)
 		setShowDatePicker(false);
+		const dateArgument = {
+			day: newDate.getDate(),
+			month: newDate.getMonth() + 1,
+			year: newDate.getFullYear()
+		}
+		getConsumedMeals_API(dateArgument, true)
 	}
 
 	return (
