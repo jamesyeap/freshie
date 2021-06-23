@@ -42,7 +42,7 @@ export const CustomMealsSection = (props) => {
 
 	const handleEdit = () => {
 		// redirects the user to the "EditRecipe" page that is pre-filled with all the item's info
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItemDetails[0] });
+		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItemDetails[0], type: "edit" });
 	}
 
 	const handleDelete = () => {
