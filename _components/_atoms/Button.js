@@ -53,14 +53,7 @@ const SmallButtonContainer = styled.TouchableOpacity`
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
-	backgroundColor: ${props => props.state === "default" 
-					? "#319795"
-					: props.state === "active"
-						? "#285E61"
-						: props.state === "disabled"
-							? "#319795" 
-							: "#319795" 
-			};
+	backgroundColor: ${props => props.isSelected ? "#1e5d5c" : "#319795"};
 	height: 32px;
 	borderRadius: 6px;
 	margin: ${props => props.margin ? props.margin : 0};
@@ -72,8 +65,8 @@ export const SmallButtonText = styled(SemiBoldText)`
 	color: #FFFFFF;
 `;
 
-export const SmallButton = ({label, state, onPress, buttonStyle, ...props}) => {
-	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} style={buttonStyle} >
+export const SmallButton = ({label, state, onPress, isSelected, buttonStyle,...props}) => {
+	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} isSelected={isSelected} style={buttonStyle} >
 			<SmallButtonText>{label}</SmallButtonText>
 		</SmallButtonContainer>);
 }

@@ -2040,6 +2040,13 @@
     lodash.pick "^4.4.0"
     lodash.template "^4.5.0"
 
+"@gregfrench/react-native-wheel-picker@^1.2.15":
+  version "1.2.15"
+  resolved "https://registry.yarnpkg.com/@gregfrench/react-native-wheel-picker/-/react-native-wheel-picker-1.2.15.tgz#b6262842c59c4508668d013e9e73bc8493e2755c"
+  integrity sha512-d0zFcoZNIu1iiGJ3pEgPePJUzn/LmbXutr+7AEjCr4XG9Es57RSJQKeFFbnjoYfhB7p8HBE/VDykCIxJsKNOtg==
+  dependencies:
+    "@react-native-picker/picker" "^1.9.4"
+
 "@hapi/address@2.x.x":
   version "2.1.4"
   resolved "https://registry.yarnpkg.com/@hapi/address/-/address-2.1.4.tgz#5d67ed43f3fd41a69d4b9ff7b56e7c0d1d0a81e5"
@@ -2767,10 +2774,10 @@
     sudo-prompt "^9.0.0"
     wcwidth "^1.0.1"
 
-"@react-native-community/datetimepicker@^3.5.2":
-  version "3.5.2"
-  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.5.2.tgz#8e6feb30f2620e5abdf565d5fe74c0c04edcf6ae"
-  integrity sha512-TWRuAtr/DnrEcRewqvXMLea2oB+YF+SbtuYLHguALLxNJQLl/RFB7aTNZeF+OoH75zKFqtXECXV1/uxQUpA+sg==
+"@react-native-community/datetimepicker@3.2.0":
+  version "3.2.0"
+  resolved "https://registry.yarnpkg.com/@react-native-community/datetimepicker/-/datetimepicker-3.2.0.tgz#757ae731bab4442842a4a884941239efa75f371f"
+  integrity sha512-RX4/mi2beCiJXakJJr9bJrqNSfu7wc69Q0gPw21m/PdpYM14bJplVgjmL0hm3VSedj3Eg/dErWy5DdLM8upS/A==
   dependencies:
     invariant "^2.2.4"
 
@@ -2779,7 +2786,7 @@
   resolved "https://registry.yarnpkg.com/@react-native-community/netinfo/-/netinfo-6.0.0.tgz#2a4d7190b508dd0c2293656c9c1aa068f6f60a71"
   integrity sha512-Z9M8VGcF2IZVOo2x+oUStvpCW/8HjIRi4+iQCu5n+PhC7OqCQX58KYAzdBr///alIfRXiu6oMb+lK+rXQH1FvQ==
 
-"@react-native-picker/picker@^1.16.1":
+"@react-native-picker/picker@^1.16.1", "@react-native-picker/picker@^1.9.4":
   version "1.16.1"
   resolved "https://registry.yarnpkg.com/@react-native-picker/picker/-/picker-1.16.1.tgz#cc5d05b0d651445afa519c67824d8af3e43fa10c"
   integrity sha512-sk07ARwL0cMXwkXsqcxyprL/KiEVD0xRFXFqznTnZs1YXqwxEqz6GiGtq2vQlK64CzXDpHX8gw1QQz47abBY1Q==

@@ -1,4 +1,5 @@
-export const URL = "http://freshie-api.herokuapp.com"
+// export const URL = "http://freshie-api.herokuapp.com"
+const URL = "http://192.168.86.24:8000";
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
 import { getToken, saveUser, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
@@ -20,14 +21,17 @@ export async function loginAsync_API(values) {
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
+        alert(e);
         store.dispatch(loading(false));
-        store.dispatch(error(e.response.statusMessage))
+        store.dispatch(error(e.response));
         console.log(e.response.statusMessage);
     }
 }
 
 /* Signs up a new user */
 export async function signupAsync_API(values) {
+    console.log(values.dailyCalories);
+
     try {
         console.log(values);
 

@@ -50,9 +50,7 @@ export function HomePage(props) {
 			<View style={{flexDirection: 'column', alignContent: 'flex-start'}}>
 			<View style={{flex: 0.7, flexDirection: 'column', alignItems: 'center'}}>
 				<WelcomeText style= {{ borderWidth: 0, marginTop: -5}}>{`Welcome home, \n${props.username}`}</WelcomeText>
-				<View style={{borderWidth: 1, marginTop: -5}}>
 				<CalorieTracker />
-				</View>
 
 				<SectionButton
 				mainText="Eating History"

@@ -4,19 +4,17 @@ import React, {Component, useEffect} from 'react';
 import {StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
 import styled from 'styled-components'
 import {View, Button, Wizard, Text, RadioGroup, RadioButton, TextField, Toast, Dialog, Image, ComponentsColors} from 'react-native-ui-lib';
-import { BigButton, TextButton } from '../../_atoms/Button';
+import { SmallButton, BigButton, TextButton } from '../../_atoms/Button';
 import { Container } from '../../_atoms/Container';
 import { HeaderMediumText, MediumText, SubHeaderText } from '../../_atoms/Text';
-import { Header } from '../../_molecules/Header';
 import { InputLabelText, TextInput } from '../../_molecules/TextInput';
-import { startDetecting } from 'react-native/Libraries/Utilities/PixelRatio';
-import { border, Center, useFocusEffect } from '@chakra-ui/react';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';
-import { column } from 'stylis';
 import * as ImagePicker from 'expo-image-picker';
 import { signupAsync_API } from '../../../_utilities/_api/Auth';
-
+import calculateCalories from '../../../_utilities/_helperFunctions/calculateCalories';
+import { DateTimePicker } from '../../_molecules/DateTimePicker';
+import { ButtonGroup } from '../../_molecules/ButtonGroup';
 
 const stepTypes = _.map(Wizard.States, state => {
   return <Text key={state}>{state}</Text>;
@@ -27,19 +25,25 @@ export default class RegisterPage extends Component {
     super(props);
 
     this.state = {
+      weight: undefined,
+      height: undefined,
+      dateOfBirth: new Date(1598051730000),
+      gender: undefined,
+      activityLevel: undefined,
+      hasPersonalTrainer: undefined,
+      referralCode: "none",
+      username: undefined,
+      email: undefined,
+      firstName: undefined,
+      lastName: undefined,
+      password1: undefined,
+      password2: undefined,
       activeIndex: 0,
       completedStepIndex: undefined,
       allTypesIndex: 0,
-      username: undefined,
-      firstName: undefined,
-      lastName: undefined,
-      email: undefined,
-      password1: undefined,
-      password2: undefined,
-      hasPersonalTrainer: undefined,
       personalTrainerCert: undefined,
-      personalTrainerRef: undefined,
-      toastMessage: undefined
+      toastMessage: undefined,
+      showDatePicker: false,
     };
   }
 
@@ -56,7 +60,6 @@ export default class RegisterPage extends Component {
       this.setState({toastMessage: undefined});
     }, 2000);
   };
-
 
   goToPrevStep = () => {
     const {activeIndex: prevActiveIndex} = this.state;
@@ -110,8 +113,20 @@ export default class RegisterPage extends Component {
     }
   };
 
+  /* Creates an account for the client */
   createAccount = () => {
-    signupAsync_API(this.state);
+    const { weight, dateOfBirth, height, gender, activityLevel } = this.state;
+
+    /* Calculate the age of the client from the birth date*/
+    const monthDiff = Date.now() - dateOfBirth.getTime();
+    const ageDT = new Date(monthDiff);
+    const year = ageDT.getUTCFullYear();
+    const age = Math.abs(year - 1970);
+
+    /* Calculate the maximum calories the client needs to eat to hit goal */
+    const calories = Math.round(calculateCalories(weight, height, age, gender, activityLevel));
+    
+    signupAsync_API({ ...this.state, isPersonalTrainer: this.props.route.params.isPersonalTrainer,  calories, age });
   }
 
   renderNextButton = disabled => {
@@ -143,11 +158,11 @@ export default class RegisterPage extends Component {
               <HeaderMediumText>Registration</HeaderMediumText>
           </View>
           <ScrollView contentContainerStyle={styles.scrollView, {height: 700}}>
-            <TextInput stacked={0} label="Username" placeholder={"Username"} onChangeText= {this.onUserNameEntered} value={username} />
-            <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText= {this.onFirstNameEntered} value={firstName}/>
-            <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText= {this.onLastNameEntered} value={lastName}/>
-            <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText= {this.onEmailEntered} value={email}/>
-            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText= {this.onPassword1} value={password1}/>
+            <TextInput stacked={0} label="Username" placeholder={"Username"} onChangeText={this.onUserNameEntered} value={username} />
+            <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText={this.onFirstNameEntered} value={firstName}/>
+            <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText={this.onLastNameEntered} value={lastName}/>
+            <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText={this.onEmailEntered} value={email}/>
+            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText={this.onPassword1} value={password1}/>
             <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2}/>
           </ScrollView>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
@@ -211,7 +226,6 @@ export default class RegisterPage extends Component {
     }
   }
   
-
   renderCustomerDetails2 = () => {
     const {customerName, hasPersonalTrainer, personalTrainerCert} = this.state;
     const iconPlaceholder = () => <Ionicons name="cloud-upload-outline" size={24}></Ionicons>
@@ -248,11 +262,11 @@ export default class RegisterPage extends Component {
             </View>
             <InputLabelText style={{marginLeft: 8}}>Were you introduced by a personal trainer?</InputLabelText>
             <RadioGroup marginR-250 onValueChange={this.onHasPersonalTrainer}>
-              <RadioButton label="Yep" value= {true} style= {{marginVertical: 5}} color="#319795"/>
-              <RadioButton label="Nope" value= {false} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Yep" value={true} onPress={() => this.onHasPersonalTrainer(true)} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Nope" value={false} onPress={() => this.onHasPersonalTrainer(false)} style= {{marginVertical: 5}} color="#319795"/>
             </RadioGroup>
-            <TextInput label="Referral Code" placeholder={"Your personal trainer's referral code"}/>
-            <View style={{marginTop: 360}}>
+            {this.state.hasPersonalTrainer && <TextInput label="Referral Code" placeholder={"Your personal trainer's referral code"} value={this.state.referralCode} onChangeText={referralCode => this.setState({referralCode})} />}
+            <View style={{position: "absolute", bottom: 0}}>
               <View>
                 {this.renderNextButton(_.isNil(customerName) || customerName.trim().length === 0)}
               </View>
@@ -266,22 +280,46 @@ export default class RegisterPage extends Component {
   };
 
   onHasPersonalTrainer = (hasPersonalTrainer) => {
-    console.log(this.state.hasPersonalTrainer)
-    this.setState({hasPersonalTrainer: true})
-    console.log(this.state.hasPersonalTrainer)
+    this.setState({hasPersonalTrainer})
   }
 
   renderQuestions = () => {
     const clientQuestions = () => {
+      const handleSetDate = (dateOfBirth) => {
+        this.setState({dateOfBirth})
+      }
+
+      const handleSetGender = (gender) => {
+        this.setState({gender})
+      }
+
+      const handleSetActivityLevel = (activityLevel) => {
+        this.setState({activityLevel})
+      }
+
       return (
-        <ScrollView contentContainerStyle={styles.scrollView}>
-          <TextInput stacked= {0} label="c Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {0} label="c Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {0} label="c Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked= {0} label="c Question 1" placeholder={"Answer here"}/>
+        <ScrollView contentContainerStyle={styles.scrollView, {height: 900}}>
+          <TextInput stacked= {0} label="What's your weight?" placeholder={"in kg"} value={this.state.weight} onChangeText={weight => this.setState({weight})}/>
+          <TextInput stacked= {0} label="What's your height?" placeholder={"in cm"} value={this.state.height} onChangeText={height => this.setState({height})}/>
+          <DateTimePicker stacked= {0} label="What's your age?" date={this.state.dateOfBirth} setDate={handleSetDate}  />
+
+          <ButtonGroup label="What's your gender?">
+            <SmallButton label="Male" buttonStyle={{ width: 70 }} onPress={() => handleSetGender(0)} isSelected={this.state.gender === 0} />
+            <SmallButton label="Female" buttonStyle={{ width: 70 }} onPress={() => handleSetGender(1)} isSelected={this.state.gender === 1} />
+          </ButtonGroup>
+
+          <ButtonGroup label="How active are you?" vertical={true} >
+              <RadioButton label="Sedentary" selected={this.state.activityLevel === 0} onPress={() => handleSetActivityLevel(0)} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Lightly Active" selected={this.state.activityLevel === 1} onPress={() => handleSetActivityLevel(1)} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Moderately Active" selected={this.state.activityLevel === 2} onPress={() => handleSetActivityLevel(2)} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Very Active" selected={this.state.activityLevel === 3} onPress={() => handleSetActivityLevel(3)} style= {{marginVertical: 5}} color="#319795"/>
+              <RadioButton label="Extremely Active" selected={this.state.activityLevel === 4} onPress={() => handleSetActivityLevel(4)} style= {{marginVertical: 5}} color="#319795"/>
+          </ButtonGroup>
+
         </ScrollView> 
       )
     }
+
     const personalTrainerQuestions = () => {
       return (
         <ScrollView contentContainerStyle={styles.scrollView}>
@@ -387,7 +425,7 @@ export default class RegisterPage extends Component {
 
 const styles = StyleSheet.create({
   scrollView: {
-    flex: 0.78
+    flex: 0.78,
   },
   container: {
     flex: 1
