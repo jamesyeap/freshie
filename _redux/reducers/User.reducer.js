@@ -1,5 +1,5 @@
 const initialState = {
-	caloriesConsumed: 1000,
+	caloriesConsumed: 0,
 	dailyCalories: 2000,
 	consumedMeals: [{
 		id: 0,

@@ -30,8 +30,13 @@ export function HomePage(props) {
 	const [loading, setLoading] = useState(true);
 
 	const loadData = () => {
-		// const response1 = getConsumedMeals_API();
-		const response2 = updateDailyCalories_API();
+		console.log("Loading data");
+		
+		setTimeout(() => {
+			getConsumedMeals_API();
+			updateDailyCalories_API();
+		}, 2000);
+
 		setLoading(false);
 	}
 
@@ -50,6 +55,7 @@ export function HomePage(props) {
 			<View style={{flexDirection: 'column', alignContent: 'flex-start'}}>
 			<View style={{flex: 0.7, flexDirection: 'column', alignItems: 'center'}}>
 				<WelcomeText style= {{ borderWidth: 0, marginTop: -5}}>{`Welcome home, \n${props.username}`}</WelcomeText>
+
 				<CalorieTracker />
 
 				<SectionButton
@@ -65,6 +71,7 @@ export function HomePage(props) {
 			</View>
 			<FAB 
 			gotoMeals={() => props.navigation.push("Meals")}
+			gotoAddCustomMeal={() => props.navigation.push("EditRecipe")}
 			/>
 		</Container>
 	)

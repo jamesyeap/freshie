@@ -30,7 +30,7 @@ export default EditRecipePage = (props) => {
     let itemDetails = {};
 
     useEffect(() => {
-        if (props.route.params.itemDetails) {
+        if (props.route.params && props.route.params.itemDetails) {
             /* NOTE: If a user is in this page to EDIT an EXISTING RECIPE, the "id" field of "itemDetails" is a number, and WILL NOT BE NULL. */ 
             const { id, title, ingredients, instructions, calories, servings, author, custom } = props.route.params.itemDetails;
 

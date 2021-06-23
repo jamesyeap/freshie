@@ -11,6 +11,11 @@ export const addRecipes = (recipe) => ({
     payload: recipe
 })
 
+export const getMealPlans = (mealPlans) => ({
+    type: 'GET_MEAL_PLANS',
+    payload: mealPlans
+})
+
 export const loading = bool => ({
     type: 'LOADING',
     isLoading: bool,

@@ -72,23 +72,32 @@ const itemDetails = {
 	ingredients: "Egg. Bread. What more do you want sia."
 };
 
-export const MealPlan = ({ id, open, setVisible, ...props }) => {
+export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
+	let totalCalories = 0;
+
+	recipes.forEach(e => {
+		console.log(e.calories);
+		totalCalories += e.calories
+	});
+
 	return (
 		<Wrapper>
 			<MediumComponentContainer isOpen={open === id}>
 				<MealTextContainer>
-					<MealPlanNameText>Meal Plan 1</MealPlanNameText>
+					<MealPlanNameText>{title}</MealPlanNameText>
 					<PreviewTextContainer>
-						<PreviewText>Taco</PreviewText>
-						<PreviewText>Fish n Chips</PreviewText>
-						<PreviewText>Steak</PreviewText>
+						{ 
+							recipes.length >= 3
+								? recipes.map(e => <PreviewText>{e.title}</PreviewText>) 
+								: recipes.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
+						}
 					</PreviewTextContainer>
 				</MealTextContainer>	
 
 				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
 
 				<InfoContainer>
-					<CalorieText>600 kcal</CalorieText>
+					<CalorieText>{`${totalCalories} kcal`}</CalorieText>
 					
 					<IconButton
 					icon={open !== id ? "chevron-down" : "chevron-up"}
@@ -100,9 +109,9 @@ export const MealPlan = ({ id, open, setVisible, ...props }) => {
 
 			<Collapsible collapsed={open !== id}>
 				<FoodItemListContainer>
-					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem} />
-					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem}/>
-					<FoodItem margin={0} navigation={props.navigation} itemDetails={itemDetails} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem}/>
+					{
+						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem} />)
+					}
 				</FoodItemListContainer>
 			</Collapsible>
 		</Wrapper>

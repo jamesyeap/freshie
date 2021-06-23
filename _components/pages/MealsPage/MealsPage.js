@@ -9,7 +9,7 @@ import CustomMealsSection from '../../_organisms/CustomMealsSection';
 import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection';
 import { ButtonModal } from '../../_molecules/ButtonModal';
 
-import { getRecipeList_API } from '../../../_utilities/_api/Recipe';
+import { getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -86,7 +86,10 @@ export default function MealsPage(props) {
 	})
 
 	// Fetches list of recipes before rendering the page
-	useEffect(() => {getRecipeList_API()}, []);
+	useEffect(() => {
+		getRecipeList_API();
+		getMealPlans_API();
+	}, []);
 
 	return (
 		<Container>

@@ -1,8 +1,7 @@
-// export const URL = "http://freshie-api.herokuapp.com"
-const URL = "http://192.168.86.24:8000";
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
 import { getToken, saveUser, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
+import { URL } from './_constants';
 
 /* Logs the user in */
 export async function loginAsync_API(values) {
