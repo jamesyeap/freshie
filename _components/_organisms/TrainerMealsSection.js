@@ -7,6 +7,7 @@ import { ButtonModal } from '../_molecules/ButtonModal';
 import { addConsumedMeal_API } from '../../_utilities/_api/User';
 import { deleteRecipe_API } from '../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
+import { determineMealType } from '../../_utilities/_helperFunctions/determineMealType';
 
 // mock example
 const data = [
@@ -26,8 +27,8 @@ const data = [
 ]
 
 function mapStateToProps(state) {
-	const { recipes } = state.recipe;
-	return { recipes };
+	const { mealPlans } = state.recipe;
+	return { mealPlans };
 }
 
 export const TrainerMealsSection = (props) => {
@@ -49,7 +50,8 @@ export const TrainerMealsSection = (props) => {
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleConsume = () => {
 		console.log(selectedFoodItem);
-		addConsumedMeal_API(selectedFoodItem);
+		const obj = { recipeID: Number(selectedFoodItem), mealType: determineMealType() }
+		addConsumedMeal_API(obj);
 		props.navigation.navigate("Home");
 	}
 
@@ -65,7 +67,15 @@ export const TrainerMealsSection = (props) => {
 
 	const loadSelectedFoodItemDetails = (id) => {
 		setSelectedFoodItem(id);
-		const itemDetails = props.recipes.filter(foodItem => foodItem.id === id);
+
+		let listOfRecipes = [];
+		props.mealPlans.forEach(e => {
+			e.meal.forEach(x => {
+				listOfRecipes.push(x);
+			})
+		})
+		
+		const itemDetails = listOfRecipes.filter(foodItem => foodItem.id === id);
 		setSelectedFoodItemDetails(itemDetails);
 	}
 	/* ************************************************************ */
@@ -82,8 +92,10 @@ export const TrainerMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={data}
+		 data={props.mealPlans}
 		 renderItem={({item}) => <MealPlan id={item.id} 
+		 				   title={item.title}
+						   recipes={item.meal}
 		 				   open={open} 
 						   setVisible={setVisible} 
 						   navigation={props.navigation} 

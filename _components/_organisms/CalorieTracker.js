@@ -34,7 +34,6 @@ const CaloriesLeftInfo = (props) => {
 		/>)
 }
 
-
 const chartConfig = {
 	   backgroundGradientFrom: "#000000",
 	   backgroundGradientFromOpacity: 0,
@@ -76,7 +75,6 @@ function mapStateToProps(state) {
 }
 
 export const CalorieTracker = (props) => {
-
 	return (
 		<Container>
 			<InfoRowContainer>

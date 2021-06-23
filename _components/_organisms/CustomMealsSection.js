@@ -6,6 +6,7 @@ import { ButtonModal } from '../_molecules/ButtonModal';
 import { addConsumedMeal_API } from '../../_utilities/_api/User';
 import { deleteRecipe_API } from '../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
+import { determineMealType } from '../../_utilities/_helperFunctions/determineMealType';
 
 /* mock example
 const data = [
@@ -32,7 +33,10 @@ export const CustomMealsSection = (props) => {
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleConsume = () => {
 		console.log(selectedFoodItem);
-		addConsumedMeal_API(selectedFoodItem);
+
+		const obj = { recipeID: Number(selectedFoodItem), mealType: determineMealType() }
+		addConsumedMeal_API(obj);
+		
 		props.navigation.navigate("Home");
 	}
 

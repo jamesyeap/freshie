@@ -22,14 +22,20 @@ export const FAB = (props) => {
           icon={open ? 'minus' : 'plus'}
           actions={[
             {
+              icon: 'plus',
+              label: 'Add Custom Meal',
+              onPress: () => props.gotoAddCustomMeal(),
+              small: false,
+            },
+            {
               icon: 'silverware-fork-knife',
               label: 'Restaurants',
               onPress: () => console.log("Hello"),
               small: false,
             },
             {
-              icon: 'plus',
-              label: 'Add a meal',
+              icon: 'food',
+              label: 'Your Meals',
               onPress: () => props.gotoMeals(),
               small: false,
             },

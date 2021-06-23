@@ -52,6 +52,7 @@ const EatenMealsSection = (props) => {
 		 setModalVisible={setModalVisible} 
 		 handleEdit={handleEdit}
 		 handleDelete={handleDelete}
+		 variation="EatingHistory_Client"
 		/>
 
 		<FlatList
