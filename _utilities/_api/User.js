@@ -21,22 +21,22 @@ export async function getConsumedMeals_API(values, searchOnly) {
 				data: values
 		});
 		console.log("here")
-		console.log(response)
-		if (searchOnly) {
-			/* Destructure the data received */
-			let consumedMealsArray = [];
+		//console.log(response)
+		
+		/* Destructure the data received */
+		let consumedMealsArray = [];
 
-			if (response.data !== "") {
-				response.data.forEach(element => {
-					let newMeal = element.meal;
-					newMeal.id = element.id;
-					consumedMealsArray.push(newMeal);
-				});
-			}
+		if (response.data !== "") {
+			response.data.forEach(element => {
+				let newMeal = element.meal;
+				newMeal.id = element.id;
+				consumedMealsArray.push(newMeal);
+			});
+		}
 
-			store.dispatch(updateConsumedMeals(consumedMealsArray));
-			console.log("Successfully fetched consumed meals!");
-
+		store.dispatch(updateConsumedMeals(consumedMealsArray));
+		console.log("Successfully fetched consumed meals!");
+		if (!searchOnly) {
 			// Calculates the new amount of total calories consumed from the new array of consumed meals
 			console.log("Updating calories consumed...")
 			async function countCalories() { 

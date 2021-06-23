@@ -40,7 +40,7 @@ export function HomePage(props) {
 		}
 		
 		setTimeout(() => {
-			getConsumedMeals_API(dateArgument);
+			getConsumedMeals_API(dateArgument, false);
 			updateDailyCalories_API(); 
 		}, 2000);
 
