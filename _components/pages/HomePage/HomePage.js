@@ -78,7 +78,7 @@ export function HomePage(props) {
 			</View>
 			<FAB 
 			gotoMeals={() => props.navigation.push("Meals")}
-			gotoAddCustomMeal={() => props.navigation.push("EditRecipe")}
+			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 			/>
 		</Container>
 	)
