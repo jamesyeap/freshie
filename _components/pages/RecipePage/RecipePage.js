@@ -49,7 +49,6 @@ const styles = StyleSheet.create(
 const Divided = () => <Divider width= {2} color="#319795" style= {{ width: "40%", alignSelf: 'center', marginVertical: 20}}></Divider>
 
 export default RecipePage = (props) => {
-
     return (
         <Container>
             <NavigationHeader/>
@@ -66,7 +65,7 @@ export default RecipePage = (props) => {
                     <Description style={styles.description}  title= "Calories" text= "300"></Description>
                 </View>
             </ScrollView>
-            <BigButton label="Done!" onPress={() => props.navigation.goBack()}></BigButton>
+            <BigButton label="Done!"></BigButton>
         </Container>
     )
 }

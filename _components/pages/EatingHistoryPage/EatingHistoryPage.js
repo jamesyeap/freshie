@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { Container as ParentContainer } from '../../_atoms/Container';
 import { IconButton } from '../../_atoms/Button';
@@ -6,6 +6,9 @@ import { Header } from '../../_molecules/Header';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { Ionicons } from '@expo/vector-icons';
 import EatenMealsSection from '../../_organisms/EatenMealsSection';
+import { prettifyDate } from '../../../_utilities/_helperFunctions/prettifyDate';
+import { getDay } from '../../../_utilities/_helperFunctions/getDay';
+import DateTimePickerModal from "react-native-modal-datetime-picker";
 
 const Container = styled(ParentContainer)`
 	backgroundColor: #CCD7E0;
@@ -22,11 +25,28 @@ const HeaderContainer = styled.TouchableOpacity`
 	marginTop: 20px;
 `;
 
+/* NOTE: FORMAT TO USE WHEN QUERYING SERVER: 
+	DD-MM-YYYY 
+*/
+
 export default function EatingHistoryPage(props) {
+	const [date, setDate] = useState(new Date());
+	const [dateHeader, setDateHeader] = useState(prettifyDate(date));
+	const [day, setDay] = useState(getDay(date));
+	const [showDatePicker, setShowDatePicker] = useState(false);
+
+	const handleConfirm = (newDate) => {
+		setDate(newDate);
+		setDateHeader(prettifyDate(newDate));
+		setDay(getDay(newDate));
+
+		setShowDatePicker(false);
+	}
+
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()} />
-			<HeaderContainer>
+			<HeaderContainer onPress={() => setShowDatePicker(true)}>
 				<Ionicons
 				name="md-calendar"
 				size={30}
@@ -35,10 +55,18 @@ export default function EatingHistoryPage(props) {
 				/>
 				<Header
 				containerStyle={{ alignItems: "flex-start", marginTop: 0, marginBottom: 0, marginLeft: 10 }}
-				headerText="Sunday"
-				subheaderText="17 January 2021"
+				headerText={day}
+				subheaderText={dateHeader}
 				/>
 			</HeaderContainer>
+
+			<DateTimePickerModal
+			isVisible={showDatePicker}
+			mode="date"
+			onConfirm={handleConfirm}
+			onCancel={() => setShowDatePicker(false)}
+			/>
+
 			<EatenMealsSection navigation={props.navigation} />
 		</Container>
 	)

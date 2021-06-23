@@ -4,20 +4,22 @@ import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loadi
 import { URL } from './_constants';
 
 /* Get a list of meals consumed for the day */
-export async function getConsumedMeals_API() {
+export async function getConsumedMeals_API(values) {
 	try {
 		console.log("Fetching consumed meals...")
 
 		const { token, username } = store.getState().auth;
 
 		store.dispatch(loading(true));
+		console.log(values);
 
 		const response = await axios({
     			method: 'get',
     			url: `${URL}/api/${username}/consumed-meals/`,
     			headers: {
       				"Authorization": `Token ${token}`
-    			}
+    			}, 
+			data: values
 		});
 
 		/* Destructure the data received */

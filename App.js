@@ -21,15 +21,12 @@ export default function App() {
   }
 
   return (
-    <RecipePage/>
-  )
-    /*
     <Provider store={store}>
       <NavigationContainer>
         <RootStackScreen />
       </NavigationContainer>
     </Provider>
-    */
+  )
 }
 
     // <LoginPage />

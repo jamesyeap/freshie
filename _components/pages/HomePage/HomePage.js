@@ -31,9 +31,16 @@ export function HomePage(props) {
 
 	const loadData = () => {
 		console.log("Loading data");
+
+		const today = new Date();
+		const dateArgument = {
+			day: today.getDate(),
+			month: today.getMonth(),
+			year: today.getFullYear()
+		}
 		
 		setTimeout(() => {
-			getConsumedMeals_API();
+			getConsumedMeals_API(dateArgument);
 			updateDailyCalories_API();
 		}, 2000);
 
