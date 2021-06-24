@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, StatusBar } from 'react-native';
 import { Container } from '../../_atoms/Container';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../_atoms/Text';

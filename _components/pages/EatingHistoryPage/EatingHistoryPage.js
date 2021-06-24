@@ -29,14 +29,6 @@ const HeaderContainer = styled.TouchableOpacity`
 /* NOTE: FORMAT TO USE WHEN QUERYING SERVER: 
 	DD-MM-YYYY 
 */
-function correctTimeZone(date) {
-	result = new Map()
-	newDate = date.toLocaleDateString("en-GB", {timeZone: "Asia/Singapore"}).split("/")
-	result.set("day", newDate[0])
-	result.set("month", newDate[1])
-	result.set("year", newDate[2])
-	return result
-}
 
 export default function EatingHistoryPage(props) {
 	const [date, setDate] = useState(new Date());
@@ -82,6 +74,10 @@ export default function EatingHistoryPage(props) {
 			mode="date"
 			onConfirm={handleConfirm}
 			onCancel={() => setShowDatePicker(false)}
+			isDarkModeEnabled={false}
+			display="spinner"
+			themeVariant="light"
+			textColor="black"
 			/>
 
 			<EatenMealsSection navigation={props.navigation} />
