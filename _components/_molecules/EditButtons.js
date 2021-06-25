@@ -22,13 +22,22 @@ export const EditButtonGroup = (props) => {
         props.navigation.navigate("Meals");
     };
 
-    return (
-        <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy" onPress={handleCopy} ></IconButton>
-            <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
-        </View>
-    )
+    if (props.type == "edit") {
+        return (
+            <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#F6C243" iconName= "ios-copy" onPress={handleCopy} ></IconButton>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
+            </View>
+        )
+    } else {
+        return (
+            <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-around', alignItems: 'center', width:320}}>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
+            </View>
+        ) 
+    }
 }
 
 const styles = StyleSheet.create({

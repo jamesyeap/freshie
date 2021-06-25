@@ -1,6 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { View, ScrollView } from 'react-native';
+import { View, ScrollView, StatusBar } from 'react-native';
 import { Container } from '../../_atoms/Container';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../_atoms/Text';
@@ -35,13 +35,13 @@ export function HomePage(props) {
 		const today = new Date();
 		const dateArgument = {
 			day: today.getDate(),
-			month: today.getMonth(),
+			month: today.getMonth() + 1,
 			year: today.getFullYear()
 		}
 		
 		setTimeout(() => {
-			getConsumedMeals_API(dateArgument);
-			updateDailyCalories_API();
+			getConsumedMeals_API(dateArgument, false);
+			updateDailyCalories_API(); 
 		}, 2000);
 
 		setLoading(false);
@@ -78,7 +78,7 @@ export function HomePage(props) {
 			</View>
 			<FAB 
 			gotoMeals={() => props.navigation.push("Meals")}
-			gotoAddCustomMeal={() => props.navigation.push("EditRecipe")}
+			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 			/>
 		</Container>
 	)

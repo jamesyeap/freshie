@@ -61,7 +61,7 @@ export default EditRecipePage = (props) => {
                 </View>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                <EditButtonGroup navigation={props.navigation} itemDetails={{ id: itemDetails.id, title, calories, ingredients, instructions }} />  
+                <EditButtonGroup type= {props.route.params.type} navigation={props.navigation} itemDetails={{ id: itemDetails.id, title, calories, ingredients, instructions }} />  
             </View>
         </Container>
     )

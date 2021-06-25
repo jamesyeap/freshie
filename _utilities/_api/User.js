@@ -4,24 +4,25 @@ import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loadi
 import { URL } from './_constants';
 
 /* Get a list of meals consumed for the day */
-export async function getConsumedMeals_API(values) {
+export async function getConsumedMeals_API(values, searchOnly) {
 	try {
 		console.log("Fetching consumed meals...")
-
 		const { token, username } = store.getState().auth;
 
 		store.dispatch(loading(true));
 		console.log(values);
 
 		const response = await axios({
-    			method: 'get',
+    			method: 'post',
     			url: `${URL}/api/${username}/consumed-meals/`,
     			headers: {
       				"Authorization": `Token ${token}`
     			}, 
-			data: values
+				data: values
 		});
-
+		console.log("here")
+		//console.log(response)
+		
 		/* Destructure the data received */
 		let consumedMealsArray = [];
 
@@ -35,34 +36,42 @@ export async function getConsumedMeals_API(values) {
 
 		store.dispatch(updateConsumedMeals(consumedMealsArray));
 		console.log("Successfully fetched consumed meals!");
+		if (!searchOnly) {
+			// Calculates the new amount of total calories consumed from the new array of consumed meals
+			console.log("Updating calories consumed...")
+			async function countCalories() { 
+				if (consumedMealsArray.length === 0) {
+					return 0;
+				} else {
+					let temp = 0; 
 
-		// Calculates the new amount of total calories consumed from the new array of consumed meals
-		console.log("Updating calories consumed...")
-		async function countCalories() { 
-			if (consumedMealsArray.length === 0) {
-				return 0;
-			} else {
-				let temp = 0; 
+					for (let i = 0; i < consumedMealsArray.length; i++) {
+						temp += consumedMealsArray[i].calories;
+					}
 
-				for (let i = 0; i < consumedMealsArray.length; i++) {
-					temp += consumedMealsArray[i].calories;
+					return temp;
 				}
-
-				return temp;
 			}
+
+			const newCaloriesConsumed = await countCalories();
+
+			store.dispatch(updateCaloriesConsumed(newCaloriesConsumed));
+
+			console.log("Successfully updated calories consumed!")
+			store.dispatch(loading(false));
+		} else {
+			store.dispatch(loading(false));	
 		}
 
-		const newCaloriesConsumed = await countCalories();
-
-		store.dispatch(updateCaloriesConsumed(newCaloriesConsumed));
-
-		console.log("Successfully updated calories consumed!")
-
-		store.dispatch(loading(false));
+		
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.status))
-		console.log(e.response);
+		if (e.response) {
+			store.dispatch(loading(false));
+			store.dispatch(error(e.response.data))
+			console.log(e.response);
+		} else {
+			console.log(e.request)
+		}
 	}
 }
 
@@ -85,10 +94,15 @@ export async function addConsumedMeal_API(values) {
 		});
 
 		console.log("Successfully added a consumed meal!");
-		console.log(response.data);
+		//console.log(response.data);
 		store.dispatch(loading(false));
-
-		await getConsumedMeals_API();
+		const today = new Date();
+		const dateArgument = {
+			day: today.getDate(),
+			month: today.getMonth() + 1,
+			year: today.getFullYear()
+		}
+		await getConsumedMeals_API(dateArgument, false);
 	} catch (e) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.status))
@@ -172,7 +186,13 @@ export async function deleteConsumedMeal_API(values) {
 		console.log("Successfully deleted the consumed meal!");
 
 		store.dispatch(loading(false));
-		await getConsumedMeals_API();
+		const today = new Date();
+		const dateArgument = {
+			day: today.getDate(),
+			month: today.getMonth() + 1,
+			year: today.getFullYear()
+		}
+		await getConsumedMeals_API(dateArgument, false);
 	} catch (e) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.status))

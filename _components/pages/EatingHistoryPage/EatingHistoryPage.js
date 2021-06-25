@@ -9,6 +9,7 @@ import EatenMealsSection from '../../_organisms/EatenMealsSection';
 import { prettifyDate } from '../../../_utilities/_helperFunctions/prettifyDate';
 import { getDay } from '../../../_utilities/_helperFunctions/getDay';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
+import { getConsumedMeals_API } from '../../../_utilities/_api/User';
 
 const Container = styled(ParentContainer)`
 	backgroundColor: #CCD7E0;
@@ -36,11 +37,19 @@ export default function EatingHistoryPage(props) {
 	const [showDatePicker, setShowDatePicker] = useState(false);
 
 	const handleConfirm = (newDate) => {
+		//let correctDate = correctTimeZone(newDate)
 		setDate(newDate);
 		setDateHeader(prettifyDate(newDate));
 		setDay(getDay(newDate));
-
+		//console.log(newDate)
+		//console.log(newerDate)
 		setShowDatePicker(false);
+		const dateArgument = {
+			day: newDate.getDate(),
+			month: newDate.getMonth() + 1,
+			year: newDate.getFullYear()
+		}
+		getConsumedMeals_API(dateArgument, true)
 	}
 
 	return (
@@ -65,6 +74,10 @@ export default function EatingHistoryPage(props) {
 			mode="date"
 			onConfirm={handleConfirm}
 			onCancel={() => setShowDatePicker(false)}
+			isDarkModeEnabled={false}
+			display="spinner"
+			themeVariant="light"
+			textColor="black"
 			/>
 
 			<EatenMealsSection navigation={props.navigation} />
