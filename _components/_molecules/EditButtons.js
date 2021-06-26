@@ -8,7 +8,18 @@ export const EditButtonGroup = (props) => {
 
     const handleSave = () => {
         if (props.itemDetails.id) {
-            editRecipe_API(props.itemDetails)
+            const { title, calories, ingredients, instructions } = props.itemDetails;
+            const values = {
+                data: {
+                    title,
+                    calories,
+                    ingredients,
+                    instructions
+                }, 
+                foodItemID: props.itemDetails.id
+            }
+
+            editRecipe_API(values)
             props.navigation.goBack()
         } else {
             console.log(props.itemDetails);

@@ -1,17 +1,19 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useReducer } from 'react';
 import styled from 'styled-components';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader';
 import { RegularText, HeaderMediumText } from '../../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { FAB } from '../../../_molecules/FAB';
+import { TextInputModal } from '../../../_molecules/TextInputModal';
 
 import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
 import MealPlansDashboardSection from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection';
 import MealsDashboardSection from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection';
 import ReferralCode from '../../../_molecules/ReferralCode';
 
-import { getRecipeDetails_API, getMealPlans_API, deleteRecipe_API, getRecipeList_API } from '../../../../_utilities/_api/Recipe';
+import { getRecipeDetails_API, getMealPlans_API, deleteRecipe_API, getRecipeList_API, createMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { getClients_API, getReferralCode_API } from '../../../../_utilities/_api/Trainer';
+import { SwitchIOS } from 'react-native';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -73,7 +75,20 @@ const TabBar = (props) => {
 		</TabBarContainer>
 	)
 }
-      
+
+const createMealPlanAction = {
+	SET_MEAL_PLAN_NAME: "SET_MEAL_PLAN_NAME",
+	SET_SHOW_MODAL: "SET_SHOW_MODAL"
+}
+
+function createMealPlanReducer(state, action) {
+	switch(action.type) {
+		case SET_MEAL_PLAN_NAME: 
+			return {...state, name: action.payload};
+		case SET_SHOW_MODAL:
+			return {...state, showModal: action.payload};
+	}
+}
 
 export default function DashboardPage(props) {
 	const [loading, setLoading] = useState(true);
@@ -83,6 +98,10 @@ export default function DashboardPage(props) {
 		{ key: 'second', title: 'Second' },
 		{ key: 'third', title: 'Third' }
 	      ]);
+	const [newMealPlan, dispatch] = useReducer(createMealPlanReducer, {
+		name: null,
+		showModal: false
+	})
 
 	const firstRoute = () => <ClientsDashboardSection navigation={props.navigation} />;
 	const secondRoute = () => <MealPlansDashboardSection navigation={props.navigation} />;
@@ -106,6 +125,10 @@ export default function DashboardPage(props) {
 
 	useEffect(loadData, []);
 
+	const handleCreateMealPlan = () => {
+		createMealPlan_API({ name: newMealPlan.name })
+	}
+
 	if (loading) {
 		return (<Container>
 				<HeaderMediumText>Loading...</HeaderMediumText>
@@ -128,6 +151,13 @@ export default function DashboardPage(props) {
 				variation="trainer"
 				gotoAddMeal={() => props.navigation.push("EditRecipe", { type: "new" })}
 				gotoAddMealPlan={() => alert("placeholder")}
+				/>
+
+				<TextInputModal
+				setModalVisible={(boolean) => dispatch({ type: createMealPlanAction.SET_SHOW_MODAL, payload: boolean })}
+				onChangeText={(value) => dispatch({ type: createMealPlanAction.SET_MEAL_PLAN_NAME, payload: value })}
+				onPress={handleCreateMealPlan}
+				modalVisible={newMealPlan.showModal}
 				/>
 
 			</Container>

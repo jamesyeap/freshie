@@ -26,16 +26,20 @@ export default EditRecipePage = (props) => {
     const [calories, setCalories] = useState("")
     const [ingredients, setIngredients] = useState(null)
     const [instructions, setInstructions] = useState("")
+    const [id, setId] = useState(null);
 
     const preload = () => {
         if (props.route.params && props.route.params.itemDetails) {
             /* NOTE: If a user is in this page to EDIT an EXISTING RECIPE, the "id" field of "itemDetails" is a number, and WILL NOT BE NULL. */ 
             const { id, title, ingredients, instructions, calories, servings, author, custom } = props.route.params.itemDetails;
 
+            setId(id);
             setTitle(title);
             setCalories(calories);
             setIngredients(ingredients);
             setInstructions(instructions);
+
+            alert(id);
 
         } else {
             /* NOTE: If a user is in this page to ADD a NEW RECIPE, the "id" field of "itemDetails" is null */ 
@@ -59,7 +63,7 @@ export default EditRecipePage = (props) => {
                 </View>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                <EditButtonGroup type={props.route.params.type} navigation={props.navigation} itemDetails={{ title, calories: Number(calories), ingredients, instructions }} />  
+                <EditButtonGroup type={props.route.params.type} navigation={props.navigation} itemDetails={{ id, title, calories: Number(calories), ingredients, instructions }} />  
             </View>
         </Container>
     )

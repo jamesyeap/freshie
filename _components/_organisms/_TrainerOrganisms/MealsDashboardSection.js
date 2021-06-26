@@ -1,67 +1,57 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer } from 'react';
 import { FlatList, Modal } from 'react-native';
-import Portal from '@burstware/react-native-portal';
 import { BigButton } from '../../_atoms/Button';
 import styled from 'styled-components';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { ButtonModal } from '../../_molecules/ButtonModal';
-import { TextInputModal } from '../../_molecules/TextInputModal';
 import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
-import { addRecipeToMealPlan_API } from '../../../_utilities/_api/Trainer';
 import { connect } from 'react-redux';
-import { MealPlan } from '../../_molecules/MealPlan';
+
+const selectedFoodItemActions = {
+	SET_SELECTED_ITEM: "SET_SELECTED_ITEM",
+	SET_MODAL_VISIBLE: "SET_MODAL_VISIBLE"
+}
+
+function selectedFoodItemReducer(state, action) {
+	switch(action.type) {
+		case selectedFoodItemActions.SET_SELECTED_ITEM: 
+			return {...state, foodItem: action.payload}
+		case selectedFoodItemActions.SET_MODAL_VISIBLE:
+			return {...state, showModal: action.payload}
+	}
+}
 
 function mapStateToProps(state) {
-	const { recipes, mealPlans } = state.recipe;
-	return { recipes, mealPlans };
+	const { recipes } = state.recipe;
+	return { recipes };
 }
 
 export function MealsDashboardSection (props) {
-	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
-	const [selectedFoodItemDetails, setSelectedFoodItemDetails] = useState(null);
-	const [modalVisible, setModalVisible] = useState(false);
-
-	const [clientUsernameTextModalVisible, setClientUsernameTextModalVisible] = useState(false);
-	const [clientUsername, setClientUsername] = useState("");
-
-	const [mealPlanTextModalVisible, setMealPlanTextModalVisible] = useState(false);
-	const [mealPlanID, setMealPlanID] = useState("");
-
-	const [searchModalVisible, setSearchModalVisible] = useState(false);
+	const [selectedFoodItem, dispatch] = useReducer(selectedFoodItemReducer, {
+		foodItem: null,
+		showModal: false
+	});
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
-	const handleAddToMealPlan = () => {
-		// adds the recipe to a meal-plan
-		const values = {
-			clientUsername: clientUsername,
-			recipeID: selectedFoodItem,
-			mealPlanID: mealPlanID,
-		}
+	const handleSelectFoodItem = (foodItem) => {
+		dispatch({ type: selectedFoodItemAction.SET_SELECTED_ITEM, 
+			   payload: foodItem
+		})
 
-		addRecipeToMealPlan_API(values);
-		alert(`Adding recipe ${selectedFoodItem} to meal plan ${mealPlanID} for client ${clientUsername}...`);
-	}
-
-	const handleShowMealPlanSelectionModal = () => {
-		setClientUsernameTextModalVisible(false);
-		setMealPlanTextModalVisible(true);
+		dispatch({ type: selectedFoodItemActions.SET_SHOW_MODAL,
+			   payload: true
+		})
 	}
 
 	const handleEdit = () => {
-		// redirects the user to the "EditRecipe" page that is pre-filled with all the item's info
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItemDetails[0], type: "edit" });
+		alert(selectedFoodItem.foodItem);
+		props.navigation.push("EditRecipe", { type: "edit", itemDetail: selectedFoodItem.foodItem });
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem);
-		props.navigation.navigate("Home");
+		deleteRecipe_API()
 	}
 
-	const loadSelectedFoodItemDetails = (id) => {
-		setSelectedFoodItem(id);
-		const itemDetails = props.recipes.filter(foodItem => foodItem.id === id);
-		setSelectedFoodItemDetails(itemDetails);
-	}
 	/* ************************************************************ */
 
 	/* Remove recipes without an author (that were duplicated on the backend for immutability and associated fancy concepts hehehoho) */
@@ -70,11 +60,10 @@ export function MealsDashboardSection (props) {
 	return (
 		<>
 		 <ButtonModal 
-		 modalVisible={modalVisible} 
-		 setModalVisible={setModalVisible} 
+		 modalVisible={selectedFoodItem.showModal} 
+		 setModalVisible={(boolean) => dispatch({ type: selectedFoodItemActions.SET_MODAL_VISIBLE, payload: boolean })} 
 		 handleEdit={handleEdit}
 		 handleDelete={handleDelete}
-		 setClientUsernameTextModalVisible={setClientUsernameTextModalVisible}
 		 variation="Meals_Trainer"
 	        />
 
@@ -82,8 +71,8 @@ export function MealsDashboardSection (props) {
 		 data={originalRecipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     itemDetails={item} 
-						     setModalVisible={setModalVisible} 
-						     setSelectedFoodItem={loadSelectedFoodItemDetails}
+						     setModalVisible={(boolean) => dispatch({ type: selectedFoodItemActions.SET_MODAL_VISIBLE, payload: boolean })} 
+						     setSelectedFoodItem={handleSelectFoodItem}
 					   />}
 		 keyExtractor={(item) => item.id}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}

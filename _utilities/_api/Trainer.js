@@ -95,8 +95,6 @@ export async function getClientMealPlan_API(values) {
 		console.log("Successfully fetched client meal plans!");
 
 		return (response.data);
-
-		await getRecipeList_API();
 	} catch (e) {
 		if (e.response) {
 			store.dispatch(loading(false));

@@ -38,11 +38,11 @@ export const ButtonModal = (props) => {
 
 	// Eating History (client)
 	const EatingHistoryClientButtons = () => 
-	<>
-		<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
-		<SmallButton label="Remove" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
-		<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
-	</>
+		<>
+			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
+			<SmallButton label="Remove" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
+			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
+		</>
 
 	// Meal Plan (trainer)
 	const MealPlanTrainerButtons = () => 
@@ -56,10 +56,9 @@ export const ButtonModal = (props) => {
 	// Meals (trainer)
 	const MealsTrainerButtons = () => 
 		<>
-			<SmallButton label="Assign to Meal Plan" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(() => props.setClientUsernameTextModalVisible(true))} />
 			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
 			<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
-			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
+			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(false)} />
 		</>
 
 	/* Determines which set of button groups to render based on the variation argument given by "props.variation" */

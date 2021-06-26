@@ -11,7 +11,6 @@ const MealTypeText = styled(MediumText)`
 	backgroundColor: #FFFFFF;
 `;
 
-
 const DATA = [
   {
     title: "Breakfast",

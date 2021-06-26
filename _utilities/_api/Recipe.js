@@ -114,7 +114,31 @@ export async function addRecipe_API(values) {
 
 /* Edits the recipe (eg ingredients needed, steps to prepare, etc...) */
 export async function editRecipe_API(values) {
+	try {
+		const { token, username } = store.getState().auth;
+		console.log("Editing recipe...");
 
+		store.dispatch(loading(true));
+
+		const response = await axios({
+			method: 'post',
+			url: `${URL}/api/recipes/${values.foodItemID}/`,
+			headers: {
+				"Authorization": `Token ${token}`
+			},
+			data: values.data
+		});
+
+		console.log(response.data);
+		console.log("Successfully edited recipe!")
+
+		store.dispatch(getMealPlans(response.data));
+		store.dispatch(loading(false));
+	} catch (e) {
+		store.dispatch(loading(false));
+		store.dispatch(error(e.response.statusMessage))
+		console.log(e.response.statusMessage)
+	}
 };
 
 /* Deletes the recipe */
@@ -143,4 +167,34 @@ export async function deleteRecipe_API(values) {
 		console.log(e.response.data.detail)
 		store.dispatch(error(e.response.data.detail))
 	}
+}
+
+/* Create a new meal plan */
+// 
+export async function createMealPlan_API(values) { 
+	try {
+		const { token, username } = store.getState().auth;
+		console.log("Creating a new meal plan...");
+
+		store.dispatch(loading(true));
+
+		const response = await axios({
+			method: 'post',
+			url: `${URL}/api/${username}/add-mealplan/`,
+			headers: {
+				"Authorization": `Token ${token}`
+			},
+			data: values
+		});
+
+		console.log(response.data);
+		console.log("Successfully created meal plan!")
+
+		store.dispatch(getMealPlans(response.data));
+		store.dispatch(loading(false));
+	} catch (e) {
+		store.dispatch(loading(false));
+		console.log(e.response.data.detail)
+		store.dispatch(error(e.response.data.detail))
+	}	
 }
