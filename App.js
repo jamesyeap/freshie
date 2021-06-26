@@ -6,7 +6,7 @@ import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 import { store } from './_redux/store/store'; 
 import Portal from '@burstware/react-native-portal'
-
+import { SearchPage } from './_components/pages/SearchPage/SearchPage';
 import RootStackScreen from './_navigation/RootStackScreen';
 
 export default function App() {
@@ -22,13 +22,14 @@ export default function App() {
   }
 
   return (
-    <Portal.Host>
-      <Provider store={store}>
-        <NavigationContainer>
-          <RootStackScreen />
-        </NavigationContainer>
-      </Provider>
-    </Portal.Host>
+    <SearchPage/>
+    // <Portal.Host>
+    //   <Provider store={store}>
+    //     <NavigationContainer>
+    //       <RootStackScreen />
+    //     </NavigationContainer>
+    //   </Provider>
+    // </Portal.Host>
   )
 }
 
