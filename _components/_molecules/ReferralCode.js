@@ -7,13 +7,18 @@ import { Ionicons } from '@expo/vector-icons';
 
 const Container = styled.View`
 	flexDirection: column;
+	alignItems: flex-start;
+	justifyContent: center;
 	height: 72px;
-	marginBottom: 10px;
+	width: 220px;
+	marginLeft: 55px;
+	alignSelf: flex-start;
 `;
 
 const TextInputContainer = styled.View`
 	flexDirection: column;
 	justifyContent: center;
+	alignItems: flex-start;
 	borderRadius: 10px;
 `;
 
@@ -21,7 +26,7 @@ const TextInputBox = styled.TextInput`
 	fontFamily: "Inter_400Regular";
 	fontSize: 16px;
 	lineHeight: 24px;
-	width: 276px;
+	width: 170px;
 	height: 40px;
 	borderColor: #E2E8F0;
 	borderWidth: 1px;
@@ -48,6 +53,22 @@ const FeedbackText = styled(RegularText)`
 	textAlign: right;
 `;
 
+const ReferralCodeContainer = styled.View`
+	flexDirection: row;
+	alignItems: flex-start;
+	justifyContent: center;
+`;
+
+const CopyButtonContainer = styled.TouchableOpacity`
+	flexDirection: column;
+	alignItems: center;
+	justifyContent: center;
+	width: 74px;
+	height: 40px;
+	borderRadius: 6px;
+	backgroundColor: #EDF2F7;
+`;
+
 const TextInput = (props) => {
 	return (
 		<TextInputContainer>
@@ -62,16 +83,6 @@ const TextInput = (props) => {
 	)
 }
 
-const CopyButtonContainer = styled.TouchableOpacity`
-	flexDirection: column;
-	alignItems: center;
-	justifyContent: center;
-	width: 74px;
-	height: 40px;
-	borderRadius: 6px;
-	backgroundColor: #EDF2F7;
-`;
-
 const CopyButton = (props) => {
 	const iconToShow = props.copied ? "checkmark-circle" : "md-copy";
 	const sizeOfIcon = props.copied ? 25 : 20;
@@ -83,20 +94,12 @@ const CopyButton = (props) => {
 	)
 }
 
-const ReferralCodeContainer = styled.View`
-	flexDirection: row;
-	alignItems: center;
-	justifyContent: center;
-	width: 351px;
-`;
-
 function mapStateToProps(state) {
 	const { referralCode } = state.trainer;
 	return { referralCode };
 }
 
 export function ReferralCode (props) {
-	console.log(props.referralCode);
 	const [copied, setCopied] = useState(false);
 
 	const handleCopy = () => {
@@ -105,7 +108,7 @@ export function ReferralCode (props) {
 	}
 
 	return (
-		<Container>
+		<Container >
 			<LabelText>Your referral code</LabelText>
 			<ReferralCodeContainer>
 				<TextInput

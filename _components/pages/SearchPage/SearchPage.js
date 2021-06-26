@@ -5,13 +5,13 @@ import { getRecipeList_API } from '../../../_utilities/_api/Recipe'
 import { connect } from 'react-redux'
 import { FoodItem } from '../../_molecules/FoodItem'
 import { store } from '../../../_redux/store/store';
-import { ScrollView } from 'react-native'
 import { getClients_API, addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_utilities/_api/Trainer'
+import { ScrollView, View, SafeAreaView } from 'react-native'
 import { ClientItem } from '../../_molecules/ClientItem'
+import { IconButton } from '../../_atoms/Button';
 
 export default function SearchPage (props) {
     const [search, setSearch] = useState("");
-    const [fixedList, setFixedList] = useState([])
     const [list, setList] = useState([]);
 
     /* The details of the mealPlan */
@@ -39,7 +39,6 @@ export default function SearchPage (props) {
         const preload = () => {
             getRecipeList_API();
             const theRecipes = store.getState().recipe.recipes;
-            setFixedList(theRecipes);
             setList(theRecipes)
         }
 
@@ -64,8 +63,17 @@ export default function SearchPage (props) {
 
         return (
             <Container>
-                <ScrollView style= {{width: "100%"}}>
-                    <SearchBar autoCapitalize="none" lightTheme platform="ios" containerStyle={{width: "90%", alignSelf:'center'}} placeholder="search for..." value={search} onChangeText={(text) => onChangeMethod(text)}></SearchBar>
+                <SafeAreaView style={{ flex: 0.2,flexDirection: 'row', width: "95%", justifyContent: 'flex-start'}}>
+                    <IconButton
+                    iconName={props.iconName ? props.iconName : "arrow-back"}
+                    iconSize={25}
+                    iconColor="black"
+                    buttonStyle={{ marginLeft: 0 }}
+                    onPress={() => props.navigation.goBack()}
+                    />
+                    <SearchBar autoCapitalize="none" lightTheme platform="ios" containerStyle={{width: "100%", alignSelf:'center', flex:1}} placeholder="search for..." value={search} onChangeText={(text) => onChangeMethod(text)}></SearchBar>
+                </SafeAreaView>
+                <ScrollView style= {{width: "100%", height: "60%"}} contentContainerStyle= {{ alignItems: 'center'}}>
                     {searchComponents()}
                 </ScrollView>
             </Container>
@@ -75,7 +83,6 @@ export default function SearchPage (props) {
         const preload = () => {
             getClients_API()
             const theClients = store.getState().trainer.clients;
-            setFixedList(theClients);
             setList(theClients)
         }
 
@@ -90,17 +97,26 @@ export default function SearchPage (props) {
             console.log(text)
             if (text !== "") {
                 const theClients = store.getState().trainer.clients;
-                const filteredList = theRecipes.filter(item => item.title.includes(text))
+                const filteredList = theClients.filter(client => client.username.includes(text))
                 setList(filteredList)
             } else {
-                const theRecipes = store.getState().trainer.clients;
-                setList(theRecipes)
+                const theClients = store.getState().trainer.clients;
+                setList(theClients)
             }
         }
         return (
             <Container>
-                <ScrollView style= {{width: "100%"}}>
-                    <SearchBar autoCapitalize="none" lightTheme platform="ios" containerStyle={{width: "90%", alignSelf:'center'}} placeholder="search for..." value={search} onChangeText={(text) => onChangeMethod(text)}></SearchBar>
+                <View style={{ flex: 0.2,flexDirection: 'row', width: "95%", justifyContent: 'flex-start'}}>
+                    <IconButton
+                    iconName={props.iconName ? props.iconName : "arrow-back"}
+                    iconSize={25}
+                    iconColor="black"
+                    buttonStyle={{ marginLeft: 0 }}
+                    onPress={() => props.navigation.goBack()}
+                    />
+                    <SearchBar autoCapitalize="none" lightTheme platform="ios" containerStyle={{width: "100%", alignSelf:'center', flex:1}} placeholder="search for..." value={search} onChangeText={(text) => onChangeMethod(text)}></SearchBar>
+                </View>
+                <ScrollView style= {{width: "100%"}} contentContainerStyle= {{ alignItems: 'center'}}>
                     {searchComponents()}
                 </ScrollView>
             </Container>

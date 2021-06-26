@@ -122,8 +122,8 @@ export const BigButtonText = styled(SemiBoldText)`
 	color: #FFFFFF;
 `;
 
-export const BigButton = ({label, state, onPress,...props}) => {
-	return (<BigButtonContainer marginTop= {props.marginTop} margin={props.margin} state={state} onPress={onPress}>
+export const BigButton = ({label, state, buttonStyle, onPress,...props}) => {
+	return (<BigButtonContainer marginTop= {props.marginTop} margin={props.margin} state={state} onPress={onPress} style={buttonStyle} >
 			<BigButtonText>{label}</BigButtonText>
 		</BigButtonContainer>);
 }

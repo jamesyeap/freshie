@@ -10,7 +10,7 @@ export const FAB = (props) => {
   const { open } = state;
   
   const fabStyle = {
-	  backgroundColor: "#F6C243"
+	  backgroundColor: "#AFEEEE",
   }
 
   const buttonChoices = () => {
@@ -22,8 +22,20 @@ export const FAB = (props) => {
           icon={open ? 'minus' : 'plus'}
           actions={[
             {
-              icon: 'plus',
-              label: 'Add Custom Meal',
+              icon: 'account-circle',
+              label: 'Add Client',
+              onPress: () => props.gotoAddCustomMeal(),
+              small: false,
+            },
+            {
+              icon: 'food-drumstick',
+              label: 'Add Meal',
+              onPress: () => props.gotoAddCustomMeal(),
+              small: false,
+            },
+            {
+              icon: 'book',
+              label: 'Add Meal Plan',
               onPress: () => props.gotoAddCustomMeal(),
               small: false,
             },

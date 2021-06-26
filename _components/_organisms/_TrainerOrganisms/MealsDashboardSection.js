@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList, Modal } from 'react-native';
 import Portal from '@burstware/react-native-portal';
-import { SmallButton } from '../../_atoms/Button';
+import { BigButton } from '../../_atoms/Button';
 import styled from 'styled-components';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { ButtonModal } from '../../_molecules/ButtonModal';
@@ -64,6 +64,9 @@ export function MealsDashboardSection (props) {
 	}
 	/* ************************************************************ */
 
+	/* Remove recipes without an author (that were duplicated on the backend for immutability and associated fancy concepts hehehoho) */
+	const originalRecipes = props.recipes.filter(x => x.author !== null);
+
 	return (
 		<>
 		 <ButtonModal 
@@ -75,31 +78,8 @@ export function MealsDashboardSection (props) {
 		 variation="Meals_Trainer"
 	        />
 
-		<TextInputModal
-		modalVisible={clientUsernameTextModalVisible}
-		setModalVisible={setClientUsernameTextModalVisible}
-		onChangeText={setClientUsername}
-		value={clientUsername}
-		onPress={handleShowMealPlanSelectionModal}
-		label="For which client?"
-		/>
-
-		<TextInputModal
-		modalVisible={mealPlanTextModalVisible}
-		setModalVisible={setMealPlanTextModalVisible}
-		onChangeText={setMealPlanID}
-		value={mealPlanID}
-		onPress={handleAddToMealPlan}
-		label="For which meal plan?"
-		/>
-
-		<MealPlansModal 
-		visible={searchModalVisible}
-		mealPlans={props.mealPlans}
-		/>
-
 		<FlatList
-		 data={props.recipes}
+		 data={originalRecipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
@@ -115,39 +95,3 @@ export function MealsDashboardSection (props) {
 
 export default connect(mapStateToProps)(MealsDashboardSection);
 
-const ModalContainer = styled.SafeAreaView`
-	flex: 1
-`;
-
-const MealPlansModal = (props) => {
-	return (
-		<Portal>
-		<Modal
-		animalType="slide"
-		transparent={true}
-		visible={props.visible}
-		onRequestClose={() => {
-			Alert.alert("Modal has been closed.");
-			setModalVisible(!modalVisible);
-		}}
-		>
-		<FlatList
-		 data={props.mealPlans}
-		 renderItem={({item}) => <MealPlan id={item.id} 
-		 				   title={item.title}
-						   recipes={item.meal}
-		 				   open={open} 
-						   setVisible={setVisible} 
-						   navigation={props.navigation} 
-						   setModalVisible={setButtonModalVisible} 
-						   setSelectedFoodItem={loadSelectedFoodItemDetails} 
-						   setTextModalVisible={setTextModalVisible}
-						   variation="Trainer"
-						   />}
-		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
-		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
-		/>
-		</Modal>
-		</Portal>
-	)
-}

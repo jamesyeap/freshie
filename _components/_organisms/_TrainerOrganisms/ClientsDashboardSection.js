@@ -2,6 +2,7 @@ import React, { useEffect } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components';
 import { connect } from 'react-redux';
+import { BigButton } from '../../_atoms/Button';
 import { ClientItem } from '../../_molecules/ClientItem';
 import { getClients_API } from '../../../_utilities/_api/Trainer';
 import { store } from '../../../_redux/store/store';

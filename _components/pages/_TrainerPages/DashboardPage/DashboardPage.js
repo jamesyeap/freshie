@@ -45,6 +45,11 @@ const TabButtonContainer = styled.TouchableOpacity`
 	borderBottomWidth: ${props => props.isSelected ? 1 : 0};
 `;
 
+const TabViewContainer = styled.View`
+	height: 80%;
+	flexDirection: column;
+`;
+
 const TabButtonText = styled(RegularText)`
 	fontSize: 16px;
 	lineHeight: 24px;
@@ -109,6 +114,7 @@ export default function DashboardPage(props) {
 		return (
 			<Container>
 				<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
+				<TabViewContainer>
 				<TabView
 				navigationState={{ index, routes }}
 				renderScene={renderScene}
@@ -116,6 +122,12 @@ export default function DashboardPage(props) {
 				onIndexChange={setIndex}
 				sceneContainerStyle={{ alignItems: "center" }}
 				/>
+				</TabViewContainer>
+
+				<FAB 
+				variation="trainer"
+				/>
+
 				<ReferralCode />
 			</Container>
 		)

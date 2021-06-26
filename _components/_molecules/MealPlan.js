@@ -80,7 +80,7 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 					<MealPlanNameText>{title}</MealPlanNameText>
 					<PreviewTextContainer>
 						{ 
-							recipes.length >= 3
+							(recipes.length <= 3)
 								? recipes.map(e => <PreviewText>{e.title}</PreviewText>) 
 								: recipes.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
 						}

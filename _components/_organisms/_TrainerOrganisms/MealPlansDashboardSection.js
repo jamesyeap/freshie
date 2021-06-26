@@ -3,7 +3,7 @@ import { FlatList } from 'react-native';
 import styled from 'styled-components';
 import { MealPlan } from '../../_molecules/MealPlan';
 import { FoodItem } from '../../_molecules/FoodItem';
-import { MediumButton } from '../../_atoms/Button';
+import { BigButton } from '../../_atoms/Button';
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { ButtonModal } from '../../_molecules/ButtonModal';
