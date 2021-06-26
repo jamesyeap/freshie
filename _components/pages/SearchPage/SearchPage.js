@@ -7,16 +7,18 @@ import { FoodItem } from '../../_molecules/FoodItem'
 import { store } from '../../../_redux/store/store';
 import { ScrollView } from 'react-native'
 
-function mapStateToProps(state) {
-    const { recipes } = state.recipe
-    return recipes 
-}
-
-export function SearchPage (props) {
+export default function SearchPage (props) {
     const [search, setSearch] = useState("");
     const [fixedList, setFixedList] = useState([])
     const [list, setList] = useState([]);
-    //let searchType = props.route.params.variation // ChooseRecipe / ChooseClient
+
+    /* The ID of the Meal Plan selected */
+    const { mealPlanID } = props.route.params;
+
+    const handleAddToMealPlan = (foodItemID) => {
+        alert(mealPlanID);
+        console.log(foodItemID);
+    }
 
     const preload = () => {
         getRecipeList_API();
@@ -27,21 +29,8 @@ export function SearchPage (props) {
 
     useEffect(preload, []);
 
-    // async function changeList(thing) {
-    //     return setList(thing)
-    // }
-
-
-
-    // const onRender = async () => { 
-    //     await getRecipeList_API()
-    //     console.log(recipes)
-    //     changeList(recipes)
-    //     console.log(list)
-    // }
-
     const searchComponents = () => {
-            return (list.map( x => {return (<FoodItem key={x.id} itemDetails= {x} title= {x.title} value= {x.calories}/>)}))
+            return (list.map( x => {return (<FoodItem key={x.id} itemDetails={x} title={x.title} value={x.calories} setSelectedFoodItem={handleAddToMealPlan}/>)}))
     }
 
     const onChangeMethod = (text) => {
@@ -67,5 +56,3 @@ export function SearchPage (props) {
     </Container>
     )
 }
-
-export default connect(mapStateToProps)(SearchPage)

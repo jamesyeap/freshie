@@ -22,14 +22,13 @@ export default function App() {
   }
 
   return (
-    <SearchPage/>
-    // <Portal.Host>
-    //   <Provider store={store}>
-    //     <NavigationContainer>
-    //       <RootStackScreen />
-    //     </NavigationContainer>
-    //   </Provider>
-    // </Portal.Host>
+    <Portal.Host>
+      <Provider store={store}>
+        <NavigationContainer>
+          <RootStackScreen />
+        </NavigationContainer>
+      </Provider>
+    </Portal.Host>
   )
 }
 

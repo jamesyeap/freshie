@@ -107,11 +107,11 @@ export const MealPlansDashboardSection = (props) => {
 
 	/* Add a food item to the meal plan template */
 	const handleAddFoodItem = () => {
-		props.navigation.push("SearchPage", { mealPlanID: selectedMealPlan.id, variation: "ChooseRecipe" })
+		props.navigation.push("Search", { mealPlanID: selectedMealPlan.mealPlan.id, variation: "ChooseRecipe" })
 	}
 
 	const handleAssignToClient = (mealPlan) => {
-		props.navigation.push("SearchPage", { mealPlanID: selectedMealPlan.id, variation: "ChooseClient" })
+		props.navigation.push("Search", { mealPlanID: selectedMealPlan.mealPlan.id, variation: "ChooseClient" })
 	}
 
 	return (
