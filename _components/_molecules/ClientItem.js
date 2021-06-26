@@ -11,7 +11,7 @@ const ClientItemContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	alignItems: center
 	width: 310px;
-	height: 120px;
+	height: 77px;
 	borderRadius: 10px;
 	borderWidth: 1px;
 	borderColor: #E6F2FC;
@@ -46,7 +46,6 @@ export const ClientItem = (props) => {
 			
 			<ClientInfoContainer>
 				<ClientNameText>{props.clientDetails.user.first_name}</ClientNameText>
-				<CaloriesText>200/2500 kcal</CaloriesText>
 			</ClientInfoContainer>
 
 			<IconButton

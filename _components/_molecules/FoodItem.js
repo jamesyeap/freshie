@@ -10,6 +10,7 @@ import { Host, Portal } from 'react-native-portalize';
 import { Info } from './Info';
 import { addConsumedMeal_API } from '../../_utilities/_api/User';
 import { deleteRecipe_API } from '../../_utilities/_api/Recipe';
+import { PrototypePage } from '../pages';
 
 const FoodItemContainer = styled.TouchableOpacity`
 	flexDirection: row;
@@ -60,7 +61,7 @@ export const FoodItem = (props) => {
 				<FoodItemNameText>{title}</FoodItemNameText>
 				<Info
 				value={calories}
-				unit="kcal"
+				unit= "kcal"
 				/>
 			</FoodItemInfoContainer>
 		</FoodItemContainer>
