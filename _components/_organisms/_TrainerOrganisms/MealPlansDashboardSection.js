@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useReducer, createContext } from 'react';
 import { FlatList } from 'react-native';
 import styled from 'styled-components';
 import { MealPlan } from '../../_molecules/MealPlan';
@@ -9,78 +9,115 @@ import { determineMealType } from '../../../_utilities/_helperFunctions/determin
 import { ButtonModal } from '../../_molecules/ButtonModal';
 import { TextInputModal } from '../../_molecules/TextInputModal';
 import { assignClientMealPlan_API } from '../../../_utilities/_api/Trainer';
+import Modal from 'react-native-modal';
 
 function mapStateToProps(state) {
-	const { mealPlans } = state.recipe;
-	return { mealPlans };
+	const { mealPlans, recipes } = state.recipe;
+	return { mealPlans, recipes };
 }
 
-export const MealPlansDashboardSection = (props) => {
-	const [open, setOpen] = useState(null);
-	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
-	const [selectedFoodItemDetails, setSelectedFoodItemDetails] = useState(null);
-	const [buttonModalVisible, setButtonModalVisible] = useState(false);
-	const [textModalVisible, setTextModalVisible] = useState(false);
-	const [user, setUser] = useState(""); // stores the name of the user the meal is to be assigned to
+/************ Logic for FoodItem ************/
+const selectedFoodItemActions = {
+	SET_SELECTED_ITEM: "SET_SELECTED_ITEM",
+}
 
-	const setVisible = (id) => {
-		if (id === open) {
-			setOpen(null);
+function selectedFoodItemReducer (foodItemDetails, action) {
+	switch(action.type) {
+		case selectedFoodItemActions.SET_SELECTED_ITEM:
+			return {foodItemID: action.payload};
+		default:
+			return foodItemDetails;
+	}
+}
+
+/************ END ***********************/
+
+/************ Logic for MealPlan ************/
+const selectedMealPlanActions = {
+	SET_SELECTED_MEAL_PLAN: "SET_SELECTED_MEAL_PLAN",
+}
+
+function selectedMealPlanReducer (mealPlanDetails, action) {
+	switch(action.type) {
+		case selectedMealPlanActions.SET_SELECTED_ITEM:
+			return { mealPlan: action.payload };
+		default:
+			return mealPlanDetails;
+	}
+}
+/************ END ***********************/
+
+export const MealPlansDashboardSection = (props) => {
+	const [selectedMealPlan, dispatchSelectedMealPlan] = useReducer(selectedMealPlanReducer, {
+		mealPlan: null
+	});
+
+	const handleExpandMealPlan = (mealPlan) => {
+		// Minimize meal plan
+		if (mealPlan.id === selectedMealPlan.mealPlan.id) {
+			dispatchSelectedMealPlan({ type: selectedMealPlanActions.SET_SELECTED_MEAL_PLAN, 
+						   payload: null
+			})
 		} else {
-			setOpen(id);
+			// Expand meal plan
+			dispatchSelectedMealPlan({ type: selectedMealPlanActions.SET_SELECTED_MEAL_PLAN, 
+						   payload: mealPlan
+			})
 		}
 	} 
 
-	const handleEdit = () => {
-		// redirects the user to the "EditRecipe" page that is pre-filled with all the item's info
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItemDetails[0] });
-	}
+	const [selectedFoodItem, dispatchSelectedFoodItem] = useReducer(selectedFoodItemReducer, {
+		foodItem: null
+	})
 
-	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem);
-		props.navigation.navigate("Home");
-	}
-
-	const loadSelectedFoodItemDetails = (id) => {
-		setSelectedFoodItem(id);
-
-		let listOfRecipes = [];
-		props.mealPlans.forEach(e => {
-			e.meal.forEach(x => {
-				listOfRecipes.push(x);
+	const handleSelectFoodItem = (foodItem) => {
+		// Close Button modal and clear preloaded info
+		if (foodItem.id === selectedFoodItem.foodItem.id) {
+			dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_SELECTED_ITEM,
+						   payload: null
 			})
-		})
+		} else {  // Show Button modal and preload info
+			dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_SELECTED_ITEM,
+						   payload: foodItem
+
+			})
+		}
+	}
+
+	/* View the details of the food item inside the meal plan template */
+	const handleViewFoodItem = () => {
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem })
+	}
+
+	/* Edit food item inside the meal plan template */
+	const handleEditFoodItem = () => {
+		alert(foodItem);
+		// the details of the selected food item is given to the editPage to prefill the fields in the page
+		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem }) 
+	}
+
+	/* Delete the food item inside the meal plan template */
+	const handleDeleteFoodItem = (foodItem) => {
+		/* CALL SOME API HERE */
+		props.navigation.push("Dashboard")
+	}
+
+	/* Add a food item to the meal plan template */
+	const handleAddFoodItem = (foodItem) => {
 		
-		const itemDetails = listOfRecipes.filter(foodItem => foodItem.id === id);
-		setSelectedFoodItemDetails(itemDetails);
 	}
-
-	const handleAssignMealPlan = () => {
-		const values = {
-			clientUsername: user,
-			mealPlanID: open
-		};
-
-		assignClientMealPlan_API(values);
-		alert(`Meal plan ID: ${open} is now assigned to ${user}!`)
-	}
-	/* ************************************************************ */
 
 	return (
 		<>
+		{/* Displays a popup with a list of buttons to interact with the foodItem */}
 		<ButtonModal 
-		 modalVisible={buttonModalVisible} 
-		 setModalVisible={setButtonModalVisible} 
-		 handleEdit={handleEdit}
-		 variation="MealPlan_Trainer"
-		/>
+		modalVisible={selectedFoodItem.foodItem !== null} 
+		handleClose={() => handleSelectFoodItem(selectedFoodItem)}
 
-		<TextInputModal
-		modalVisible={textModalVisible}
-		setModalVisible={setTextModalVisible}
-		onChangeText={setUser}
-		value={user}
-		onPress={handleAssignMealPlan}
+		variation="MealPlan_Trainer"
+		handleViewFoodItem={handleViewFoodItem}
+		handleEditFoodItem={handleEditFoodItem}
+		handleDeleteFoodItem={handleDeleteFoodItem}
 		/>
 
 		<FlatList
@@ -88,12 +125,10 @@ export const MealPlansDashboardSection = (props) => {
 		 renderItem={({item}) => <MealPlan id={item.id} 
 		 				   title={item.title}
 						   recipes={item.meal}
-		 				   open={open} 
-						   setVisible={setVisible} 
+		 				   open={item.id === selectedMealPlan.mealPlanID} 
+						   setVisible={handleExpandMealPlan} 
 						   navigation={props.navigation} 
-						   setModalVisible={setButtonModalVisible} 
-						   setSelectedFoodItem={loadSelectedFoodItemDetails} 
-						   setTextModalVisible={setTextModalVisible}
+						   setSelectedFoodItem={handleSelectFoodItem} 
 						   variation="Trainer"
 						   />}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
@@ -103,5 +138,31 @@ export const MealPlansDashboardSection = (props) => {
 	)
 }
 
-export default connect(mapStateToProps)(MealPlansDashboardSection)
+export default connect(mapStateToProps)(MealPlansDashboardSection);
+
+/****** Modal that slides up to let user choose what recipes to add to the meal plan *********/
+
+const selectRecipesModalContainer = styled.View`
+	height: "80%"
+`;
+
+function selectRecipesModal({ isVisible, recipes, ...props }) {
+	return (
+		<Modal isVisible={isVisible} >
+			<selectRecipesModalContainer>
+			<FlatList
+			data={recipes}
+			renderItem={({ item }) => <FoodItem navigation={props.navigation} 
+							itemDetails={item} 
+							setModalVisible={setModalVisible} 
+							setSelectedFoodItem={loadSelectedFoodItemDetails}
+						/>}
+			keyExtractor={(item) => item.id}
+			style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
+			contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+			/>
+			</selectRecipesModalContainer>
+		</Modal>
+	)
+}
 

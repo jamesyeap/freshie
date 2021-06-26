@@ -137,32 +137,17 @@ export const ComplexMealPlan = ({ id, title, recipes, open, setVisible, ...props
 					<IconButton
 					icon={open !== id ? "chevron-down" : "chevron-up"}
 					size={35}
-					onPress={() => setVisible(id)}
+					onPress={() => setVisible({ id, title, recipes, ...props })}
 					/>
 				</InfoContainer>
 			</MediumComponentContainer>
 
-			<Collapsible collapsed={open !== id}>
+			<Collapsible collapsed={open}>
 				<FoodItemListContainer>
 					{
-						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem} />)
+						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
 					}
 				</FoodItemListContainer>
-
-				{(props.variation === "Trainer") && 
-					(<ButtonGroup containerStyle={{ width: 300, alignItems: "center", justifyContent: "space-around", marginTop: -90 }}>
-						<SmallButton 
-						label="Assign to client"  
-			   	  		onPress={() => props.setTextModalVisible(true)}
-						buttonStyle={{ width: 120}}
-						/>
-
-						<SmallButton 
-						label="Add recipe here"
-						buttonStyle={{ width: 120}}
-						/>
-					</ButtonGroup>)
-				}
 			</Collapsible>
 		</Wrapper>
 	)
