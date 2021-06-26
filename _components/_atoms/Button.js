@@ -89,8 +89,8 @@ export const MediumButtonText = styled(SemiBoldText)`
 	color: #FFFFFF;
 `;
 
-export const MediumButton = ({label, backgroundColor, onPress,...props}) => {
-	return (<MediumButtonContainer margin={props.margin} backgroundColor={backgroundColor} onPress={onPress}>
+export const MediumButton = ({label, backgroundColor, onPress, buttonStyle, ...props}) => {
+	return (<MediumButtonContainer margin={props.margin} backgroundColor={backgroundColor} onPress={onPress} style={buttonStyle} >
 			<MediumButtonText>{label}</MediumButtonText>
 		</MediumButtonContainer>);
 }

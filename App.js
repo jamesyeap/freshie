@@ -5,6 +5,7 @@ import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '
 import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
 import { store } from './_redux/store/store'; 
+import Portal from '@burstware/react-native-portal'
 
 import RootStackScreen from './_navigation/RootStackScreen';
 
@@ -21,11 +22,13 @@ export default function App() {
   }
 
   return (
-    <Provider store={store}>
-      <NavigationContainer>
-        <RootStackScreen />
-      </NavigationContainer>
-    </Provider>
+    <Portal.Host>
+      <Provider store={store}>
+        <NavigationContainer>
+          <RootStackScreen />
+        </NavigationContainer>
+      </Provider>
+    </Portal.Host>
   )
 }
 

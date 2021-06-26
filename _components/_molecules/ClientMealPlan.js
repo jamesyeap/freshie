@@ -56,23 +56,35 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
-export const ClientMealPlan = ({ id, goTo, ...props }) => {
+export const ClientMealPlan = ({ id, goTo, mealPlanDetails,...props }) => {
+	console.log(mealPlanDetails);
+	const { title, meal } = mealPlanDetails;
+
+	let totalCalories = 0;
+
+	meal.forEach(e => {
+		console.log(e.calories);
+		totalCalories += e.calories
+	});
+	
 	return (
 		<Wrapper>
 			<MediumComponentContainer onPress={goTo}>
 				<MealTextContainer>
-					<MealPlanNameText>Meal Plan 1</MealPlanNameText>
+					<MealPlanNameText>{title}</MealPlanNameText>
 					<PreviewTextContainer>
-						<PreviewText>Taco</PreviewText>
-						<PreviewText>Fish n Chips</PreviewText>
-						<PreviewText>Steak</PreviewText>
+						{ 
+							meal.length >= 3
+								? meal.map(e => <PreviewText>{e.title}</PreviewText>) 
+								: meal.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
+						}
 					</PreviewTextContainer>
 				</MealTextContainer>	
 
 				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
 
 				<InfoContainer>
-					<CalorieText>600 kcal</CalorieText>
+					<CalorieText>{totalCalories} kcal</CalorieText>
 					
 					<Ionicons
 					 name="chevron-forward-circle-outline"

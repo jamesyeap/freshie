@@ -13,3 +13,4 @@ export {default as ClientPage} from '../pages/_TrainerPages/ClientPage/ClientPag
 export {default as EditMealPlanPage} from '../pages/_TrainerPages/EditMealPlanPage/EditMealPlanPage';
 export {default as TrainerAccountPage} from './_TrainerPages/TrainerAccountPage/TrainerAccountPage';
 export {default as RecipePage } from './RecipePage/RecipePage';
+export {default as MealPlanPage } from './_TrainerPages/MealPlanPage/MealPlanPage';

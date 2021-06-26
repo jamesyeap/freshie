@@ -1,3 +1,5 @@
+/* State management for "CLIENT" */
+
 const initialState = {
 	caloriesConsumed: 0,
 	dailyCalories: 2000,

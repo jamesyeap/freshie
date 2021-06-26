@@ -56,16 +56,17 @@ export const ButtonModal = (props) => {
 	// Meal Plan (trainer)
 	const MealPlanTrainerButtons = () => 
 		<>
-			<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
 			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
+			<SmallButton label="Remove from Meal Plan" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
 			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
 		</>
 
 	// Meals (trainer)
 	const MealsTrainerButtons = () => 
 		<>
-			<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
+			<SmallButton label="Assign to Meal Plan" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(() => props.setClientUsernameTextModalVisible(true))} />
 			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
+			<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
 			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
 		</>
 

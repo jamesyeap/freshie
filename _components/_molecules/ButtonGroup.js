@@ -23,12 +23,12 @@ export const LabelText = styled(MediumText)`
 	marginBottom: 8px;
 `;
 
-export const ButtonGroup = ({ label, children, vertical, ...props }) => {
+export const ButtonGroup = ({ label, children, vertical, containerStyle, ...props }) => {
 	return (
 		<ButtonGroupContainer >
 			{label && <LabelText>{label}</LabelText>}
 
-			<ButtonsContainer vertical={vertical} >
+			<ButtonsContainer vertical={vertical} style={containerStyle} >
 				{children}
 			</ButtonsContainer>
 		</ButtonGroupContainer>

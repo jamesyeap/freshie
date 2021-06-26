@@ -29,11 +29,11 @@ export const InputFeedbackText = styled(RegularText)`
 `;
 
 export const TextInput = (props) => {
-
 	return (
 		<TextInputContainer style={props.containerStyle} stacked= {props.stacked} >
 			{props.label && <InputLabelText>{props.label}</InputLabelText>}
 			<TextInputBox
+			autoCapitalize="none"
 			value={props.value}
 			placeholder={props.placeholder}
 			onChangeText={props.onChangeText}
@@ -41,7 +41,7 @@ export const TextInput = (props) => {
 			keyboardType={props.keyboardType}
 			width={props.width ? props.width : 320}
 			height={props.height ? props.height : 40}
-			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, paddingLeft: 5, paddingBottom: 5, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, textAlign: 'left' }}
+			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, paddingLeft: 5, paddingBottom: 5, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, textAlign: 'left', ...props.inputStyle }}
 			{...props}
 			/>
 			{props.feedbackMessage && props.touched && <InputFeedbackText>{props.feedbackMessage}</InputFeedbackText>}

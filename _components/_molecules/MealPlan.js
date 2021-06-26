@@ -6,6 +6,8 @@ import { Info } from '../_molecules/Info';
 import { Divider, IconButton } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import { FoodItem } from './FoodItem';
+import { SmallButton } from '../_atoms/Button';
+import { ButtonGroup } from '../_molecules/ButtonGroup';
 
 const MediumComponentContainer = styled(ParentContainer)`
 	flexDirection: row;
@@ -63,16 +65,49 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
-// Mock data
-const itemDetails = {
-	id: 0,
-	title: "Egg Sandwich",
-	calories: 500,
-	instructions: "Just make lah bro.",
-	ingredients: "Egg. Bread. What more do you want sia."
-};
 
-export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
+export const MealPlan = (props) => {
+	if (props.variation === "simple") {
+		return <SimpleMealPlan />;
+	} else {
+		return <ComplexMealPlan {...props} />;
+	}
+}
+
+export const SimpleMealPlan = (props) => {
+	let totalCalories = 0;
+
+	recipes.forEach(e => {
+		console.log(e.calories);
+		totalCalories += e.calories
+	});
+
+	return (
+		<Wrapper>
+			<MediumComponentContainer>
+				<MealTextContainer>
+					<MealPlanNameText>{title}</MealPlanNameText>
+					<PreviewTextContainer>
+						{ 
+							recipes.length >= 3
+								? recipes.map(e => <PreviewText>{e.title}</PreviewText>) 
+								: recipes.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
+						}
+					</PreviewTextContainer>
+				</MealTextContainer>	
+
+				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
+
+				<InfoContainer>
+					<CalorieText>{`${totalCalories} kcal`}</CalorieText>
+				</InfoContainer>
+			</MediumComponentContainer>
+		</Wrapper>
+	)	
+}
+
+
+export const ComplexMealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
 	let totalCalories = 0;
 
 	recipes.forEach(e => {
@@ -113,6 +148,21 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setModalVisible={props.setModalVisible} setSelectedFoodItem={props.setSelectedFoodItem} />)
 					}
 				</FoodItemListContainer>
+
+				{(props.variation === "Trainer") && 
+					(<ButtonGroup containerStyle={{ width: 300, alignItems: "center", justifyContent: "space-around", marginTop: -90 }}>
+						<SmallButton 
+						label="Assign to client"  
+			   	  		onPress={() => props.setTextModalVisible(true)}
+						buttonStyle={{ width: 120}}
+						/>
+
+						<SmallButton 
+						label="Add recipe here"
+						buttonStyle={{ width: 120}}
+						/>
+					</ButtonGroup>)
+				}
 			</Collapsible>
 		</Wrapper>
 	)

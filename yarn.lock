@@ -1185,6 +1185,11 @@
   resolved "https://registry.yarnpkg.com/@bcoe/v8-coverage/-/v8-coverage-0.2.3.tgz#75a2e8b51cb758a7553d6804a5932d7aace75c39"
   integrity sha512-0hYQ8SB4Db5zvZB4axdMHGwEaQjkZzFjQiN9LVYvIFB2nSUHW9tYpxWriPrWDASIxiaXax83REcLxuSdnGPZtw==
 
+"@burstware/react-native-portal@^1.0.2":
+  version "1.0.2"
+  resolved "https://registry.yarnpkg.com/@burstware/react-native-portal/-/react-native-portal-1.0.2.tgz#0408e40c9c76b30bfd9ef8d06740cd1aef46c86a"
+  integrity sha512-PWGV5hJJzd0xU55SnznAvqegfvZGkk5kq8uQ1NY3sOsCbWvV/KdvjUJfC6wTEn4a+d1nTMlMsTJt1JBHXoTFyw==
+
 "@callstack/react-theme-provider@^3.0.6":
   version "3.0.6"
   resolved "https://registry.yarnpkg.com/@callstack/react-theme-provider/-/react-theme-provider-3.0.6.tgz#7dac483037e27e28676bdf1431ba87b88f21118f"
