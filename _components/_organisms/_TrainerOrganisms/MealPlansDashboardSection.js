@@ -7,7 +7,7 @@ import { MediumButton } from '../../_atoms/Button';
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { ButtonModal } from '../../_molecules/ButtonModal';
-import { assignClientMealPlan_API } from '../../../_utilities/_api/Trainer';
+import { addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_utilities/_api/Trainer';
 
 function mapStateToProps(state) {
 	const { mealPlans, recipes } = state.recipe;
@@ -57,7 +57,6 @@ export const MealPlansDashboardSection = (props) => {
 	const handleExpandMealPlan = (mealPlan) => {
 		// Minimize meal plan
 		if (selectedMealPlan.mealPlan && mealPlan.id === selectedMealPlan.mealPlan.id) {
-			console.log(mealPlan)
 			dispatchSelectedMealPlan({ type: selectedMealPlanActions.SET_SELECTED_MEAL_PLAN, 
 						   payload: null
 			})
@@ -101,17 +100,28 @@ export const MealPlansDashboardSection = (props) => {
 
 	/* Delete the food item inside the meal plan template */
 	const handleDeleteFoodItem = (foodItem) => {
-		/* CALL SOME API HERE */
-		props.navigation.push("Dashboard")
+		let currRecipes = [];
+		alert(currRecipes);
+		
+		selectedMealPlan.mealPlan.recipes.forEach(x => currRecipes.push(x.id));
+		const removeFoodItemID = selectedFoodItem.foodItem.id;
+		currRecipes = currRecipes.filter(x => x !== removeFoodItemID);
+		
+		addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.mealPlan.id, 
+					  mealPlanTitle: selectedMealPlan.mealPlan.title,
+					  recipeIDList: currRecipes
+		})
+
+		props.navigation.push("Dashboard");
 	}
 
 	/* Add a food item to the meal plan template */
 	const handleAddFoodItem = () => {
-		props.navigation.push("Search", { mealPlanID: selectedMealPlan.mealPlan.id, variation: "ChooseRecipe" })
+		props.navigation.push("Search", { mealPlan: selectedMealPlan.mealPlan, variation: "ChooseRecipe" })
 	}
 
 	const handleAssignToClient = (mealPlan) => {
-		props.navigation.push("Search", { mealPlanID: selectedMealPlan.mealPlan.id, variation: "ChooseClient" })
+		props.navigation.push("Search", { mealPlan: selectedMealPlan.mealPlan, variation: "ChooseClient" })
 	}
 
 	return (

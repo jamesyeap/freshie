@@ -102,8 +102,8 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 
 			<Collapsible collapsed={!open}>
 				<ButtonGroup containerStyle={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
-					<SmallButton label="Assign to Client" onPress={props.handleAssignToClient} buttonStyle={{ width: 150 }} />
-					<SmallButton label="Add recipe" onPress={props.handleAddFoodItem} buttonStyle={{ width: 150 }} />
+					<SmallButton label="Assign to Client" onPress={props.handleAssignToClient} buttonStyle={{ width: 140, marginRight: 10 }} />
+					<SmallButton label="Add recipe" onPress={props.handleAddFoodItem} buttonStyle={{ width: 140 }} />
 				</ButtonGroup>
 
 				<FoodItemListContainer>

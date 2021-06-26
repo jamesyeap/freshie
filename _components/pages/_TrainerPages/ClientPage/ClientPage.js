@@ -95,6 +95,7 @@ export default function ClientPage(props) {
 	const { first_name, last_name, mealPlans, email, username } = props.route.params.clientDetails.user;
 
 	const mealPlanContainerStyle = {backgroundColor: "#FFFFFF", width: 355, height: 150, borderRadius: 10};
+
 	return (
 		<Container>
 			<NavigationHeader  goTo={() => props.navigation.goBack()} />
@@ -104,6 +105,7 @@ export default function ClientPage(props) {
 			username={username}
 			email={email}
 			/>
+
 			<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
 			<Collapsible collapsed={!showBiometrics}>
 				<InfoPanel 

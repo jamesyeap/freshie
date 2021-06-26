@@ -98,8 +98,6 @@ export function MealsDashboardSection (props) {
 		mealPlans={props.mealPlans}
 		/>
 
-		<SmallButton label="search" onPress={() => setSearchModalVisible(true)}/>
-		
 		<FlatList
 		 data={props.recipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 

@@ -7,7 +7,7 @@ import { HeaderMediumText } from '../../_atoms/Text';
 import { FAB, Provider } from '../../_molecules/FAB';
 import CalorieTracker from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
-import { WeeklyChart } from '../../_molecules/WeeklyChart';
+import { WeeklyChart } from '../../_organisms/WeeklyChart';
 import { connect } from 'react-redux';
 import { updateDailyCalories_API, getConsumedMeals_API } from '../../../_utilities/_api/User';
 

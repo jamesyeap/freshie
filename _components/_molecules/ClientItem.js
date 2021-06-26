@@ -36,7 +36,6 @@ const ClientNameText = styled(SemiBoldText)`
 `;
 
 export const ClientItem = (props) => {
-
 	return (
 		<ClientItemContainer margin={props.margin} onPress={props.onPress} >
 			<Image 

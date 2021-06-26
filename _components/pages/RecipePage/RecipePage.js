@@ -56,7 +56,7 @@ export default RecipePage = (props) => {
                     <Description style={styles.description}  title= "Calories" text={ itemDetails.calories } ></Description>
                 </View>
             </ScrollView>
-            <BigButton label="Done!"></BigButton>
+            <BigButton label="Done!" onPress={() => props.navigation.goBack()}></BigButton>
         </Container>
     )
 }

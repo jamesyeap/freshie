@@ -165,7 +165,7 @@ export async function assignClientMealPlan_API(values) {
 		});
 
 		store.dispatch(loading(false));
-		console.log(response.data);
+		alert(response.data);
 		
 		console.log("Successfully assigned meal plan to client!");
 
@@ -211,7 +211,7 @@ export async function deleteClientMealPlan_API(values) {
 		store.dispatch(loading(false));
 		console.log("Successfully removed meal plan from client!");
 
-		await getClients_API();
+		getClients_API();
 	} catch (e) {
 		if (e.response) {
 			store.dispatch(loading(false));
@@ -262,6 +262,7 @@ export async function getReferralCode_API() {
 export async function addRecipeToMealPlan_API(values) {
 	try {
 		console.log("Adding recipe to meal plan...")
+		console.log(values);
 		const { token, username } = store.getState().auth;
 
 		store.dispatch(loading(true));
@@ -273,7 +274,8 @@ export async function addRecipeToMealPlan_API(values) {
       				"Authorization": `Token ${token}`
     			},
 			data: {
-				meals: [values.recipeIDList]
+				title: values.mealPlanTitle,
+				meals: values.recipeIDList
 			}
 		});
 
