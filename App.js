@@ -22,6 +22,7 @@ export default function App() {
   }
 
   return (
+    // <SearchPage/>
     <Portal.Host>
       <Provider store={store}>
         <NavigationContainer>
