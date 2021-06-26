@@ -7,7 +7,7 @@ import { URL } from './_constants';
 /* Get a list of recipes for the user */
 export async function getRecipeList_API() {
 	try {
-		const { token, username } = store.getState().auth;
+		// const { token, username } = store.getState().auth;
 		console.log("Fetching list of recipes...");
 
 		store.dispatch(loading(true));
@@ -15,12 +15,12 @@ export async function getRecipeList_API() {
 		const response = await axios({
 			method: 'get',
 			url: `${URL}/api/recipes/`,
-			headers: {
-				"Authorization": `Token ${token}`
-			}
+			// headers: {
+			// 	"Authorization": `Token ${token}`
+			// }
 		});
 
-		console.log(response.data);
+		//console.log(response.data);
 		console.log("Successfully fetched list of recipes!")
 
 		store.dispatch(getRecipes(response.data));
