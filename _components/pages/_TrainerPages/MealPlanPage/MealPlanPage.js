@@ -7,8 +7,10 @@ import { FoodItem } from '../../../_molecules/FoodItem';
 import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { HeaderMediumText } from '../../../_atoms/Text';
 import { MediumButton } from '../../../_atoms/Button';
-
 import { deleteClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
+import { Header } from '../../../_molecules/Header';
+
+const HeaderTextContainer = styled.View``;
 
 export default function MealPlanPage(props) {
 	const { id, title, meal } = props.route.params.mealPlanDetails;
@@ -64,12 +66,14 @@ export default function MealPlanPage(props) {
 		 handleDelete={handleDelete}
 		 variation="Custom_Client"
 		/>
-
-		<HeaderMediumText>{title}</HeaderMediumText>
+		
+		<HeaderMediumText style={{ textAlign: "left" }}>{title}</HeaderMediumText>
 
 		<FlatList
 		data={meal}
-		renderItem={({ item }) => <FoodItem navigation={props.navigation} 
+		renderItem={({ item }) => <FoodItem 
+						key={item.id}
+						navigation={props.navigation} 
 						itemDetails={item} 
 						setModalVisible={setModalVisible} 
 						setSelectedFoodItem={loadSelectedFoodItemDetails} 

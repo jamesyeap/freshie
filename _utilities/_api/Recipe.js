@@ -85,7 +85,31 @@ export async function getRecipeDetails_API(values) {
 
 /* Adds a new recipe */
 export async function addRecipe_API(values) {
-	
+	try {
+		const { token, username } = store.getState().auth;
+		console.log("Adding recipe...");
+
+		store.dispatch(loading(true));
+
+		const response = await axios({
+			method: 'post',
+			url: `${URL}/api/recipes/`,
+			headers: {
+				"Authorization": `Token ${token}`
+			},
+			data: values
+		});
+
+		console.log(response.data);
+		console.log("Successfully added recipe!")
+
+		store.dispatch(getMealPlans(response.data));
+		store.dispatch(loading(false));
+	} catch (e) {
+		store.dispatch(loading(false));
+		store.dispatch(error(e.response.statusMessage))
+		console.log(e.response.statusMessage)
+	}
 }
 
 /* Edits the recipe (eg ingredients needed, steps to prepare, etc...) */

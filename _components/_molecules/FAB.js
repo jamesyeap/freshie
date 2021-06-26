@@ -22,21 +22,15 @@ export const FAB = (props) => {
           icon={open ? 'minus' : 'plus'}
           actions={[
             {
-              icon: 'account-circle',
-              label: 'Add Client',
-              onPress: () => props.gotoAddCustomMeal(),
-              small: false,
-            },
-            {
               icon: 'food-drumstick',
               label: 'Add Meal',
-              onPress: () => props.gotoAddCustomMeal(),
+              onPress: () => props.gotoAddMeal(),
               small: false,
             },
             {
               icon: 'book',
               label: 'Add Meal Plan',
-              onPress: () => props.gotoAddCustomMeal(),
+              onPress: () => props.gotoAddMealPlan(),
               small: false,
             },
           ]}

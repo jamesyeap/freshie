@@ -3,9 +3,9 @@ import styled from 'styled-components';
 import { Container } from '../../../_atoms/Container';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../../_atoms/Text';
-import { MediumButton } from '../../../_atoms/Button';
-import { InfoPanel } from '../../../_organisms/InfoPanel';
-import { TrainerPanel } from '../../../_organisms/TrainerPanel';
+import { BigButton } from '../../../_atoms/Button';
+import ReferralCode from '../../../_molecules/ReferralCode';
+import { connect } from 'react-redux';
 
 const NameText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -17,84 +17,27 @@ const NameText = styled(HeaderMediumText)`
 	alignSelf: flex-start;
 `;
 
-const InfoOne = {
-	label: "Height",
-	value: 180,
-	unit: "cm"
+function mapStateToProps(state) {
+	const { username, firstName, lastName, email } = state.auth;
+	return { username, firstName, lastName, email };
 }
 
-const InfoTwo = {
-	label: "Age",
-	value: 30,
-	unit: "years old"
-}
-
-const InfoThree = {
-	label: "Weight",
-	value: 75,
-	unit: "kg"
-}
-
-const InfoFour = {
-	label: "Target Weight",
-	value: 70,
-	unit: "kg"
-}
-
-const InfoFive = {
-	label: "BMR",
-	value: 70,
-	unit: "kg"
-}
-
-const InfoSix = {
-	label: "Activity Level",
-	value: "Slightly Active",
-}
-
-const InfoSeven = {
-	label: "Today's Calories",
-	value: 500,
-	unit: "kcal"
-}
-
-const InfoEight = {
-	label: "Target Calories",
-	value: 2500,
-	unit: "kcal"
-}
-
-export default function TrainerAccountPage(props) {
+export function TrainerAccountPage(props) {
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()} />
-			<NameText>Tan Ah Beng</NameText>
-			<InfoPanel 
-			 infoOne={InfoOne}
-			 infoTwo={InfoTwo}
-			 infoThree={InfoThree}
-			 infoFour={InfoFour}
+			<NameText>{props.firstName + " " + props.lastName}</NameText>
+
+			<ReferralCode
 			/>
 
-			<InfoPanel
-			labelColor="#9A8EBA"
-			valueColor="#FFFFFF"
-			unitColor="#9A8EBA"
-			backgroundColor="#583AAB"
-
-			infoOne={InfoFive}
-			infoTwo={InfoSix}
-			infoThree={InfoSeven}
-			infoFour={InfoEight}
-			/>
-
-			<TrainerPanel
-			/>
-
-			<MediumButton
+			<BigButton
 			label="Log Out"
+			buttonStyle={{ marginTop: 15, backgroundColor: "#D53F8C" }}
 			/>
 		</Container>
 	)
 }
+
+export default connect(mapStateToProps)(TrainerAccountPage);
 
