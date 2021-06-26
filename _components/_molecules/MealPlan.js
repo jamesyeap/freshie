@@ -18,7 +18,7 @@ const MediumComponentContainer = styled(ParentContainer)`
 	alignItems: center;
 	justifyContent: center;
 	marginTop: 12.5px;
-	marginBottom: ${props => props.isOpen ? 0 : 2};
+	marginBottom: ${props => props.isOpen ? 0 : "2px"};
 `;
 
 const MealTextContainer = styled.View`
@@ -81,8 +81,8 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 					<PreviewTextContainer>
 						{ 
 							(recipes.length <= 3)
-								? recipes.map(e => <PreviewText>{e.title}</PreviewText>) 
-								: recipes.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
+								? recipes.map(e => <PreviewText key= {e.id} >{e.title} </PreviewText>) 
+								: recipes.slice(0, 2).map(e => <PreviewText key= {e.id} >{e.title}</PreviewText>)
 						}
 					</PreviewTextContainer>
 				</MealTextContainer>	
@@ -108,7 +108,7 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 
 				<FoodItemListContainer>
 					{
-						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
+						recipes.map(e => <FoodItem key= {e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
 					}
 				</FoodItemListContainer>
 			</Collapsible>

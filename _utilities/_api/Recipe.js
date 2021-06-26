@@ -5,26 +5,44 @@ import { loading, getRecipes, getMealPlans, error } from '../../_redux/actions/R
 import { URL } from './_constants';
 
 /* Get a list of recipes for the user */
-export async function getRecipeList_API() {
+export async function getRecipeList_API(variant) {
 	try {
-		// const { token, username } = store.getState().auth;
+		const { token, username } = store.getState().auth;
 		console.log("Fetching list of recipes...");
 
 		store.dispatch(loading(true));
 
-		const response = await axios({
-			method: 'get',
-			url: `${URL}/api/recipes/`,
-			// headers: {
-			// 	"Authorization": `Token ${token}`
-			// }
-		});
+		if (variant === "search") {
+			const response = await axios({
+				method: 'get',
+				url: `${URL}/api/recipes/search/`,
+				headers: {
+					"Authorization": `Token ${token}`
+				}
+			});
 
-		//console.log(response.data);
-		console.log("Successfully fetched list of recipes!")
+			//console.log(response.data);
+			console.log("Successfully fetched list of recipes!")
 
-		store.dispatch(getRecipes(response.data));
-		store.dispatch(loading(false));
+			store.dispatch(getRecipes(response.data));
+			store.dispatch(loading(false));
+		}
+		if (variant === "custom") {
+			const response = await axios({
+				method: 'get',
+				url: `${URL}/api/recipes/custom/`,
+				headers: {
+					"Authorization": `Token ${token}`
+				}
+			});
+
+			//console.log(response.data);
+			console.log("Successfully fetched list of recipes!")
+
+			store.dispatch(getRecipes(response.data));
+			store.dispatch(loading(false));	
+		}
+
 	} catch (e) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.statusMessage))

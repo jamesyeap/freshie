@@ -39,7 +39,7 @@ const TabButtonContainer = styled.TouchableOpacity`
 	width: 91px;
 	padding: 8px;
 	borderBottomColor: ${props => props.isSelected ? "#2B6CB0" : "#CCD7E0"}
-	borderBottomWidth: ${props => props.isSelected ? 1 : 0 };
+	borderBottomWidth: ${props => props.isSelected ? "1px" : 0 };
 `;
 
 const TabButtonText = styled(RegularText)`
@@ -87,7 +87,7 @@ export default function MealsPage(props) {
 
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
-		getRecipeList_API();
+		getRecipeList_API("custom");
 		getMealPlans_API();
 	}, []);
 

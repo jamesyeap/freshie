@@ -37,7 +37,7 @@ export default function SearchPage (props) {
 
     if (searchVariation === "ChooseRecipe") {
         const preload = () => {
-            getRecipeList_API();
+            getRecipeList_API("search");
             const theRecipes = store.getState().recipe.recipes;
             setList(theRecipes)
         }
@@ -81,7 +81,7 @@ export default function SearchPage (props) {
 
     } else {
         const preload = () => {
-            getClients_API()
+            getClients_API("search")
             const theClients = store.getState().trainer.clients;
             setList(theClients)
         }

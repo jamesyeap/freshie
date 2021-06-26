@@ -42,7 +42,7 @@ export function HomePage(props) {
 		setTimeout(() => {
 			getConsumedMeals_API(dateArgument, false);
 			updateDailyCalories_API(); 
-		}, 2000);
+		}, 0);
 
 		setLoading(false);
 	}

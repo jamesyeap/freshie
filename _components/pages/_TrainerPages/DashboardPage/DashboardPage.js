@@ -42,7 +42,7 @@ const TabButtonContainer = styled.TouchableOpacity`
 	width: 91px;
 	padding: 8px;
 	borderBottomColor: ${props => props.isSelected ? "#2B6CB0" : "#CCD7E0"}
-	borderBottomWidth: ${props => props.isSelected ? 1 : 0};
+	borderBottomWidth: ${props => props.isSelected ? "1px" : 0};
 `;
 
 const TabViewContainer = styled.View`
@@ -96,7 +96,7 @@ export default function DashboardPage(props) {
 
 	const loadData = () => {
 		/* PRELOAD DATA */
-		getRecipeList_API();
+		getRecipeList_API("custom");
 		getMealPlans_API();	
 		getClients_API();
 		getReferralCode_API();
