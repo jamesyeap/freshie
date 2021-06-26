@@ -1,7 +1,6 @@
 import React from 'react';
 import styled from 'styled-components';
 import { RegularText, MediumText } from '../_atoms/Text';
-import { Field } from 'formik';
 
 const TextInputContainer = styled.View`
 	flexDirection: column;

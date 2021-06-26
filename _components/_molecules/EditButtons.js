@@ -7,10 +7,13 @@ import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../_utilitie
 export const EditButtonGroup = (props) => {
 
     const handleSave = () => {
-        if (props.itemDetails.id !== null) {
+        if (props.itemDetails.id) {
             editRecipe_API(props.itemDetails)
+            props.navigation.goBack()
         } else {
+            console.log(props.itemDetails);
             addRecipe_API(props.itemDetails)
+            props.navigation.goBack()
         }
     }
 

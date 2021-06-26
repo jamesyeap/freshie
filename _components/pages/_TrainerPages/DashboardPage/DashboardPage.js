@@ -126,9 +126,10 @@ export default function DashboardPage(props) {
 
 				<FAB 
 				variation="trainer"
+				gotoAddMeal={() => props.navigation.push("EditRecipe", { type: "new" })}
+				gotoAddMealPlan={() => alert("placeholder")}
 				/>
 
-				<ReferralCode />
 			</Container>
 		)
 	}

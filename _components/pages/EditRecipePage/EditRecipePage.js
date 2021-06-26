@@ -52,14 +52,14 @@ export default EditRecipePage = (props) => {
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
                 </View>
                 <View style ={{flex: 0.6}}>
-                    <TextInput containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText= {title => setTitle(title)} value={title}/>
-                    <TextInput containerStyle={{flex:0.25}} stacked="0px" onChangeText={calories => setCalories(calories)} value={calories} />
-                    <MultiLineTextInput style={{flex: 0.25}} placeholder={ingredients} onChangeText={ingredients => setIngredients(ingredients)} value={ingredients}/>
-                    <MultiLineTextInput style={{flex: 0.25}} marginTop="20px" placeholder={instructions} onChangeText= {instructions => setInstructions(instructions)} value={instructions}/>
+                    <TextInput label="Name" containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText= {title => setTitle(title)} value={title}/>
+                    <TextInput label="Calories" containerStyle={{flex:0.25}} stacked="0px" onChangeText={calories => setCalories(calories)} value={calories} />
+                    <MultiLineTextInput label="Ingredients" placeholder={ingredients} onChangeText={ingredients => setIngredients(ingredients)} value={ingredients}/>
+                    <MultiLineTextInput label="Instructions" placeholder={instructions} onChangeText= {instructions => setInstructions(instructions)} value={instructions}/>
                 </View>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                <EditButtonGroup type={props.route.params.type} navigation={props.navigation}  />  
+                <EditButtonGroup type={props.route.params.type} navigation={props.navigation} itemDetails={{ title, calories: Number(calories), ingredients, instructions }} />  
             </View>
         </Container>
     )

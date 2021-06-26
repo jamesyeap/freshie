@@ -71,6 +71,7 @@ export async function getClientData_API(values) {
 	}c
 }
 
+/* Gets a list of meal-plans for a client */
 // meal-plans -> get client's assigned meal-plans (GET)
 export async function getClientMealPlan_API(values) {
 	try {
@@ -89,11 +90,13 @@ export async function getClientMealPlan_API(values) {
 		});
 
 		store.dispatch(loading(false));
-		console.log(response.data);
+		// console.log(response.data);
 		
 		console.log("Successfully fetched client meal plans!");
 
 		return (response.data);
+
+		await getRecipeList_API();
 	} catch (e) {
 		if (e.response) {
 			store.dispatch(loading(false));

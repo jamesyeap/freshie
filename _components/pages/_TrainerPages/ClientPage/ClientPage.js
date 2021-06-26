@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from "styled-components";
 import Collapsible from 'react-native-collapsible';
 import { Ionicons } from '@expo/vector-icons';
@@ -9,8 +9,7 @@ import { InfoPanel } from '../../../_organisms/InfoPanel';
 import { AccountPanel } from '../../../_molecules/AccountPanel';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader'
 import MealPlansSection from '../../../_organisms/_TrainerOrganisms/MealPlansSection';
-
-import { connect } from 'react-redux';
+import { getClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
 
 const InfoOne = {
 	label: "Height",
@@ -91,6 +90,17 @@ export default function ClientPage(props) {
 	const [showBiometrics, setShowBiometrics] = useState(true);
 	const [showCaloricInformation, setShowCaloricInformation] = useState(false);
 	const [showMealPlans, setShowMealPlans] = useState(false);
+	const [mealPlansData, setMealPlansData] = useState(null);
+	const [loading, setLoading] = useState(true);
+
+	/* Fetches meal plans for the client */
+	const preload = () => {
+		let data = getClientMealPlan_API(props.route.params.clientDetails.user.username);
+		data.then(x => setMealPlansData(x));
+		setLoading(false);
+	}
+
+	useEffect(preload, []);
 	
 	const { first_name, last_name, mealPlans, email, username } = props.route.params.clientDetails.user;
 
@@ -134,7 +144,7 @@ export default function ClientPage(props) {
 
 			<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
 			<Collapsible collapsed={!showMealPlans}>
-				<MealPlansSection clientDetails={props.route.params.clientDetails.user} assignedMealPlansID={mealPlans} style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />
+				{!loading && <MealPlansSection data={mealPlansData} clientDetails={props.route.params.clientDetails.user} assignedMealPlansID={mealPlans} style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />}
 			</Collapsible>
 
 

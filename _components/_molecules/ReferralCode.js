@@ -10,9 +10,9 @@ const Container = styled.View`
 	alignItems: flex-start;
 	justifyContent: center;
 	height: 72px;
-	width: 220px;
-	marginLeft: 55px;
-	alignSelf: flex-start;
+	width: 310px;
+	marginTop: 6px;
+	marginBottom: 12px;
 `;
 
 const TextInputContainer = styled.View`
@@ -26,7 +26,7 @@ const TextInputBox = styled.TextInput`
 	fontFamily: "Inter_400Regular";
 	fontSize: 16px;
 	lineHeight: 24px;
-	width: 170px;
+	width: 220px;
 	height: 40px;
 	borderColor: #E2E8F0;
 	borderWidth: 1px;
