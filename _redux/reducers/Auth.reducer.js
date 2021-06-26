@@ -5,6 +5,7 @@ const initialState = {
 	lastName: null,
 	email: null,
 	username: null,
+	isPersonalTrainer: null,
 	loading: false,
 	error: null,
 };
@@ -19,7 +20,8 @@ export const authReducer = (state = initialState, action) => {
 				username: action.payload.user.username,
 				firstName: action.payload.user.first_name,
 				lastName: action.payload.user.last_name,
-				email: action.payload.user.email 
+				email: action.payload.user.email,
+				isPersonalTrainer: action.payload.user.isPersonalTrainer
 			};
 		case 'REMOVE_TOKEN':
 			return { ...state, token: null };

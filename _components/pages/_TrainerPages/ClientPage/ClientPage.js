@@ -8,7 +8,9 @@ import { Container } from '../../../_atoms/Container';
 import { InfoPanel } from '../../../_organisms/InfoPanel';
 import { AccountPanel } from '../../../_molecules/AccountPanel';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader'
-import { MealPlansSection } from '../../../_organisms/_TrainerOrganisms/MealPlansSection';
+import MealPlansSection from '../../../_organisms/_TrainerOrganisms/MealPlansSection';
+
+import { connect } from 'react-redux';
 
 const InfoOne = {
 	label: "Height",
@@ -89,12 +91,18 @@ export default function ClientPage(props) {
 	const [showBiometrics, setShowBiometrics] = useState(true);
 	const [showCaloricInformation, setShowCaloricInformation] = useState(false);
 	const [showMealPlans, setShowMealPlans] = useState(false);
+	
+	const { first_name, last_name, mealPlans, email, username } = props.route.params.clientDetails.user;
 
 	const mealPlanContainerStyle = {backgroundColor: "#FFFFFF", width: 355, height: 150, borderRadius: 10};
 	return (
 		<Container>
 			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<AccountPanel
+			firstName={first_name}
+			lastName={last_name}
+			username={username}
+			email={email}
 			/>
 			<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
 			<Collapsible collapsed={!showBiometrics}>
@@ -121,11 +129,10 @@ export default function ClientPage(props) {
 				/>
 			</Collapsible>
 
-			
 
 			<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
 			<Collapsible collapsed={!showMealPlans}>
-				<MealPlansSection style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />
+				<MealPlansSection clientDetails={props.route.params.clientDetails.user} assignedMealPlansID={mealPlans} style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />
 			</Collapsible>
 
 

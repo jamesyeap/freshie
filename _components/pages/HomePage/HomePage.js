@@ -77,6 +77,7 @@ export function HomePage(props) {
 			</View>
 			</View>
 			<FAB 
+			variation="client"
 			gotoMeals={() => props.navigation.push("Meals")}
 			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 			/>

@@ -1,6 +1,3 @@
-import AsyncStorage from '@react-native-async-storage/async-storage';
-import { store } from '../store/store';
-
 export const getRecipes = (recipes) => ({
     type: 'GET_RECIPES',
     payload: recipes

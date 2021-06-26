@@ -27,8 +27,8 @@ export const AccountPanel = (props) => {
 		/>
 
 		<Header
-		headerText="Bob"
-		subheaderText="bigBadBob95"
+		headerText={props.firstName + " " + props.lastName}
+		subheaderText={props.username}
 		containerStyle={{ marginTop: 0, marginBottom: 0, alignItems: "flex-start" }}
 		/>
 	</MediumComponentContainer>

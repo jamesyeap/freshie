@@ -19,9 +19,9 @@ const OptionsContainer = styled.View`
 
 const LoginSchema = Yup.object().shape({
 	username: Yup.string()
-		   .required('hello sir your email is required hor.'),
+		   .required('Email is required!'),
 	password: Yup.string()
-		     .required('nice one no password then how to secure sia')
+		     .required('Please enter a password!')
 
 })
 

@@ -9,15 +9,18 @@ import { connect } from 'react-redux';
 const RootStack = createStackNavigator();
 
 function mapStateToProps(state) {
-	const { token, loading, error } = state.auth;
-	return { token, loading, error }
+	const { token, isPersonalTrainer, loading, error } = state.auth;
+	return { token, isPersonalTrainer, loading, error }
 }
 
 export function RootStackScreen(props) {
 	const checkAuth = () => {
 		if (props.token !== null) {
-			return <RootStack.Screen name="Client" component={ClientStackScreen} />
-			// <RootStack.Screen name="Trainer" component={TrainerStackScreen} />
+			if (props.isPersonalTrainer) {
+				return <RootStack.Screen name="Trainer" component={TrainerStackScreen} />
+			} else {
+				return <RootStack.Screen name="Client" component={ClientStackScreen} />
+			}
 		} else {
 			return <RootStack.Screen name="Auth" component={AuthStackScreen} />
 		}	
@@ -28,6 +31,7 @@ export function RootStackScreen(props) {
 			{checkAuth()}
 		</RootStack.Navigator>
 	);
+	
 }
 
 export default connect(mapStateToProps)(RootStackScreen);

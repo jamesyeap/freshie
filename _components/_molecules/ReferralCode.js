@@ -1,6 +1,7 @@
 import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RegularText, MediumText } from '../_atoms/Text';
+import { connect } from 'react-redux';
 import { Ionicons } from '@expo/vector-icons';
 // see list of icons available at "https://icons.expo.fyi"
 
@@ -82,8 +83,6 @@ const CopyButton = (props) => {
 	)
 }
 
-
-
 const ReferralCodeContainer = styled.View`
 	flexDirection: row;
 	alignItems: center;
@@ -91,7 +90,13 @@ const ReferralCodeContainer = styled.View`
 	width: 351px;
 `;
 
-export const ReferralCode = (props) => {
+function mapStateToProps(state) {
+	const { referralCode } = state.trainer;
+	return { referralCode };
+}
+
+export function ReferralCode (props) {
+	console.log(props.referralCode);
 	const [copied, setCopied] = useState(false);
 
 	const handleCopy = () => {
@@ -104,7 +109,7 @@ export const ReferralCode = (props) => {
 			<LabelText>Your referral code</LabelText>
 			<ReferralCodeContainer>
 				<TextInput
-				value={"E53DHY"}
+				value={props.referralCode}
 				copied={copied}
 				/>
 				<CopyButton 
@@ -116,3 +121,5 @@ export const ReferralCode = (props) => {
 		</Container>
 	)
 }
+
+export default connect(mapStateToProps)(ReferralCode);

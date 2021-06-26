@@ -1,13 +1,17 @@
-import React, { useState } from 'react';
+import React, { useState, useEffect } from 'react';
 import styled from 'styled-components';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader';
-import { RegularText } from '../../../_atoms/Text';
+import { RegularText, HeaderMediumText } from '../../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
+import { FAB } from '../../../_molecules/FAB';
 
 import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/ClientsDashboardSection';
-import { MealPlansDashboardSection } from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection';
-import { MealsDashboardSection } from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection';
-import { ReferralCode } from '../../../_molecules/ReferralCode';
+import MealPlansDashboardSection from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection';
+import MealsDashboardSection from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection';
+import ReferralCode from '../../../_molecules/ReferralCode';
+
+import { getRecipeDetails_API, getMealPlans_API, deleteRecipe_API, getRecipeList_API } from '../../../../_utilities/_api/Recipe';
+import { getClients_API, getReferralCode_API } from '../../../../_utilities/_api/Trainer';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -67,6 +71,7 @@ const TabBar = (props) => {
       
 
 export default function DashboardPage(props) {
+	const [loading, setLoading] = useState(true);
 	const [index, setIndex] = useState(0);
 	const [routes] = useState([
 		{ key: 'first', title: 'First' },
@@ -84,17 +89,35 @@ export default function DashboardPage(props) {
 		third: thirdRoute
 	})
 
-	return (
-		<Container>
-			<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
-			<TabView
-			navigationState={{ index, routes }}
-			renderScene={renderScene}
-			renderTabBar={props => <TabBar index={index} setIndex={setIndex} {...props} />}
-			onIndexChange={setIndex}
-			sceneContainerStyle={{ alignItems: "center" }}
-			/>
-			<ReferralCode />
-		</Container>
-	)
+	const loadData = () => {
+		/* PRELOAD DATA */
+		getRecipeList_API();
+		getMealPlans_API();	
+		getClients_API();
+		getReferralCode_API();
+		
+		setLoading(false);
+	}
+
+	useEffect(loadData, []);
+
+	if (loading) {
+		return (<Container>
+				<HeaderMediumText>Loading...</HeaderMediumText>
+			</Container>)
+	} else {
+		return (
+			<Container>
+				<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
+				<TabView
+				navigationState={{ index, routes }}
+				renderScene={renderScene}
+				renderTabBar={props => <TabBar index={index} setIndex={setIndex} {...props} />}
+				onIndexChange={setIndex}
+				sceneContainerStyle={{ alignItems: "center" }}
+				/>
+				<ReferralCode />
+			</Container>
+		)
+	}
 }

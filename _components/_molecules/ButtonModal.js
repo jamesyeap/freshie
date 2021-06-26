@@ -2,16 +2,6 @@ import React from 'react';
 import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { SmallButton, TextButton } from '../_atoms/Button';
 
-/* WORK IN PROGRESS */
-/* VARIATIONS TO MAKE
-	-> Meal Plan (client)
-	-> Custom (client)
-	-> Favorites (client)
-
-	-> Meal Plan (trainer)
-	-> Meals (trainer)
-*/
-
 export const ButtonModal = (props) => {
 	const handleButtonPress = (func) => {
 		props.setModalVisible(!props.modalVisible);
@@ -56,16 +46,18 @@ export const ButtonModal = (props) => {
 	// Meal Plan (trainer)
 	const MealPlanTrainerButtons = () => 
 		<>
-			<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
-			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
-			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
+			<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleViewFoodItem)} />
+			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEditFoodItem)} />
+			<SmallButton label="Remove from Meal Plan" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDeleteFoodItem)} />
+			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={props.handleClose} />
 		</>
 
 	// Meals (trainer)
 	const MealsTrainerButtons = () => 
 		<>
-			<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
+			<SmallButton label="Assign to Meal Plan" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(() => props.setClientUsernameTextModalVisible(true))} />
 			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
+			<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
 			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(!props.modalVisible)} />
 		</>
 

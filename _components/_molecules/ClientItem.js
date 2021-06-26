@@ -36,6 +36,7 @@ const ClientNameText = styled(SemiBoldText)`
 `;
 
 export const ClientItem = (props) => {
+
 	return (
 		<ClientItemContainer margin={props.margin} onPress={props.onPress} >
 			<Image 
@@ -44,7 +45,7 @@ export const ClientItem = (props) => {
 			/>
 			
 			<ClientInfoContainer>
-				<ClientNameText>Bob</ClientNameText>
+				<ClientNameText>{props.clientDetails.user.first_name}</ClientNameText>
 				<CaloriesText>200/2500 kcal</CaloriesText>
 			</ClientInfoContainer>
 

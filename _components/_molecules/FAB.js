@@ -13,11 +13,33 @@ export const FAB = (props) => {
 	  backgroundColor: "#F6C243"
   }
 
-  return (
-    <Provider>
-      <Portal>
+  const buttonChoices = () => {
+    if (props.variation === "trainer") {
+      return (
         <ParentFAB.Group
-	  fabStyle={fabStyle}
+	        fabStyle={fabStyle}
+          open={open}
+          icon={open ? 'minus' : 'plus'}
+          actions={[
+            {
+              icon: 'plus',
+              label: 'Add Custom Meal',
+              onPress: () => props.gotoAddCustomMeal(),
+              small: false,
+            },
+          ]}
+          onStateChange={onStateChange}
+          onPress={() => {
+            if (open) {
+              // do something if the speed dial is open
+            }
+          }}
+        />
+      )
+    } else {
+      return (
+        <ParentFAB.Group
+	        fabStyle={fabStyle}
           open={open}
           icon={open ? 'minus' : 'plus'}
           actions={[
@@ -47,6 +69,14 @@ export const FAB = (props) => {
             }
           }}
         />
+      )
+    }
+  }
+
+  return (
+    <Provider>
+      <Portal>
+        {buttonChoices()}
       </Portal>
     </Provider>
   );
