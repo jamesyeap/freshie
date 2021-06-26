@@ -24,10 +24,10 @@ import { editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recip
 export default EditRecipePage = (props) => {
     const [title, setTitle] = useState("")
     const [calories, setCalories] = useState("")
-    const [ingredients, setIngredients] = useState("")
+    const [ingredients, setIngredients] = useState(null)
     const [instructions, setInstructions] = useState("")
 
-    useEffect(() => {
+    const preload = () => {
         if (props.route.params && props.route.params.itemDetails) {
             /* NOTE: If a user is in this page to EDIT an EXISTING RECIPE, the "id" field of "itemDetails" is a number, and WILL NOT BE NULL. */ 
             const { id, title, ingredients, instructions, calories, servings, author, custom } = props.route.params.itemDetails;
@@ -40,8 +40,10 @@ export default EditRecipePage = (props) => {
         } else {
             /* NOTE: If a user is in this page to ADD a NEW RECIPE, the "id" field of "itemDetails" is null */ 
         }
-    }, []);
+    }
     
+    useEffect(preload, [])
+
     return (
         <Container>
             <NavigationHeader goTo={() => props.navigation.goBack()} />
@@ -50,14 +52,14 @@ export default EditRecipePage = (props) => {
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
                 </View>
                 <View style ={{flex: 0.6}}>
-                    <TextInput containerStyle={{flex:0.25}} stacked= "20px" placeholder={title} onChangeText= {title => setTitle(title)} value= {title}/>
-                    <TextInput containerStyle={{flex:0.25}} stacked= "0px" placeholder={calories} onChangeText= {calories => setCalories(calories)} value= {calories} />
-                    <MultiLineTextInput style={{flex: 0.25}} placeholder={ingredients} onChangeText= {ingredients => setIngredients(ingredients)} value= {ingredients}/>
-                    <MultiLineTextInput style={{flex: 0.25}} marginTop="20px" placeholder={instructions} onChangeText= {instructions => setInstructions(instructions)} value= {instructions}/>
+                    <TextInput containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText= {title => setTitle(title)} value={title}/>
+                    <TextInput containerStyle={{flex:0.25}} stacked="0px" onChangeText={calories => setCalories(calories)} value={calories} />
+                    <MultiLineTextInput style={{flex: 0.25}} placeholder={ingredients} onChangeText={ingredients => setIngredients(ingredients)} value={ingredients}/>
+                    <MultiLineTextInput style={{flex: 0.25}} marginTop="20px" placeholder={instructions} onChangeText= {instructions => setInstructions(instructions)} value={instructions}/>
                 </View>
             </ScrollView>
             <View style={{flex: 0.2, flexDirection: 'column', justifyContent: 'flex-end'}}>
-                <EditButtonGroup type= {props.route.params.type} navigation={props.navigation} itemDetails={{ id: itemDetails.id, title, calories, ingredients, instructions }} />  
+                <EditButtonGroup type={props.route.params.type} navigation={props.navigation}  />  
             </View>
         </Container>
     )

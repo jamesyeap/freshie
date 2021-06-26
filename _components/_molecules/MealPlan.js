@@ -65,16 +65,7 @@ const Wrapper = styled.View`
 	justifyContent: center;
 `;
 
-
-export const MealPlan = (props) => {
-	if (props.variation === "simple") {
-		return <SimpleMealPlan />;
-	} else {
-		return <ComplexMealPlan {...props} />;
-	}
-}
-
-export const SimpleMealPlan = (props) => {
+export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
 	let totalCalories = 0;
 
 	recipes.forEach(e => {
@@ -84,40 +75,7 @@ export const SimpleMealPlan = (props) => {
 
 	return (
 		<Wrapper>
-			<MediumComponentContainer>
-				<MealTextContainer>
-					<MealPlanNameText>{title}</MealPlanNameText>
-					<PreviewTextContainer>
-						{ 
-							recipes.length >= 3
-								? recipes.map(e => <PreviewText>{e.title}</PreviewText>) 
-								: recipes.slice(0, 2).map(e => <PreviewText>{e.title}</PreviewText>)
-						}
-					</PreviewTextContainer>
-				</MealTextContainer>	
-
-				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
-
-				<InfoContainer>
-					<CalorieText>{`${totalCalories} kcal`}</CalorieText>
-				</InfoContainer>
-			</MediumComponentContainer>
-		</Wrapper>
-	)	
-}
-
-
-export const ComplexMealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
-	let totalCalories = 0;
-
-	recipes.forEach(e => {
-		console.log(e.calories);
-		totalCalories += e.calories
-	});
-
-	return (
-		<Wrapper>
-			<MediumComponentContainer isOpen={open === id}>
+			<MediumComponentContainer isOpen={open}>
 				<MealTextContainer>
 					<MealPlanNameText>{title}</MealPlanNameText>
 					<PreviewTextContainer>
@@ -135,14 +93,19 @@ export const ComplexMealPlan = ({ id, title, recipes, open, setVisible, ...props
 					<CalorieText>{`${totalCalories} kcal`}</CalorieText>
 					
 					<IconButton
-					icon={open !== id ? "chevron-down" : "chevron-up"}
+					icon={open ? "chevron-up" : "chevron-down"}
 					size={35}
-					onPress={() => setVisible({ id, title, recipes, ...props })}
+					onPress={() => props.handleExpandMealPlan({ id, title, recipes, ...props })}
 					/>
 				</InfoContainer>
 			</MediumComponentContainer>
 
-			<Collapsible collapsed={open}>
+			<Collapsible collapsed={!open}>
+				<ButtonGroup containerStyle={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
+					<SmallButton label="Assign to Client" onPress={props.handleAssignToClient} buttonStyle={{ width: 150 }} />
+					<SmallButton label="Add recipe" onPress={props.handleAddFoodItem} buttonStyle={{ width: 150 }} />
+				</ButtonGroup>
+
 				<FoodItemListContainer>
 					{
 						recipes.map(e => <FoodItem margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)

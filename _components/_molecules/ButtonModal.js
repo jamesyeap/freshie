@@ -4,7 +4,8 @@ import { SmallButton, TextButton } from '../_atoms/Button';
 
 export const ButtonModal = (props) => {
 	const handleButtonPress = (func) => {
-		props.setModalVisible(!props.modalVisible);
+		// closes the modal after a button has been pressed!
+		props.setModalVisible(false);
 		func();
 	}
 
@@ -46,10 +47,10 @@ export const ButtonModal = (props) => {
 	// Meal Plan (trainer)
 	const MealPlanTrainerButtons = () => 
 		<>
-			<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleViewFoodItem)} />
-			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEditFoodItem)} />
+			<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(() => handleButtonPress(props.handleViewFoodItem))} />
+			<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(() => handleButtonPress(props.handleEditFoodItem))} />
 			<SmallButton label="Remove from Meal Plan" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDeleteFoodItem)} />
-			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={props.handleClose} />
+			<TextButton label="Close" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => props.setModalVisible(false)} />
 		</>
 
 	// Meals (trainer)

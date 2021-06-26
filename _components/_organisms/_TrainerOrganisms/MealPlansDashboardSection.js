@@ -7,9 +7,7 @@ import { MediumButton } from '../../_atoms/Button';
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { ButtonModal } from '../../_molecules/ButtonModal';
-import { TextInputModal } from '../../_molecules/TextInputModal';
 import { assignClientMealPlan_API } from '../../../_utilities/_api/Trainer';
-import Modal from 'react-native-modal';
 
 function mapStateToProps(state) {
 	const { mealPlans, recipes } = state.recipe;
@@ -19,12 +17,15 @@ function mapStateToProps(state) {
 /************ Logic for FoodItem ************/
 const selectedFoodItemActions = {
 	SET_SELECTED_ITEM: "SET_SELECTED_ITEM",
+	SET_MODAL_VISIBLE: "SET_MODAL_VISIBLE",
 }
 
 function selectedFoodItemReducer (foodItemDetails, action) {
 	switch(action.type) {
 		case selectedFoodItemActions.SET_SELECTED_ITEM:
-			return {foodItemID: action.payload};
+			return { ...foodItemDetails, foodItem: action.payload };
+		case selectedFoodItemActions.SET_MODAL_VISIBLE:
+			return { ...foodItemDetails, showModal: action.payload };
 		default:
 			return foodItemDetails;
 	}
@@ -39,7 +40,7 @@ const selectedMealPlanActions = {
 
 function selectedMealPlanReducer (mealPlanDetails, action) {
 	switch(action.type) {
-		case selectedMealPlanActions.SET_SELECTED_ITEM:
+		case selectedMealPlanActions.SET_SELECTED_MEAL_PLAN:
 			return { mealPlan: action.payload };
 		default:
 			return mealPlanDetails;
@@ -49,12 +50,14 @@ function selectedMealPlanReducer (mealPlanDetails, action) {
 
 export const MealPlansDashboardSection = (props) => {
 	const [selectedMealPlan, dispatchSelectedMealPlan] = useReducer(selectedMealPlanReducer, {
-		mealPlan: null
+		mealPlan: null,
+		showModal: false
 	});
 
 	const handleExpandMealPlan = (mealPlan) => {
 		// Minimize meal plan
-		if (mealPlan.id === selectedMealPlan.mealPlan.id) {
+		if (selectedMealPlan.mealPlan && mealPlan.id === selectedMealPlan.mealPlan.id) {
+			console.log(mealPlan)
 			dispatchSelectedMealPlan({ type: selectedMealPlanActions.SET_SELECTED_MEAL_PLAN, 
 						   payload: null
 			})
@@ -67,33 +70,33 @@ export const MealPlansDashboardSection = (props) => {
 	} 
 
 	const [selectedFoodItem, dispatchSelectedFoodItem] = useReducer(selectedFoodItemReducer, {
-		foodItem: null
+		foodItem: null,
+		showModal: false
 	})
 
 	const handleSelectFoodItem = (foodItem) => {
-		// Close Button modal and clear preloaded info
-		if (foodItem.id === selectedFoodItem.foodItem.id) {
-			dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_SELECTED_ITEM,
-						   payload: null
-			})
-		} else {  // Show Button modal and preload info
-			dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_SELECTED_ITEM,
-						   payload: foodItem
+		dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_MODAL_VISIBLE,
+			payload: true
+		})
+		
+		dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_SELECTED_ITEM,
+					   payload: foodItem
+		})
 
-			})
-		}
+		console.log(foodItem);
+		console.log(selectedFoodItem.foodItem);
 	}
 
 	/* View the details of the food item inside the meal plan template */
 	const handleViewFoodItem = () => {
-		props.navigation.push("Recipe", { itemDetails: selectedFoodItem })
+		console.log(selectedFoodItem);
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem.foodItem })
 	}
 
 	/* Edit food item inside the meal plan template */
 	const handleEditFoodItem = () => {
-		alert(foodItem);
 		// the details of the selected food item is given to the editPage to prefill the fields in the page
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem }) 
+		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem.foodItem, type: "edit" }) 
 	}
 
 	/* Delete the food item inside the meal plan template */
@@ -103,16 +106,20 @@ export const MealPlansDashboardSection = (props) => {
 	}
 
 	/* Add a food item to the meal plan template */
-	const handleAddFoodItem = (foodItem) => {
-		
+	const handleAddFoodItem = () => {
+		props.navigation.push("SearchPage", { mealPlanID: selectedMealPlan.id, variation: "ChooseRecipe" })
+	}
+
+	const handleAssignToClient = (mealPlan) => {
+		props.navigation.push("SearchPage", { mealPlanID: selectedMealPlan.id, variation: "ChooseClient" })
 	}
 
 	return (
 		<>
 		{/* Displays a popup with a list of buttons to interact with the foodItem */}
 		<ButtonModal 
-		modalVisible={selectedFoodItem.foodItem !== null} 
-		handleClose={() => handleSelectFoodItem(selectedFoodItem)}
+		modalVisible={selectedFoodItem.showModal} 
+		setModalVisible={(boolean) => dispatchSelectedFoodItem({ type: selectedFoodItemActions.SET_MODAL_VISIBLE, payload: boolean })}
 
 		variation="MealPlan_Trainer"
 		handleViewFoodItem={handleViewFoodItem}
@@ -125,10 +132,14 @@ export const MealPlansDashboardSection = (props) => {
 		 renderItem={({item}) => <MealPlan id={item.id} 
 		 				   title={item.title}
 						   recipes={item.meal}
-		 				   open={item.id === selectedMealPlan.mealPlanID} 
-						   setVisible={handleExpandMealPlan} 
+		 				   open={selectedMealPlan.mealPlan !== null && item.id === selectedMealPlan.mealPlan.id} 
+						   handleExpandMealPlan={handleExpandMealPlan} 
 						   navigation={props.navigation} 
 						   setSelectedFoodItem={handleSelectFoodItem} 
+
+						   handleAddFoodItem={handleAddFoodItem}
+						   handleAssignToClient={handleAssignToClient}
+
 						   variation="Trainer"
 						   />}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
@@ -139,30 +150,4 @@ export const MealPlansDashboardSection = (props) => {
 }
 
 export default connect(mapStateToProps)(MealPlansDashboardSection);
-
-/****** Modal that slides up to let user choose what recipes to add to the meal plan *********/
-
-const selectRecipesModalContainer = styled.View`
-	height: "80%"
-`;
-
-function selectRecipesModal({ isVisible, recipes, ...props }) {
-	return (
-		<Modal isVisible={isVisible} >
-			<selectRecipesModalContainer>
-			<FlatList
-			data={recipes}
-			renderItem={({ item }) => <FoodItem navigation={props.navigation} 
-							itemDetails={item} 
-							setModalVisible={setModalVisible} 
-							setSelectedFoodItem={loadSelectedFoodItemDetails}
-						/>}
-			keyExtractor={(item) => item.id}
-			style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
-			contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
-			/>
-			</selectRecipesModalContainer>
-		</Modal>
-	)
-}
 

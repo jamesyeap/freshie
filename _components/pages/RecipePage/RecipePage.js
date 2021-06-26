@@ -34,6 +34,32 @@ FOR SAUCE:
 5. When chicken is done and cooked through, arrange chicken skin-side up in the pan (if cooking with skin); add the garlic between the chicken and fry until fragrant (about 30 seconds). Add the honey, water, vinegar and soy sauce. Increase heat to medium-high and continue to cook until the sauce reduces down and thicken slightly (about 3-4 minutes).
 6. Garnish with parsley and serve over vegetables, rice, pasta or with a salad.`
 
+const Divided = () => <Divider width= {2} color="#319795" style= {{ width: "40%", alignSelf: 'center', marginVertical: 20}}></Divider>
+
+export default RecipePage = (props) => {
+
+    const itemDetails = props.route.params.itemDetails;
+
+    return (
+        <Container>
+            <NavigationHeader/>
+            <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column'}} style={{borderWidth:0, width:"100%"}}>
+                <View marginT-20 style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
+                    <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
+                </View>
+                <View style ={{flex: 0.5, borderWidth:0, justifyContent: 'space-around'}}>
+                    <HeaderMediumText style={{flex: 1, alignSelf: 'center', marginTop:15}}>{ itemDetails.title }</HeaderMediumText>
+                    <Description style={styles.description} title= "Ingredients" text= { itemDetails.ingredients }></Description>
+                    <Divided/>
+                    <Description style={styles.description}  title= "Instructions" text={ itemDetails.instructions }></Description>
+                    <Divided/>
+                    <Description style={styles.description}  title= "Calories" text={ itemDetails.calories } ></Description>
+                </View>
+            </ScrollView>
+            <BigButton label="Done!"></BigButton>
+        </Container>
+    )
+}
 
 const styles = StyleSheet.create(
     {
@@ -45,27 +71,3 @@ const styles = StyleSheet.create(
         }
     }
 )
-
-const Divided = () => <Divider width= {2} color="#319795" style= {{ width: "40%", alignSelf: 'center', marginVertical: 20}}></Divider>
-
-export default RecipePage = (props) => {
-    return (
-        <Container>
-            <NavigationHeader/>
-            <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column'}} style={{borderWidth:0, width:"100%"}}>
-                <View marginT-20 style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
-                    <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
-                </View>
-                <View style ={{flex: 0.5, borderWidth:0, justifyContent: 'space-around'}}>
-                    <HeaderMediumText style={{flex: 1, alignSelf: 'center', marginTop:15}}>chicken</HeaderMediumText>
-                    <Description style={styles.description} title= "Ingredients" text= {ingredients}></Description>
-                    <Divided/>
-                    <Description style={styles.description}  title= "Instructions" text= {instructions}></Description>
-                    <Divided/>
-                    <Description style={styles.description}  title= "Calories" text= "300"></Description>
-                </View>
-            </ScrollView>
-            <BigButton label="Done!"></BigButton>
-        </Container>
-    )
-}

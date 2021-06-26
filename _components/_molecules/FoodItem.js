@@ -44,7 +44,7 @@ export const FoodItem = (props) => {
 	*/ 
 
 	const handleLoadModal = () => {
-		props.setSelectedFoodItem(itemDetails);
+		props.setSelectedFoodItem(props.itemDetails);
 	}
 
 	const { id, title, calories, ingredients, instructions } = props.itemDetails;
