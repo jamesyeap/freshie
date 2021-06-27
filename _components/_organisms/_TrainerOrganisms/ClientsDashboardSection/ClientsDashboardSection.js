@@ -47,7 +47,7 @@ export function ClientsDashboardSection(props) {
 
 		<FlatList
 		 data={store.getState().trainer.clients}
-		 renderItem={({ item }) => <ClientItem key={item.id} clientDetails={item} onPress={() => handleSelect(item)} />}
+		 renderItem={({ item }) => <ClientItem key={item.id.toString()} clientDetails={item} onPress={() => handleSelect(item)} />}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 keyExtractor={(item) => item.id.toString()}

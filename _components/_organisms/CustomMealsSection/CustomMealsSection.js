@@ -59,11 +59,11 @@ export const CustomMealsSection = (props) => {
 		<FlatList
 		 data={originalRecipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
+		 				     key={item.id.toString()}
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} 
 					   />}
-		 keyExtractor={(item) => item.id}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>

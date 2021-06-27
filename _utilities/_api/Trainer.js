@@ -284,6 +284,7 @@ export async function addRecipeToMealPlan_API(values) {
 		console.log(response.data);
 		
 		console.log("Successfully added recipe to meal plan!!");
+		await getRecipeList_API("custom")
 		await getMealPlans_API();
 	} catch (e) {
 		if (e.response) {

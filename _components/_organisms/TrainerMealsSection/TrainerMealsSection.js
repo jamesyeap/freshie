@@ -5,7 +5,7 @@ import { MealPlan } from '../../_molecules/MealPlan';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { ButtonModal } from '../../_molecules/ButtonModal';
 import { addConsumedMeal_API } from '../../../_utilities/_api/User';
-import { addRecipeToMealPlan_API, deleteMealPlan_API } from '../../../_utilities/_api/Recipe'
+import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API } from '../../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { MealButtonModal } from './MealButtonModal';
@@ -80,7 +80,8 @@ export const TrainerMealsSection = (props) => {
 		setMealPlanModalVisible(true)
 	}
 
-	const handleAddFoodItem = () => {
+	const handleAddFoodItem = async () => {
+		await getRecipeList_API("search");
 		props.navigation.push("Search", { mealPlan: selectedMealPlan, variation: "ChooseRecipe" })
 	}
 
@@ -118,6 +119,7 @@ export const TrainerMealsSection = (props) => {
 		<FlatList
 		 data={props.mealPlans}
 		 renderItem={({item}) => <MealPlan id={item.id} 
+		 				   key={item.id.toString()}
 		 				   title={item.title}
 						   recipes={item.meal}
 		 				   open={selectedMealPlan !== null && item.id === selectedMealPlan.id && !mealPlanModalVisible} 

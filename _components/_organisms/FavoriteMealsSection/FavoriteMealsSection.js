@@ -74,10 +74,11 @@ export const FavoriteMealsSection = (props) => {
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} 
+						     key={item.id.toString()}
 					   />}
-		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+		 keyExtractor = { (item, index) => index.toString() }
 		/>
 		</>
 	)

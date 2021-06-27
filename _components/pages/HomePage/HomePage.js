@@ -97,26 +97,6 @@ export function HomePage(props) {
 
 					<CalorieTracker />
 
-<<<<<<< HEAD
-				<SectionButton
-				mainText="Eating History"
-				subText="See what you've been eating"
-				margin="21px"
-				onPress={() => props.navigation.push("EatingHistory")}
-				/>
-			</View>
-			<View style={{flex: 0.3,marginTop: 100}}>
-				<WeeklyChart/>
-			</View>
-
-			<CreateMealPlanModal
-				modalVisible={showCreateMealPlanModal}
-				handleClose={handleCloseCreateMealPlanModal}
-				onChangeText={(value) => setNewMealPlanName(value)}
-				onPress={handleCreateMealPlan}
-			/>
-
-=======
 					<SectionButton
 					mainText="Eating History"
 					subText="See what you've been eating"
@@ -127,7 +107,6 @@ export function HomePage(props) {
 				<View style={{flex: 0.4, marginTop: 50}}>
 					<WeeklyChart weeklyCalories= {props.weeklyCalories} dailyCalories={props.dailyCalories}/>
 				</View>
->>>>>>> 8b3f49de236b96d1b32d75b35e41a133a50018b2
 			</View>
 			<FAB 
 			variation="client"
