@@ -16,11 +16,25 @@ export const updateDailyCalories = newDailyCalories => {
 	}
 }
 
+export const updateWeeklyCalories = newWeeklyCalories => {
+	return {
+		type: 'UPDATE_WEEKLY_CALORIES',
+		payload: newWeeklyCalories
+	}
+}
+
 /* Updates the record of meals the user has consumed for the day */ 
 export const updateConsumedMeals = consumedMealsList => {
 	return {
 		type: 'UPDATE_CONSUMED_MEALS',
 		payload: consumedMealsList
+	}
+}
+
+export const updateFavouriteMeals = favouriteMealsList => {
+	return {
+		type: 'UPDATE_FAVOURITE_MEALS',
+		payload: favouriteMealsList
 	}
 }
 

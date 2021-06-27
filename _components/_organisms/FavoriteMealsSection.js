@@ -21,8 +21,8 @@ const data = [
 */
 
 function mapStateToProps(state) {
-	const { recipes } = state.recipe;
-	return { recipes };
+	const { favouriteMeals } = state.user;
+	return { favouriteMeals };
 }
 
 export const FavoriteMealsSection = (props) => {
@@ -50,7 +50,7 @@ export const FavoriteMealsSection = (props) => {
 
 	const loadSelectedFoodItemDetails = (id) => {
 		setSelectedFoodItem(id);
-		const itemDetails = props.recipes.filter(foodItem => foodItem.id === id);
+		const itemDetails = props.favouriteMeals.filter(foodItem => foodItem.id === id);
 		setSelectedFoodItemDetails(itemDetails);
 	}
 	/* ************************************************************ */
@@ -69,13 +69,13 @@ export const FavoriteMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={props.recipes}
+		 data={props.favouriteMeals}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={loadSelectedFoodItemDetails} 
 					   />}
-		 keyExtractor={(item) => item.id}
+		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>

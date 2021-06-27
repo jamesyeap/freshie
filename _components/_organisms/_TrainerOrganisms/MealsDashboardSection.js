@@ -74,7 +74,7 @@ export function MealsDashboardSection (props) {
 						     setModalVisible={(boolean) => dispatch({ type: selectedFoodItemActions.SET_MODAL_VISIBLE, payload: boolean })} 
 						     setSelectedFoodItem={handleSelectFoodItem}
 					   />}
-		 keyExtractor={(item) => item.id}
+		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>

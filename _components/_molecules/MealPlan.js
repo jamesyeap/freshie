@@ -81,8 +81,8 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 					<PreviewTextContainer>
 						{ 
 							(recipes.length <= 3)
-								? recipes.map(e => <PreviewText key= {e.id} >{e.title} </PreviewText>) 
-								: recipes.slice(0, 2).map(e => <PreviewText key= {e.id} >{e.title}</PreviewText>)
+								? recipes.map(e => <PreviewText key= {e.id.toString()} >{e.title} </PreviewText>) 
+								: recipes.slice(0, 2).map(e => <PreviewText key= {e.id.toString()} >{e.title}</PreviewText>)
 						}
 					</PreviewTextContainer>
 				</MealTextContainer>	
