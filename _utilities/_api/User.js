@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
-import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loading, error } from '../../_redux/actions/User.actions';
+import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loading, error, updateFavouriteMeals, updateWeeklyCalories } from '../../_redux/actions/User.actions';
 import { URL } from './_constants';
 
 /* Get a list of meals consumed for the day */
@@ -10,7 +10,7 @@ export async function getConsumedMeals_API(values, searchOnly) {
 		const { token, username } = store.getState().auth;
 
 		store.dispatch(loading(true));
-		console.log(values);
+		//console.log(values);
 
 		const response = await axios({
     			method: 'post',
@@ -20,7 +20,7 @@ export async function getConsumedMeals_API(values, searchOnly) {
     			}, 
 				data: values
 		});
-		console.log("here")
+		//console.log("here")
 		//console.log(response)
 		
 		/* Destructure the data received */
@@ -197,5 +197,100 @@ export async function deleteConsumedMeal_API(values) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.status))
 		console.log(e.response.status);
+	}
+}
+
+export async function getFavouriteMeals_API() {
+	try {
+
+		console.log("Getting favourite meals...")
+
+		const { token, username } = store.getState().auth
+		store.dispatch(loading(true))
+
+		const response = await axios({
+			method: 'get',
+			url: `${URL}/api/${username}/fav-meals/`,
+			headers: {
+				"Authorization": `Token ${token}`	
+			}
+		})
+
+		console.log("Got favourite meals")
+		store.dispatch(loading(false))
+
+		let favMeals = []
+		if (response.data !== "You have not added any favourties!") {
+			response.data.forEach(meal => {
+				favMeals.push(meal.meal)
+			})
+		}
+		store.dispatch(updateFavouriteMeals(favMeals))
+		console.log("added favourite meals!")	
+	} catch (e) {
+		store.dispatch(loading(false));
+		store.dispatch(error(e.response.status))
+		console.log(e.response.status);	
+	}
+}
+
+export async function deleteFavouriteMeal_API(id) {
+	try {
+		console.log("Deleting favourite meal...")
+
+		const { token, username } = store.getState().auth
+		store.dispatch(loading(true))
+
+		const response = await axios({
+			method: 'delete',
+			url: `${URL}/api/${username}/fav-meals/${id}`,
+			headers: {
+				"Authorization": `Token ${token}`	
+			}
+		})
+
+		console.log("Successfully deleted favourite meal!")
+		store.dispatch(loading(false))
+
+		await getFavouriteMeals_API()
+	} catch (e) {
+		store.dispatch(loading(false));
+		store.dispatch(error(e.response.status))
+		console.log(e.response.status);
+	}	
+}
+
+export async function getWeeklyConsumedMeals_API(values) {
+	try {
+		console.log("getting weekly calories...")
+
+		const { token, username } = store.getState().auth
+		//console.log(store.getState().user.loading)
+		store.dispatch(loading(true))
+		//console.log(store.getState().user.loading)
+
+		axios({
+			method: 'post',
+			url: `${URL}/api/${username}/weeklyCalories/`,
+			headers: {
+				"Authorization": `Token ${token}`
+			},
+			data: values
+		}).then(response => {
+			const res = response.data
+			while(res.length < 7) {
+				res.push(0)
+			}
+			//console.log("dispatching...")
+			store.dispatch(updateWeeklyCalories(res))
+			//console.log("dispatched...")
+		})
+		//console.log(response.data)
+		console.log("successfully got weekly calories!")
+		
+	} catch (e) {
+		store.dispatch(loading(false));
+		store.dispatch(error(e.response))
+		console.log("catch");
 	}
 }

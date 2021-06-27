@@ -6,7 +6,7 @@ import { URL } from './_constants';
 /* Logs the user in */
 export async function loginAsync_API(values) {
     try {
-        console.log(values);
+        //console.log(values);
         
         store.dispatch(loading(true));
 
@@ -16,7 +16,7 @@ export async function loginAsync_API(values) {
             data: values
         });
 
-        console.log(response.data)
+        //console.log(response.data)
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
@@ -55,14 +55,20 @@ export async function signupAsync_API(values) {
 /* Logs the existing user out */
 export async function logoutAsync_API(values) {
     try {
+        const { token } = store.getState().auth
         store.dispatch(loading(true));
+        const response = await axios({
+            method: 'post',
+            url: `${URL}/logout/`,
+            headers: {
+                "Authorization": `Token ${token}`
+            }
+        })
         store.dispatch(removeToken());
         store.dispatch(loading(false));
     } catch (e) {
         store.dispatch(loading(false));
         store.dispatch(error(e.response.statusMessage))
-
-
     }
 }
 

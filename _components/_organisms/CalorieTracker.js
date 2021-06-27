@@ -4,6 +4,7 @@ import { ProgressChart } from 'react-native-chart-kit';
 import { BigComponentContainer } from '../_atoms/Container';
 import { Info } from '../_molecules/Info';
 import { connect } from 'react-redux';
+import { store } from '../../_redux/store/store';
 
 const Container = styled(BigComponentContainer)`
 	backgroundColor: #152238;
@@ -34,14 +35,6 @@ const CaloriesLeftInfo = (props) => {
 		/>)
 }
 
-const chartConfig = {
-	   backgroundGradientFrom: "#000000",
-	   backgroundGradientFromOpacity: 0,
-	   backgroundGradientTo: "#000000",
-	   backgroundGradientToOpacity: 0,
-	   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      };
-
 const CaloriesPieChartContainer = styled.View`
       flexDirection: column;
       justifyContent: center;
@@ -52,7 +45,15 @@ const CaloriesPieChartContainer = styled.View`
 const CaloriesPieChart = (props) => {
 	// indicates how much the progress is filled 
 	// values must be placed inside an array
-	const data = [props.value];
+	const chartConfig = {
+		backgroundGradientFrom: "#000000",
+		backgroundGradientFromOpacity: 0,
+		backgroundGradientTo: "#000000",
+		backgroundGradientToOpacity: 0,
+		color: (opacity = 1) => props.value > 1 ? `rgba(255, 0, 0, ${opacity})` : `rgba(26, 255, 146, ${opacity})`,
+	   };
+
+	const data = [props.value > 1 ? props.value - 1 : props.value];
 
 	return (
 		<CaloriesPieChartContainer>
