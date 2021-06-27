@@ -8,6 +8,8 @@ export const EditButtonGroup = (props) => {
 
     const handleSave = () => {
         if (props.itemDetails.id) {
+            console.log(itemDetails);
+            
             const { title, calories, ingredients, instructions } = props.itemDetails;
             const values = {
                 data: {

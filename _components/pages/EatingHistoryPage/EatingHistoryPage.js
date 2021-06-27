@@ -1,11 +1,11 @@
-import React, { useState } from 'react';
+import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Container as ParentContainer } from '../../_atoms/Container';
 import { IconButton } from '../../_atoms/Button';
 import { Header } from '../../_molecules/Header';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { Ionicons } from '@expo/vector-icons';
-import EatenMealsSection from '../../_organisms/EatenMealsSection';
+import EatenMealsSection from '../../_organisms/EatenMealsSection/EatenMealsSection';
 import { prettifyDate } from '../../../_utilities/_helperFunctions/prettifyDate';
 import { getDay } from '../../../_utilities/_helperFunctions/getDay';
 import DateTimePickerModal from "react-native-modal-datetime-picker";
@@ -32,8 +32,8 @@ const HeaderContainer = styled.TouchableOpacity`
 
 export default function EatingHistoryPage(props) {
 	const [date, setDate] = useState(new Date());
-	const [dateHeader, setDateHeader] = useState(prettifyDate(date));
-	const [day, setDay] = useState(getDay(date));
+	const [dateHeader, setDateHeader] = useState();
+	const [day, setDay] = useState();
 	const [showDatePicker, setShowDatePicker] = useState(false);
 
 	const handleConfirm = (newDate) => {
@@ -51,6 +51,11 @@ export default function EatingHistoryPage(props) {
 		}
 		getConsumedMeals_API(dateArgument, true)
 	}
+
+	useEffect(() => {
+		setDay(getDay(date));
+		setDateHeader(prettifyDate(date));
+	}, [date, day, dateHeader])
 
 	return (
 		<Container>

@@ -8,6 +8,8 @@ import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { loginAsync_API } from '../../../_utilities/_api/Auth';
+import LoginSnackBar from './LoginSnackBar';
+import { connect } from 'react-redux';
 
 const OptionsContainer = styled.View`
 	flexDirection: row;
@@ -25,10 +27,13 @@ const LoginSchema = Yup.object().shape({
 
 })
 
-export default function LoginPage(props) {
+function mapStateToProps(state) {
+	return state;
+}
+
+function LoginPage(props) {
 
 	const handleLogin = (values) => {
-		console.log(values);
 		loginAsync_API(values);
 	}
 
@@ -77,8 +82,15 @@ export default function LoginPage(props) {
 			<BigButton label="Sign In" state="active" onPress={handleSubmit}/>
 
 			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")} buttonStyle={{ marginTop: 20 }}/>
+			
+			<LoginSnackBar 
+			visible={props.loading === true}
+			/>
+			
 		</Container>
 		)}
 		</Formik>
 	)
 }
+
+export default connect(mapStateToProps)(LoginPage);

@@ -49,8 +49,12 @@ export const MultiLineTextInput = (props) => {
         <Container>
             {props.label && <InputLabelText>{props.label}</InputLabelText>}
             <TextContainer marginTop= {props.marginTop}>
-                <TextArea placeholderTextColor= "#B9BBBE" placeholder= {props.placeholder} style={{fontFamily: "Inter_400Regular"}}>
-                    {props.text}
+                <TextArea placeholderTextColor="#B9BBBE" 
+                          placeholder={props.placeholder} 
+                          style={{fontFamily: "Inter_400Regular"}}  
+                          onChangeText={props.onChangeText}
+                >
+                    {props.value}
                 </TextArea>
             </TextContainer>
         </Container>

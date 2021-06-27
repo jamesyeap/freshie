@@ -15,12 +15,12 @@ export const removeToken = () => ({
 
 export const loading = bool => ({
     type: 'LOADING',
-    isLoading: bool,
+    payload: bool,
 });
 
 export const error = error => ({
     type: 'ERROR',
-    error,
+    payload: error,
 });
 
 

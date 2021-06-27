@@ -9,7 +9,9 @@ import CalorieTracker from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
 import { WeeklyChart } from '../../_organisms/WeeklyChart';
 import { connect } from 'react-redux';
+import { createMealPlan_API } from '../../../_utilities/_api/Recipe';
 import { updateDailyCalories_API, getConsumedMeals_API } from '../../../_utilities/_api/User';
+import { CreateMealPlanModal } from './CreateMealPlanModal';
 
 const WelcomeText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -28,6 +30,8 @@ function mapStateToProps(state) {
 
 export function HomePage(props) {
 	const [loading, setLoading] = useState(true);
+	const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false);
+	const [newMealPlanName, setNewMealPlanName] = useState("");
 
 	const loadData = () => {
 		console.log("Loading data");
@@ -48,6 +52,16 @@ export function HomePage(props) {
 	}
 
 	useEffect(loadData, []);
+
+	const handleCreateMealPlan = () => {
+		createMealPlan_API({ title: newMealPlanName })
+		setNewMealPlanName("");
+	}
+
+	const handleCloseCreateMealPlanModal = () => {
+		setShowCreateMealPlanModal(false);
+		setNewMealPlanName("");
+	}
 
 	if (loading) {
 		return (
@@ -75,11 +89,20 @@ export function HomePage(props) {
 			<View style={{flex: 0.3,marginTop: 100}}>
 				<WeeklyChart/>
 			</View>
+
+			<CreateMealPlanModal
+				modalVisible={showCreateMealPlanModal}
+				handleClose={handleCloseCreateMealPlanModal}
+				onChangeText={(value) => setNewMealPlanName(value)}
+				onPress={handleCreateMealPlan}
+			/>
+
 			</View>
 			<FAB 
 			variation="client"
 			gotoMeals={() => props.navigation.push("Meals")}
 			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
+			gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
 			/>
 		</Container>
 	)

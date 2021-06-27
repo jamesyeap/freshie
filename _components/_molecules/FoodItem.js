@@ -35,22 +35,10 @@ const FoodItemNameText = styled(SemiBoldText)`
 
 export const FoodItem = (props) => {
 
-	/* IN-PROGRESS!
-		There are a few variations of this button.
-		- client-trainer
-		- client-custom
-		- client-favorites
-		- more...
-	*/ 
-
-	const handleLoadModal = () => {
-		props.setSelectedFoodItem(props.itemDetails);
-	}
-
 	const { id, title, calories, ingredients, instructions } = props.itemDetails;
 
 	return (
-		<FoodItemContainer margin={props.margin} onPress={handleLoadModal} >
+		<FoodItemContainer margin={props.margin} onPress={() => props.setSelectedFoodItem(props.itemDetails)} >
 			<Image 
 			source={require('../../assets/taco.png')}
 			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33 }}

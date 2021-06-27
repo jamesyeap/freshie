@@ -4,7 +4,7 @@ import { AuthStackScreen } from './AuthStackScreen';
 import { ClientStackScreen } from './ClientStackScreen';
 import { TrainerStackScreen } from './TrainerStackScreen';
 import { store } from '../_redux/store/store';
-import { connect } from 'react-redux';
+import { Provider, connect } from 'react-redux';
 
 const RootStack = createStackNavigator();
 
@@ -27,9 +27,11 @@ export function RootStackScreen(props) {
 	}
 
 	return (
-		<RootStack.Navigator headerMode="none">
-			{checkAuth()}
-		</RootStack.Navigator>
+		<Provider store={store}>
+			<RootStack.Navigator headerMode="none">
+				{checkAuth()}
+			</RootStack.Navigator>
+		</Provider>
 	);
 	
 }

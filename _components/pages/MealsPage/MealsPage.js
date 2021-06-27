@@ -4,9 +4,9 @@ import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { RegularText } from '../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
 
-import TrainerMealsSection from '../../_organisms/TrainerMealsSection';
-import CustomMealsSection from '../../_organisms/CustomMealsSection';
-import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection';
+import TrainerMealsSection from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
+import CustomMealsSection from '../../_organisms/CustomMealsSection/CustomMealsSection';
+import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
 import { ButtonModal } from '../../_molecules/ButtonModal';
 
 import { getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe';

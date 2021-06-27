@@ -9,8 +9,11 @@ import { FoodItem } from './FoodItem';
 import { SmallButton } from '../_atoms/Button';
 import { ButtonGroup } from '../_molecules/ButtonGroup';
 
-const MediumComponentContainer = styled(ParentContainer)`
+const MediumComponentContainer = styled.TouchableOpacity`
 	flexDirection: row;
+	width: 310px;
+	height: 120px;
+	borderRadius: 10px;
 	borderWidth: 1px;
 	backgroundColor: ${props => props.isOpen ? "#C2F1FB" : "#FFFFFF"};
 	borderColor: #E6F2FC;
@@ -75,7 +78,7 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 
 	return (
 		<Wrapper>
-			<MediumComponentContainer isOpen={open}>
+			<MediumComponentContainer isOpen={open} onPress={() => props.handleSelectMealPlan({ id, title, recipes })}>
 				<MealTextContainer>
 					<MealPlanNameText>{title}</MealPlanNameText>
 					<PreviewTextContainer>
@@ -101,14 +104,14 @@ export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => 
 			</MediumComponentContainer>
 
 			<Collapsible collapsed={!open}>
-				<ButtonGroup containerStyle={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
+				{props.variation === "Trainer" && (<ButtonGroup containerStyle={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
 					<SmallButton label="Assign to Client" onPress={props.handleAssignToClient} buttonStyle={{ width: 140, marginRight: 10 }} />
 					<SmallButton label="Add recipe" onPress={props.handleAddFoodItem} buttonStyle={{ width: 140 }} />
-				</ButtonGroup>
+				</ButtonGroup>)}
 
 				<FoodItemListContainer>
 					{
-						recipes.map(e => <FoodItem key= {e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
+						recipes.map(e => <FoodItem key={e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
 					}
 				</FoodItemListContainer>
 			</Collapsible>

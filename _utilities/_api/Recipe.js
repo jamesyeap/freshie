@@ -104,6 +104,8 @@ export async function addRecipe_API(values) {
 		console.log("Successfully added recipe!")
 
 		store.dispatch(getMealPlans(response.data));
+
+		await (getRecipeList_API("search"));
 		store.dispatch(loading(false));
 	} catch (e) {
 		store.dispatch(loading(false));
@@ -117,12 +119,13 @@ export async function editRecipe_API(values) {
 	try {
 		const { token, username } = store.getState().auth;
 		console.log("Editing recipe...");
+		console.log(values)
 
 		store.dispatch(loading(true));
 
 		const response = await axios({
 			method: 'post',
-			url: `${URL}/api/recipes/${values.foodItemID}/`,
+			url: `${URL}/api/recipes/edit/${values.foodItemID}/`,
 			headers: {
 				"Authorization": `Token ${token}`
 			},
@@ -133,6 +136,7 @@ export async function editRecipe_API(values) {
 		console.log("Successfully edited recipe!")
 
 		store.dispatch(getMealPlans(response.data));
+		getRecipeList_API("custom")
 		store.dispatch(loading(false));
 	} catch (e) {
 		store.dispatch(loading(false));
@@ -151,7 +155,7 @@ export async function deleteRecipe_API(values) {
 
 		const response = await axios({
 			method: 'delete',
-			url: `${URL}/api/recipes/${values}/`,
+			url: `${URL}/api/recipes/edit/${values}/`,
 			headers: {
 				"Authorization": `Token ${token}`
 			}
@@ -160,7 +164,8 @@ export async function deleteRecipe_API(values) {
 		console.log(response.data);
 		console.log("Successfully deleted recipe!")
 
-		store.dispatch(getMealPlans(response.data));
+		getRecipeList_API("custom");
+
 		store.dispatch(loading(false));
 	} catch (e) {
 		store.dispatch(loading(false));
@@ -170,7 +175,6 @@ export async function deleteRecipe_API(values) {
 }
 
 /* Create a new meal plan */
-// 
 export async function createMealPlan_API(values) { 
 	try {
 		const { token, username } = store.getState().auth;
@@ -189,12 +193,89 @@ export async function createMealPlan_API(values) {
 
 		console.log(response.data);
 		console.log("Successfully created meal plan!")
-
-		store.dispatch(getMealPlans(response.data));
 		store.dispatch(loading(false));
+
+		await getMealPlans_API();
 	} catch (e) {
 		store.dispatch(loading(false));
 		console.log(e.response.data.detail)
 		store.dispatch(error(e.response.data.detail))
+	}	
+}
+
+/* Replace the recipes in a meal plan with an array of recipes
+	-> "meals" to be given in an array 
+*/
+export async function addRecipeToMealPlan_API(values) {
+	try {
+		console.log("Adding recipe to meal plan...")
+		console.log(values);
+		const { token, username } = store.getState().auth;
+
+		store.dispatch(loading(true));
+
+		const response = await axios({
+    			method: 'post',
+    			url: `${URL}/api/${username}/mealplan/${values.mealPlanID}/`,
+    			headers: {
+      				"Authorization": `Token ${token}`
+    			},
+			data: {
+				title: values.mealPlanTitle,
+				meals: values.recipeIDList
+			}
+		});
+
+		store.dispatch(loading(false));
+		console.log(response.data);
+		
+		console.log("Successfully added recipe to meal plan!!");
+		await getMealPlans_API();
+	} catch (e) {
+		if (e.response) {
+			store.dispatch(loading(false));
+			store.dispatch(error(e.response.data))
+			console.log(e.response);
+			console.log("ERROR")
+		} else {
+			console.log(e.request)
+			console.log("ERROR")
+		}
+	}	
+}
+
+/* Delete meal plan */
+export async function deleteMealPlan_API(values) {
+	try {
+		console.log("Deleting meal plan...")
+		console.log(values);
+		const { token, username } = store.getState().auth;
+
+		store.dispatch(loading(true));
+
+		const response = await axios({
+    			method: 'delete',
+    			url: `${URL}/api/${username}/mealplan/${values}/`,
+    			headers: {
+      				"Authorization": `Token ${token}`
+    			},
+		});
+
+		store.dispatch(loading(false));
+		console.log(response.data);
+		
+		console.log("Successfully deleted meal plan!");
+
+		getMealPlans_API();
+	} catch (e) {
+		if (e.response) {
+			store.dispatch(loading(false));
+			store.dispatch(error(e.response.data))
+			console.log(e.response);
+			console.log("ERROR")
+		} else {
+			console.log(e.request)
+			console.log("ERROR")
+		}
 	}	
 }

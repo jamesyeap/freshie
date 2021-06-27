@@ -128,7 +128,7 @@ export async function deleteClient_API(values) {
 		
 		console.log("Successfully removed client!");
 
-		await getClients_API();
+		await getClients_API("Search");
 	} catch (e) {
 		if (e.response) {
 			store.dispatch(loading(false));

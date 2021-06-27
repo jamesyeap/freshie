@@ -56,6 +56,12 @@ export const FAB = (props) => {
               small: false,
             },
             {
+              icon: 'book',
+              label: 'Add Meal Plan',
+              onPress: () => props.gotoAddMealPlan(),
+              small: false,
+            },
+            {
               icon: 'silverware-fork-knife',
               label: 'Restaurants',
               onPress: () => console.log("Hello"),
