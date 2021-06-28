@@ -14,14 +14,17 @@ The application caters to three main groups of users:
 
 ### Personal Trainer
 ---
+
+##### Signing up
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
+#### Home
 Upon signing in, three main sections will be shown:
   - [Clients](#list-of-clients)
   - [Meal Plans](#list-of-meal-plans)
   - [Food Items](#list-of-food-items)
 
-#### Clients
+###### Clients
 In this section, a personal trainer can access the relevant information for his clients, including:
   - Meal plans assigned to the client
   - Physical measurements (height, weight, etc)
