@@ -13,9 +13,11 @@ The application caters to three main groups of users:
   <summary>Personal Trainer</summary>
   
   ### Signing up
+  ---
   After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
   
 ### Home Page
+  ---
   Upon signing in, three main sections will be shown:
   
 #### Clients
@@ -43,9 +45,11 @@ The application caters to three main groups of users:
   <summary>Clients</summary>
   
 ### Signing up
+  ---
 During sign-up, a client can provide his personal trainer's referral code to associate their accounts.
   
 ### Home Page
+  ---
 After signing in, a client will be sent to the Home page, with 3 main components:
   - A pie-chart showing how many calories were consumed (and how many are left)
   - A section with a history of food items consumed for the day (and the past)
@@ -91,6 +95,26 @@ By and large, users without a personal trainer will be able to use the applicati
     - Updates the various calorie-tracking components in the application
 
 ## Problems Encountered
+<details>
+  <summary>CSRF Token Required</summary>
+  
+### Error
+`CSRF Failed: CSRF token missing or incorrect.`
+  
+### Solution
+  <pre>
+    <code>
+    from django.views.decorators.csrf import csrf_exempt
+    # ... other code in the file
+    
+    @csrf_exempt
+    def functional_view(request):
+      # ... code inside
+    </code>
+  </pre>
+  
+</details>
+  
 
 
 ## Appendix
