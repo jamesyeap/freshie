@@ -40,7 +40,6 @@ The application caters to three main groups of users:
   > - the steps to follow to prepare it
 </details>
 
-
 <details>
   <summary>Clients</summary>
   
@@ -112,10 +111,8 @@ By and large, users without a personal trainer will be able to use the applicati
       # ... code inside the function
     </code>
   </pre>
-  
 </details>
-  
-
+ 
 
 ## Appendix
   
