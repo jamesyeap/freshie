@@ -4,7 +4,7 @@ import { MealPlan } from '../../../_molecules/MealPlan';
 import { connect } from 'react-redux';
 import { MealButtonModal } from './MealButtonModal';
 import { addRecipeToMealPlan_API } from '../../../../_utilities/_api/Trainer';
-import { getMealPlans_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
+import { getRecipeList_API, getMealPlans_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 
 function mapStateToProps(state) {
@@ -56,6 +56,9 @@ export const MealPlansDashboardSection = (props) => {
 					  recipeIDList: currRecipes
 		})
 
+		setSelectedFoodItem(null);
+		setSelectedMealPlan(null);
+		setMealModalVisible(false);
 	}
 
 	const handleExpandMealPlan = (mealPlanDetails) => {
