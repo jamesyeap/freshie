@@ -1,10 +1,9 @@
-import React, { useState, useReducer, createContext } from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { MealPlan } from '../../../_molecules/MealPlan';
 import { connect } from 'react-redux';
-import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { MealButtonModal } from './MealButtonModal';
-import { addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
+import { addRecipeToMealPlan_API } from '../../../../_utilities/_api/Trainer';
 import { getRecipeList_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 

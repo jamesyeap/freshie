@@ -1,9 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
-import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
-import { RegularText, MediumText, SemiBoldText } from '../_atoms/Text';
-import { Divider, IconButton } from 'react-native-paper';
-import { Info } from '../_molecules/Info';
+import { RegularText, SemiBoldText } from '../_atoms/Text';
+import { Divider } from 'react-native-paper';
 import { Ionicons } from '@expo/vector-icons';
 
 const MediumComponentContainer = styled.TouchableOpacity`

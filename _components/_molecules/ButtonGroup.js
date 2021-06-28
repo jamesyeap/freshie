@@ -1,6 +1,5 @@
 import React from 'react';
 import styled from 'styled-components';
-import { SmallButton } from '../_atoms/Button';
 import { MediumText } from '../_atoms/Text';
 
 const ButtonGroupContainer = styled.View`

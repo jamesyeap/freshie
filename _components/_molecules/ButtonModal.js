@@ -1,5 +1,5 @@
 import React from 'react';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { Alert, Modal, StyleSheet, View } from 'react-native';
 import { SmallButton, TextButton } from '../_atoms/Button';
 
 export const ButtonModal = (props) => {

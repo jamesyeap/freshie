@@ -1,10 +1,6 @@
-import React, { useEffect } from 'react'
+import React from 'react'
 import { BarChart } from 'react-native-chart-kit'
 import { Dimensions, View, SafeAreaView } from "react-native";
-import { Container } from '../_atoms/Container';
-import { column } from 'stylis';
-import { connect } from 'react-redux';
-import { store } from '../../_redux/store/store'
 
 const screenWidth = Dimensions.get("window").width;
 
@@ -20,17 +16,8 @@ export default function WeeklyChart(props) {
         barPercentage: 0.5,
         barRadius: 3,
     };
-    //const weeklyCalories = store.getState().user.weeklyCalories
     const weeklyCalories = props.weeklyCalories
     const dailyCalories = props.dailyCalories
-    //console.log(props.weeklyCalories)
-    //console.log(weeklyCalories)
-    //const dailyCalories = store.getState().user.dailyCalories
-
-    // useEffect(() => { 
-    //     setTimeout(() => console.log("sleeping..."), 2000) 
-    //     }, [weeklyCalories])
-
     const data = {
         labels: [ "S", "M", "T", "W", "T", "F", "S"],
         datasets: [

@@ -1,4 +1,3 @@
-import { propNames } from '@chakra-ui/react';
 import React, { useState } from 'react';
 import { FAB as ParentFAB, Portal, Provider } from 'react-native-paper';
 

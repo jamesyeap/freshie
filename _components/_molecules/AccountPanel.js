@@ -1,10 +1,7 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
 import { Header } from '../_molecules/Header';
-import { Divider, IconButton } from 'react-native-paper';
-import Collapsible from 'react-native-collapsible';
-import { FoodItem } from './FoodItem';
 import { Image } from 'react-native-ui-lib';
 
 const MediumComponentContainer = styled(ParentContainer)`

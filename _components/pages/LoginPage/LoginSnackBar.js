@@ -1,8 +1,5 @@
 import * as React from 'react';
-import { View, StyleSheet } from 'react-native';
-import { Button, Snackbar } from 'react-native-paper';
-import { ActivityIndicator } from 'react-native-paper';
-import { SemiBoldText } from '../../_atoms/Text';
+import { Snackbar } from 'react-native-paper';
 import { connect } from 'react-redux';
 
 function mapStateToProps(state) {

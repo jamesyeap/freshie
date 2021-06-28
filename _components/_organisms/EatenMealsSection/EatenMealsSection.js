@@ -1,9 +1,7 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import styled from 'styled-components';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { connect } from 'react-redux';
-import { ButtonModal } from '../../_molecules/ButtonModal';
 import { EatenMealsButtonModal } from './EatenMealsButtonModal';
 import { deleteConsumedMeal_API } from '../../../_utilities/_api/User';
 

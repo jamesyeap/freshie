@@ -2,7 +2,6 @@ import React, { useEffect, useState } from 'react'
 import { Container } from '../../_atoms/Container'
 import { SearchBar } from 'react-native-elements'
 import { getRecipeList_API } from '../../../_utilities/_api/Recipe'
-import { connect } from 'react-redux'
 import { FoodItem } from '../../_molecules/FoodItem'
 import { store } from '../../../_redux/store/store';
 import { getClients_API, addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_utilities/_api/Trainer'

@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { MediumText } from '../_atoms/Text';
 import DateTimeComponent from '@react-native-community/datetimepicker';

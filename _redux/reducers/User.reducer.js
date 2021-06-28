@@ -16,18 +16,6 @@ const initialState = {
 	error: null,
 }
 
-/* mock example
-const data = [
-	{
-		id: 0,
-		title: "Egg Sandwich",
-		calories: 500,
-		instructions: "Just make lah bro.",
-		ingredients: "Egg. Bread. What more do you want sia."
-	}
-]
-*/
-
 export const userReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'UPDATE_CALORIES_CONSUMED':

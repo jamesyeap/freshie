@@ -1,8 +1,8 @@
-import React, { useState, useEffect } from 'react';
+import React from 'react';
 import styled from 'styled-components';
-import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
+import { Modal, StyleSheet, View } from 'react-native';
 import { SmallButton, TextButton } from '../../../_atoms/Button';
-import { RegularText, HeaderMediumText, SubHeaderText } from '../../../_atoms/Text';
+import { HeaderMediumText, SubHeaderText } from '../../../_atoms/Text';
 
 const TextContainer = styled.View`
 	flexDirection: column;

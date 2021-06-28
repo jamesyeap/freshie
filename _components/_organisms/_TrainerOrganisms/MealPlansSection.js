@@ -1,4 +1,4 @@
-import React, { useState } from 'react';
+import React from 'react';
 import { FlatList } from 'react-native';
 import { ClientMealPlan } from '../../_molecules/ClientMealPlan'
 import { connect } from 'react-redux';

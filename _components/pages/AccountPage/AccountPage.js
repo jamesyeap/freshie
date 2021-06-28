@@ -6,8 +6,6 @@ import { HeaderMediumText } from '../../_atoms/Text';
 import { MediumButton } from '../../_atoms/Button';
 import { InfoPanel } from '../../_organisms/InfoPanel';
 import { TrainerPanel } from '../../_organisms/TrainerPanel';
-import { store } from '../../../_redux/store/store';
-import { removeToken } from '../../../_redux/actions/Auth.actions';
 import { connect } from 'react-redux';
 import { logoutAsync_API } from '../../../_utilities/_api/Auth';
 

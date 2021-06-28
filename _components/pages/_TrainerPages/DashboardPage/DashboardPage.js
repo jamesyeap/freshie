@@ -10,7 +10,7 @@ import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/C
 import MealPlansDashboardSection from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection/MealPlansDashboardSection';
 import MealsDashboardSection from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection/MealsDashboardSection';
 
-import { getRecipeDetails_API, getMealPlans_API, deleteRecipe_API, getRecipeList_API, createMealPlan_API } from '../../../../_utilities/_api/Recipe';
+import { getMealPlans_API, getRecipeList_API, createMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { getClients_API, getReferralCode_API } from '../../../../_utilities/_api/Trainer';
 
 /* 

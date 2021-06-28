@@ -1,10 +1,8 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import styled from 'styled-components';
 import { connect } from 'react-redux';
-import { BigButton } from '../../../_atoms/Button';
 import { ClientItem } from '../../../_molecules/ClientItem';
-import { getClients_API, deleteClient_API } from '../../../../_utilities/_api/Trainer';
+import { deleteClient_API } from '../../../../_utilities/_api/Trainer';
 import { store } from '../../../../_redux/store/store';
 import { ClientsButtonModal } from './ClientsButtonModal';
 

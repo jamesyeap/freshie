@@ -8,9 +8,6 @@ import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { HeaderMediumText } from '../../../_atoms/Text';
 import { MediumButton } from '../../../_atoms/Button';
 import { deleteClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
-import { Header } from '../../../_molecules/Header';
-
-const HeaderTextContainer = styled.View``;
 
 export default function MealPlanPage(props) {
 	const { id, title, meal } = props.route.params.mealPlanDetails;

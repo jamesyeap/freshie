@@ -1,15 +1,8 @@
-import React, { useRef } from 'react';
-import { Modal } from "react-native";
+import React from 'react';
 import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
-import { ExtraSmallButton, TextButton } from '../_atoms/Button';
-import { Divider, IconButton } from 'react-native-paper';
-import { Modalize } from 'react-native-modalize';
-import { Host, Portal } from 'react-native-portalize';
 import { Info } from './Info';
-import { addConsumedMeal_API } from '../../_utilities/_api/User';
-import { deleteRecipe_API } from '../../_utilities/_api/Recipe';
 
 const FoodItemContainer = styled.TouchableOpacity`
 	flexDirection: row;

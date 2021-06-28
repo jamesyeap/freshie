@@ -1,7 +1,5 @@
-import React, { useState, useReducer } from 'react';
-import { FlatList, Modal } from 'react-native';
-import { BigButton } from '../../_atoms/Button';
-import styled from 'styled-components';
+import React, { useReducer } from 'react';
+import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { ButtonModal } from '../../_molecules/ButtonModal';
 import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'

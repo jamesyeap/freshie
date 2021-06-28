@@ -1,7 +1,6 @@
 import React from 'react'
 import { BrandHeaderText, MediumText } from '../_atoms/Text'
 import { View } from 'react-native'
-import { useProps } from '@chakra-ui/react'
 
 export const Description = (props) => {
     return (

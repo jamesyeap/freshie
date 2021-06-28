@@ -3,7 +3,7 @@ import { createStackNavigator } from '@react-navigation/stack'
 import { RegisterPage, SignupPage, LoginPage } from '../_components/pages/index';
 import { ClientStackScreen } from './ClientStackScreen';
 import { TrainerStackScreen } from './TrainerStackScreen'
-import { Provider, connect } from 'react-redux';
+import { Provider } from 'react-redux';
 import { store } from '../_redux/store/store';
 
 const AuthStack = createStackNavigator();

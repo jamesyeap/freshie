@@ -1,7 +1,6 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
 import { Container as ParentContainer } from '../../_atoms/Container';
-import { IconButton } from '../../_atoms/Button';
 import { Header } from '../../_molecules/Header';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { Ionicons } from '@expo/vector-icons';

@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
-import { getToken, saveUser, removeToken, loading, error } from '../../_redux/actions/Auth.actions';
+import { saveUser, removeToken, loading } from '../../_redux/actions/Auth.actions';
 import { URL } from './_constants';
 
 /* Logs the user in */

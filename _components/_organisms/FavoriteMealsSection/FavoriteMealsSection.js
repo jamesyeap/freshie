@@ -1,8 +1,6 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
-import styled from 'styled-components';
 import { FoodItem } from '../../_molecules/FoodItem';
-import { ButtonModal } from '../../_molecules/ButtonModal';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
 import { addConsumedMeal_API } from '../../../_utilities/_api/User';
 import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'

@@ -1,17 +1,16 @@
 import React, { useEffect, useState } from 'react';
 import styled from 'styled-components';
-import { View, ScrollView, StatusBar } from 'react-native';
+import { View } from 'react-native';
 import { Container } from '../../_atoms/Container';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../_atoms/Text';
-import { FAB, Provider } from '../../_molecules/FAB';
+import { FAB } from '../../_molecules/FAB';
 import CalorieTracker from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
 import WeeklyChart from '../../_organisms/WeeklyChart';
 import { connect } from 'react-redux';
 import { createMealPlan_API } from '../../../_utilities/_api/Recipe';
 import {  updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API } from '../../../_utilities/_api/User';
-import { CreateMealPlanModal } from './CreateMealPlanModal';
 
 const WelcomeText = styled(HeaderMediumText)`
 	textAlign: left; 

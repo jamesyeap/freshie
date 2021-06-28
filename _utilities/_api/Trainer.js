@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
-import { getClients, getReferralCode, loading, error } from '../../_redux/actions/Trainer.actions';
+import { getClients, getReferralCode, loading } from '../../_redux/actions/Trainer.actions';
 import { getRecipeList_API, getMealPlans_API } from './Recipe';
 import { URL } from './_constants';
 

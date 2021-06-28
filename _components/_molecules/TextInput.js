@@ -5,8 +5,8 @@ import { RegularText, MediumText } from '../_atoms/Text';
 const TextInputContainer = styled.View`
 	flexDirection: column;
 	justifyContent: center;
-	margin: 18px;
-	marginTop: ${props => props.stacked ? props.stacked : "18px"}
+	margin: 10px;
+	marginTop: ${props => props.stacked ? props.stacked : "10px"}
 `;
 
 const TextInputBox = styled.TextInput`
@@ -39,7 +39,7 @@ export const TextInput = (props) => {
 			onBlur={props.onBlur}
 			keyboardType={props.keyboardType}
 			width={props.width ? props.width : 320}
-			height={props.height ? props.height : 40}
+			minHeight={props.height ? props.height : 40}
 			style={{ fontFamily: "Inter_400Regular", fontSize: 16, lineHeight: 24, paddingLeft: 5, paddingBottom: 5, borderColor: "#E2E8F0", borderWidth: 1, borderRadius: 6, textAlign: 'left', ...props.inputStyle }}
 			{...props}
 			/>

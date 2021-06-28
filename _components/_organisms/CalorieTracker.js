@@ -4,7 +4,6 @@ import { ProgressChart } from 'react-native-chart-kit';
 import { BigComponentContainer } from '../_atoms/Container';
 import { Info } from '../_molecules/Info';
 import { connect } from 'react-redux';
-import { store } from '../../_redux/store/store';
 
 const Container = styled(BigComponentContainer)`
 	backgroundColor: #152238;

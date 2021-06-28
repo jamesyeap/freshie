@@ -1,6 +1,6 @@
 import React from "react";
 import styled from 'styled-components';
-import { StyleSheet, Text, View, SafeAreaView, SectionList, StatusBar } from "react-native";
+import { StyleSheet, StatusBar } from "react-native";
 import { MediumText } from "../../_atoms/Text";
 import { FoodItem } from "../../_molecules/FoodItem";
 

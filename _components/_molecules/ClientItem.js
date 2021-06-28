@@ -2,10 +2,8 @@ import React from 'react';
 import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
-import { ExtraSmallButton, TextButton } from '../_atoms/Button';
 import { RegularText } from '../_atoms/Text';
-import { Divider, IconButton } from 'react-native-paper';
-import { Info } from './Info';
+import { IconButton } from 'react-native-paper';
 
 const ClientItemContainer = styled.TouchableOpacity`
 	flexDirection: row;

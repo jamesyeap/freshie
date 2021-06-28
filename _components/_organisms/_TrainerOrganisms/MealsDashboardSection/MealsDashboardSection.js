@@ -1,7 +1,6 @@
-import React, { useState, useReducer } from 'react';
-import { FlatList, Modal } from 'react-native';
+import React, { useState } from 'react';
+import { FlatList } from 'react-native';
 import { FoodItem } from '../../../_molecules/FoodItem';
-import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { getRecipeList_API, deleteRecipe_API } from '../../../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
 import { MealsButtonModal } from './MealsButtonModal';

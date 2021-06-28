@@ -1,12 +1,11 @@
 
 import _ from 'lodash';
-import React, {Component, useEffect} from 'react';
-import {StyleSheet, ScrollView, SafeAreaView, TouchableOpacity, Platform } from 'react-native';
-import styled from 'styled-components'
-import {View, Button, Wizard, Text, RadioGroup, RadioButton, TextField, Toast, Dialog, Image, ComponentsColors} from 'react-native-ui-lib';
+import React, {Component } from 'react';
+import {StyleSheet, ScrollView, SafeAreaView, TouchableOpacity } from 'react-native';
+import {View, Wizard, Text, RadioGroup, RadioButton, Image } from 'react-native-ui-lib';
 import { SmallButton, BigButton, TextButton } from '../../_atoms/Button';
 import { Container } from '../../_atoms/Container';
-import { HeaderMediumText, MediumText, SubHeaderText } from '../../_atoms/Text';
+import { HeaderMediumText } from '../../_atoms/Text';
 import { InputLabelText, TextInput } from '../../_molecules/TextInput';
 import { StatusBar } from 'expo-status-bar';
 import { Ionicons } from '@expo/vector-icons';

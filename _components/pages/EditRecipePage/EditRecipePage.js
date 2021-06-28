@@ -1,15 +1,11 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ScrollView, StyleSheet } from 'react-native'
-import { Image } from 'react-native-ui-lib'
+import { ScrollView, StyleSheet, Alert } from 'react-native'
 import { BrandHeaderText } from '../../_atoms/Text'
 import { Container } from '../../_atoms/Container'
-import { Carousel, View } from 'react-native-ui-lib'
+import {  View } from 'react-native-ui-lib'
 import { Avatar } from 'react-native-elements'
-import { Header } from '../../_molecules/Header'
 import { TextInput } from '../../_molecules/TextInput'
-import { MultiLineTextInput } from '../../_molecules/MultiLineTextInput'
-import { EditButtonGroup } from '../../_molecules/EditButtons'
 import { IconButton } from '../../_atoms/Button'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
 import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recipe';
@@ -50,7 +46,7 @@ export default EditRecipePage = (props) => {
         }
     }
     
-    useEffect(preload, [])
+    useEffect(preload)
 
     const handleSave = () => {
         if (id) {
@@ -74,8 +70,26 @@ export default EditRecipePage = (props) => {
     }
 
     const handleDelete = () => {
-        deleteRecipe_API(Number(id));
-        props.navigation.goBack()
+        if (id) {
+            deleteRecipe_API(Number(id));
+            props.navigation.goBack()
+        } else {
+            Alert.alert(
+                "Are you sure you want to leave without saving?",
+                "",
+                [
+                  {
+                    text: "Confirm",
+                    onPress: () => props.navigation.goBack(),
+                    style: "default",
+                  }, 
+                  {
+                    text: "Cancel",
+                    style: "cancel"
+                  }
+                ]
+              );
+        }
     };
 
     if (loading) {
@@ -83,20 +97,20 @@ export default EditRecipePage = (props) => {
     } else {
         return (<Container>
             <NavigationHeader goTo={() => props.navigation.goBack()} />
-            <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', justifyContent: 'space-between'}}>
+            <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', }}>
                 <View marginT-40 style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
                 </View>
                 <View style ={{flex: 0.6}}>
-                    <TextInput label="Name" containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
-                    <TextInput label="Calories" containerStyle={{flex:0.25}} stacked="20px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
-                    <MultiLineTextInput label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/>
-                    <MultiLineTextInput label="Instructions" placeholder={instructions} onChangeText={val => setInstructions(val)} value={instructions}/>
+                    <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
+                    <TextInput label="Calories" stacked="10px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
+                    <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/>
+                    <TextInput multiline={true} label="Instructions" placeholder={instructions} onChangeText={val => setInstructions(val)} value={instructions}/>
                 </View>
             </ScrollView>
 
-            <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
-                {id && <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>}
+            <View style={{flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
                 <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
             </View>
         </Container>)

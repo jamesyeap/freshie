@@ -2,7 +2,7 @@ import React from 'react'
 import { View } from 'react-native'
 import { IconButton } from '../_atoms/Button'
 import { StyleSheet } from 'react-native';
-import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../_utilities/_api/Recipe';
+import { addRecipe_API, editRecipe_API } from '../../_utilities/_api/Recipe';
 
 export const EditButtonGroup = (props) => {
 

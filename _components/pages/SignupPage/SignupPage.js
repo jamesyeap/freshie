@@ -2,7 +2,7 @@ import React from 'react'
 import styled from 'styled-components'
 import { Image } from 'react-native-ui-lib'
 import { Container } from '../../_atoms/Container'
-import { BrandHeaderText, MediumText } from '../../_atoms/Text'
+import { BrandHeaderText } from '../../_atoms/Text'
 import { Header as ParentHeader } from '../../_molecules/Header'
 import { BigButton, TextButton } from '../../_atoms/Button'
 
