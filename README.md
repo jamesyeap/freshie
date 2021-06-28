@@ -16,9 +16,6 @@ After a personal trainer creates an account, he will be assigned a code that he 
 
 #### Home
 Upon signing in, three main sections will be shown:
-  - [Clients](#list-of-clients)
-  - [Meal Plans](#list-of-meal-plans)
-  - [Food Items](#list-of-food-items)
 
 ##### Clients
 In this section, a personal trainer can access the relevant information for his clients, including:
