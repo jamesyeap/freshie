@@ -109,7 +109,7 @@ By and large, users without a personal trainer will be able to use the applicati
     
     @csrf_exempt
     def functional_view(request):
-      # ... code inside
+      # ... code inside the function
     </code>
   </pre>
   
