@@ -16,7 +16,7 @@ The application caters to three main groups of users:
 ---
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
-Upon signing in, three main sections will be shown.
+Upon signing in, three main sections will be shown:
   - [Clients](#list-of-clients)
   - [Meal Plans](#list-of-meal-plans)
   - [Food Items](#list-of-food-items)
@@ -40,6 +40,8 @@ To add variety to his client's nutrition plan and ensure better adherence, the a
 In this section, a personal trainer can create a food item. In addition to specifying how many calories it provides, he can also provide his client with information on:
   - the ingredients needed to prepare it
   - the steps to follow to prepare it
+
+
 
 ### Clients
 ---
@@ -68,9 +70,14 @@ Hence, the application also allows clients to create their own food items.
 #### Favorites
 This section holds the food items that a client has marked as a personal favorite.
 
+
+
 ### Regular Users
 ---
 By and large, users without a personal trainer will be able to use the application much like a client of a personal trainer would, with the exception that they have to create their own meal plans instead.
+
+
+
 
 
 ## Core Features Developed
