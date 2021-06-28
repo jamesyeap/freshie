@@ -8,40 +8,70 @@ Apollo 11
 Freshie is a mobile-application that helps personal trainers design nutrition programs for their clients.
 
 The application caters to three main groups of users: 
-  - [personal trainers](#personal-trainer)
-  - [clients](#clients)
-  - [users without a personal trainer](#regular-users)
+  - [Personal Trainers](#personal-trainer)
+  - [Clients](#clients)
+  - [Users without a personal trainer](#regular-users)
 
 ### Personal Trainer
+---
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
 Upon signing in, three main sections will be shown.
-  - [List of Clients](#list-of-clients)
-  - [List of Meal Plans](#list-of-meal-plans)
-  - [List of Food Items](#list-of-food-items)
+  - [Clients](#list-of-clients)
+  - [Meal Plans](#list-of-meal-plans)
+  - [Food Items](#list-of-food-items)
 
-#### List of Clients
+#### Clients
 In this section, a personal trainer can access the relevant information for his clients, including:
-  - Meal plans assigned to them
-  - Their physical measurements (height, weight, etc)
-  - Calories they have consumed
-  - Target calories
+  - Meal plans assigned to the client
+  - Physical measurements (height, weight, etc)
+  - Target calories for the client
 
-#### List of Meal Plans
+#### Meal Plans
 In this section, a personal trainer can create a meal plan, assign it to a specific client, and make the necessary changes to it as needed.
 
 A meal plan contains the following:
-  - The total calories for the food items contained in it.
-  - The food items.
+  - The total calories for the food items contained in it
+  - The food items
 
-#### List of Food Items
+To add variety to his client's nutrition plan and ensure better adherence, the application allows personal trainers to create multiple meal plans for the same client.
+
+#### Food Items
 In this section, a personal trainer can create a food item. In addition to specifying how many calories it provides, he can also provide his client with information on:
   - the ingredients needed to prepare it
   - the steps to follow to prepare it
 
 ### Clients
+---
+During sign-up, a client can provide his personal trainer's referral code to associate their accounts.
+
+After signing in, a client will be sent to the Home page, with 3 main components:
+  - A pie-chart showing how many calories were consumed (and how many are left)
+  - A section with a history of food items consumed for the day (and the past)
+  - A bar-chart showing the total-calories consumed for each day of the current week
+
+At meal times, a client can decide what to eat by navigating to three main sections:
+  - [Meal Plans](#meal-plans)
+  - [Custom Food Items](#custom-food-items)
+  - [Favorites](#favorites)
+
+#### Meal Plans
+In this section, a client can view the customized meal plans made for him by his personal-trainer. 
+
+Information on how to and what is needed to prepare the food items can also be accessed here.
+
+#### Custom Food Items
+Although it is an ideal outcome, it would be unrealistic to expect a client to follow the prescribed meal-plan all the time. 
+
+Hence, the application also allows clients to create their own food items.
+
+#### Favorites
+This section holds the food items that a client has marked as a personal favorite.
 
 ### Regular Users
+---
+By and large, users without a personal trainer will be able to use the application much like a client of a personal trainer would, with the exception that they have to create their own meal plans instead.
+
 
 ## Core Features Developed
   - Calculate target calories based on physical measurements [see how](#calculating-target-calories)
