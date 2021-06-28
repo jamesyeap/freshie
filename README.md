@@ -11,10 +11,11 @@ The application caters to three main groups of users:
 
 <details><summary>Personal Trainer</summary>
 
+
 <ins>Signing up</ins>
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
-#### Home
+<ins>Home</ins>
 Upon signing in, three main sections will be shown:
 
 ##### Clients
