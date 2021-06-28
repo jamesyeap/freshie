@@ -11,7 +11,7 @@ export default function EditMealPlanPage(props) {
 		<Container>
 			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<Header
-			containerStyle={{ alignItems: "flex-start", width: 310, marginTop: 20, marginBottom: 20 }}
+			containerStyle={{ alignItems: "flex-start", width: 310, marginTop: 20, marginBottom: "20px" }}
 			headerText="Meal Plan 1"
 			subheaderText="Bob"
 			/>

@@ -55,7 +55,6 @@ export function MealsDashboardSection (props) {
 	/* ************************************************************ */
 
 	/* Remove recipes without an author (that were duplicated on the backend for immutability and associated fancy concepts hehehoho) */
-	const originalRecipes = props.recipes.filter(x => x.author !== null);
 
 	return (
 		<>
@@ -68,7 +67,7 @@ export function MealsDashboardSection (props) {
 	        />
 
 		<FlatList
-		 data={originalRecipes}
+		 data={props.recipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     itemDetails={item} 
 						     setModalVisible={(boolean) => dispatch({ type: selectedFoodItemActions.SET_MODAL_VISIBLE, payload: boolean })} 

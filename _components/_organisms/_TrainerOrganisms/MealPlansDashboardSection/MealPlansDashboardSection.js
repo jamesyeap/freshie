@@ -5,7 +5,7 @@ import { connect } from 'react-redux';
 import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { MealButtonModal } from './MealButtonModal';
 import { addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
-import { deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
+import { getRecipeList_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 
 function mapStateToProps(state) {
@@ -69,12 +69,14 @@ export const MealPlansDashboardSection = (props) => {
 	}
 
 	const handleSelectMealPlan = (mealPlanDetails) => {
+		console.log(mealPlanDetails)
 		setSelectedMealPlan(mealPlanDetails)
 		setMealPlanModalVisible(true)
 	}
 
 	/* Add a food item to the meal plan template */
-	const handleAddFoodItem = () => {
+	const handleAddFoodItem = async () => {
+		await getRecipeList_API("search");
 		props.navigation.push("Search", { mealPlan: selectedMealPlan, variation: "ChooseRecipe" })
 	}
 
@@ -120,6 +122,7 @@ export const MealPlansDashboardSection = (props) => {
 		<FlatList
 		 data={props.mealPlans}
 		 renderItem={({item}) => <MealPlan id={item.id} 
+		 				   key={item.id.toString()}
 		 				   title={item.title}
 						   recipes={item.meal}
 		 				   open={selectedMealPlan !== null && item.id === selectedMealPlan.id && !mealPlanModalVisible} 
@@ -128,7 +131,8 @@ export const MealPlansDashboardSection = (props) => {
 						   navigation={props.navigation} 
 						   setSelectedFoodItem={handleSelectFoodItem} 
 						   />}
-		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
+		 keyExtractor = { (item, index) => index.toString() }
+		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }} 
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>
 		</>

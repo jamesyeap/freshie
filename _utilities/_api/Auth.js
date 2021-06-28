@@ -20,10 +20,8 @@ export async function loginAsync_API(values) {
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
-        alert(e);
-        store.dispatch(loading(false));
-        store.dispatch(error(e.response));
-        console.log(e.response.statusMessage);
+        alert(e.response.data.non_field_errors)
+        console.log(e.response.data)
     }
 }
 
@@ -46,9 +44,7 @@ export async function signupAsync_API(values) {
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
-        store.dispatch(loading(false));
-        console.log(e.response.statusMessage)
-        store.dispatch(error(e.response.statusMessage))
+        alert(e.response.data)
     }
 }
 
@@ -67,8 +63,7 @@ export async function logoutAsync_API(values) {
         store.dispatch(removeToken());
         store.dispatch(loading(false));
     } catch (e) {
-        store.dispatch(loading(false));
-        store.dispatch(error(e.response.statusMessage))
+        alert(e.response.data)
     }
 }
 

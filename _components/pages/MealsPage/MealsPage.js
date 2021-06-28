@@ -98,9 +98,10 @@ export default function MealsPage(props) {
 			<TabView
 			navigationState={{ index, routes }}
 			renderScene={renderScene}
-			renderTabBar={props => <TabBar index={index} setIndex={setIndex} {...props} />}
+			renderTabBar={props => <TabBar key={index} index={index} setIndex={setIndex} {...props} />}
 			onIndexChange={setIndex}
 			sceneContainerStyle={{ alignItems: "center" }}
+		
 			/>
 		</Container>
 	)

@@ -72,9 +72,7 @@ export async function getMealPlans_API(values) {
 		store.dispatch(getMealPlans(response.data));
 		store.dispatch(loading(false));
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.statusMessage))
-		console.log(e.response.statusMessage)
+		alert(e.response.data)
 	}	
 }
 
@@ -103,14 +101,10 @@ export async function addRecipe_API(values) {
 		console.log(response.data);
 		console.log("Successfully added recipe!")
 
-		store.dispatch(getMealPlans(response.data));
-
 		await (getRecipeList_API("search"));
 		store.dispatch(loading(false));
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.statusMessage))
-		console.log(e.response.statusMessage)
+		alert(e.response.data)
 	}
 }
 
@@ -136,7 +130,7 @@ export async function editRecipe_API(values) {
 		console.log("Successfully edited recipe!")
 
 		store.dispatch(getMealPlans(response.data));
-		getRecipeList_API("custom")
+		await getRecipeList_API("custom")
 		store.dispatch(loading(false));
 	} catch (e) {
 		store.dispatch(loading(false));
@@ -149,6 +143,7 @@ export async function editRecipe_API(values) {
 export async function deleteRecipe_API(values) {
 	try {
 		const { token, username } = store.getState().auth;
+		alert(values);
 		console.log("Deleting recipe...");
 
 		store.dispatch(loading(true));
@@ -164,13 +159,12 @@ export async function deleteRecipe_API(values) {
 		console.log(response.data);
 		console.log("Successfully deleted recipe!")
 
-		getRecipeList_API("custom");
+		await getRecipeList_API("custom");
+		await getMealPlans_API();
 
 		store.dispatch(loading(false));
 	} catch (e) {
-		store.dispatch(loading(false));
-		console.log(e.response.data.detail)
-		store.dispatch(error(e.response.data.detail))
+		alert(e.response.data)
 	}
 }
 
@@ -197,9 +191,7 @@ export async function createMealPlan_API(values) {
 
 		await getMealPlans_API();
 	} catch (e) {
-		store.dispatch(loading(false));
-		console.log(e.response.data.detail)
-		store.dispatch(error(e.response.data.detail))
+		alert(e.response.data)
 	}	
 }
 
@@ -232,15 +224,7 @@ export async function addRecipeToMealPlan_API(values) {
 		console.log("Successfully added recipe to meal plan!!");
 		await getMealPlans_API();
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-			console.log("ERROR")
-		} else {
-			console.log(e.request)
-			console.log("ERROR")
-		}
+		alert(e.response.data)	
 	}	
 }
 
@@ -266,16 +250,8 @@ export async function deleteMealPlan_API(values) {
 		
 		console.log("Successfully deleted meal plan!");
 
-		getMealPlans_API();
+		await getMealPlans_API();
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-			console.log("ERROR")
-		} else {
-			console.log(e.request)
-			console.log("ERROR")
-		}
+		alert(e.response.data)	
 	}	
 }

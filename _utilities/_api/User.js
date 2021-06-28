@@ -65,13 +65,7 @@ export async function getConsumedMeals_API(values, searchOnly) {
 
 		
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -107,6 +101,8 @@ export async function addConsumedMeal_API(values) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.status))
 		console.log(e.response.status);
+
+		alert(e.response.data)
 	}
 }
 
@@ -131,40 +127,9 @@ export async function updateDailyCalories_API() {
 		store.dispatch(loading(false));
 		console.log("Successfully updated daily calories!");
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.status))
-		console.log(e.response.status);
+		alert(e.response.data)
 	}
 }
-
-/* 	****** IN-PROGRESS ******
-	// Edits the attribute for a specific meal consumed in the record (e.g calories, date eaten, etc...) 
-export async function editConsumedMeal_API(values) {
-	try {
-		console.log("Editing the consumed meal...")
-
-		const { token, username } = store.getState().auth;
-		store.dispatch(loading(true));
-
-		const response = await axios({
-    			method: 'get',
-    			url: `${URL}/api/${username}/consumed-meals/`,
-    			headers: {
-      				"Authorization": `Token ${token}`
-    			}
-		});
-
-		console.log("Successfully edited consumed meal!");
-		store.dispatch(loading(false));
-
-		await (getConsumedMeals_API());
-	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.statusMessage))
-		console.log(e.response.statusMessage);
-	}
-}
-*/
 
 /* Deletes the consumed meal from the record */
 export async function deleteConsumedMeal_API(values) {
@@ -194,9 +159,7 @@ export async function deleteConsumedMeal_API(values) {
 		}
 		await getConsumedMeals_API(dateArgument, false);
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.status))
-		console.log(e.response.status);
+		alert(e.response.data)
 	}
 }
 
@@ -228,9 +191,7 @@ export async function getFavouriteMeals_API() {
 		store.dispatch(updateFavouriteMeals(favMeals))
 		console.log("added favourite meals!")	
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.status))
-		console.log(e.response.status);	
+		alert(e.response.data)
 	}
 }
 
@@ -254,9 +215,7 @@ export async function deleteFavouriteMeal_API(id) {
 
 		await getFavouriteMeals_API()
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response.status))
-		console.log(e.response.status);
+		alert(e.response.data)
 	}	
 }
 
@@ -289,8 +248,6 @@ export async function getWeeklyConsumedMeals_API(values) {
 		console.log("successfully got weekly calories!")
 		
 	} catch (e) {
-		store.dispatch(loading(false));
-		store.dispatch(error(e.response))
-		console.log("catch");
+		alert(e.response.data)	
 	}
 }

@@ -131,6 +131,7 @@ export const TrainerMealsSection = (props) => {
 
 						   variation="Client"
 						   />}
+		 keyExtractor = { (item, index) => index.toString() }
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}

@@ -27,7 +27,7 @@ export function MealsDashboardSection (props) {
 	}
 
 	const handleEdit = () => {
-		props.navigation.push("EditRecipe", { itemDetail: selectedFoodItem });
+		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem });
 	}
 
 	const handleDelete = () => {
@@ -40,8 +40,6 @@ export function MealsDashboardSection (props) {
 		getRecipeList_API("search")
 		setRefreshing(false);
 	}
-	/* Remove recipes without an author (that were duplicated on the backend for immutability and associated fancy concepts hehehoho) */
-	const originalRecipes = props.recipes.filter(x => x.author !== null);
 
 	return (
 		<>
@@ -55,13 +53,14 @@ export function MealsDashboardSection (props) {
 		/>
 
 		<FlatList
-		 data={originalRecipes}
+		 data={props.recipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     itemDetails={item} 
 						     setModalVisible={() => setShowModal(true)} 
 						     setSelectedFoodItem={handleSelectFoodItem}
+						     key={item.id.toString()}
 					   />}
-		 keyExtractor={(item) => item.id}
+		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 onRefresh={handleRefresh}

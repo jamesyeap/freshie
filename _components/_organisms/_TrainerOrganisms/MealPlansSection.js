@@ -18,6 +18,7 @@ function MealPlansSection (props) {
 		 style={styles}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}
+		 keyExtractor = { (item, index) => index.toString() }
 		/>
 	)
 }

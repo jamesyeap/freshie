@@ -71,6 +71,7 @@ export const FavoriteMealsSection = (props) => {
 		<FlatList
 		 data={props.favouriteMeals}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
+		 				     id={item.id}
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} 
@@ -78,7 +79,7 @@ export const FavoriteMealsSection = (props) => {
 					   />}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
-		 keyExtractor = { (item, index) => index.toString() }
+		 keyExtractor = {(item) => item.id.toString()}
 		/>
 		</>
 	)

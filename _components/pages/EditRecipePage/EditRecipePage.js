@@ -12,7 +12,7 @@ import { MultiLineTextInput } from '../../_molecules/MultiLineTextInput'
 import { EditButtonGroup } from '../../_molecules/EditButtons'
 import { IconButton } from '../../_atoms/Button'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
-import { editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recipe';
+import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recipe';
 
 /* This page is used for 
     - ADDING a NEW RECIPE 
@@ -47,7 +47,6 @@ export default EditRecipePage = (props) => {
         } else {
             /* NOTE: If a user is in this page to ADD a NEW RECIPE, the "id" field of "itemDetails" is null */ 
             setLoading(false)
-            alert("he")
         }
     }
     
@@ -55,7 +54,6 @@ export default EditRecipePage = (props) => {
 
     const handleSave = () => {
         if (id) {
-            
             const values = {
                 data: {
                     title,
@@ -69,14 +67,15 @@ export default EditRecipePage = (props) => {
             editRecipe_API(values)
             props.navigation.goBack()
         } else {
-            console.log(props.itemDetails);
-            addRecipe_API(props.itemDetails)
+            console.log({ title, calories, ingredients, instructions, custom: true })
+            addRecipe_API({ title, calories, ingredients, instructions, custom: true })
             props.navigation.goBack()
         }
     }
 
     const handleDelete = () => {
-        props.navigation.navigate("Meals");
+        deleteRecipe_API(Number(id));
+        props.navigation.goBack()
     };
 
     if (loading) {
@@ -89,15 +88,15 @@ export default EditRecipePage = (props) => {
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
                 </View>
                 <View style ={{flex: 0.6}}>
-                    <TextInput label="Name" containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText={setTitle} value={title}/>
-                    <TextInput label="Calories" containerStyle={{flex:0.25}} stacked="20px" placeholder={String(calories)} onChangeText={setCalories} value={calories} />
+                    <TextInput label="Name" containerStyle={{flex:0.25}} stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
+                    <TextInput label="Calories" containerStyle={{flex:0.25}} stacked="20px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
                     <MultiLineTextInput label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/>
-                    <MultiLineTextInput label="Instructions" placeholder={instructions} onChangeText={setInstructions} value={instructions}/>
+                    <MultiLineTextInput label="Instructions" placeholder={instructions} onChangeText={val => setInstructions(val)} value={instructions}/>
                 </View>
             </ScrollView>
 
             <View style={{flex: 1, flexDirection: 'row', justifyContent:'space-between', alignItems: 'center', width:320}}>
-                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+                {id && <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>}
                 <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
             </View>
         </Container>)

@@ -43,7 +43,6 @@ export const CustomMealsSection = (props) => {
 	}
 	/* ************************************************************ */
 	
-	const originalRecipes = props.recipes.filter(x => x.author !== null);
 
 	return (
 		<>	
@@ -57,13 +56,14 @@ export const CustomMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={originalRecipes}
+		 data={props.recipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     key={item.id.toString()}
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} 
 					   />}
+		 keyExtractor = { (item, index) => index.toString() }
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		/>

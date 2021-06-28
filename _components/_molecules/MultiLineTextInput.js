@@ -53,8 +53,8 @@ export const MultiLineTextInput = (props) => {
                           placeholder={props.placeholder} 
                           style={{fontFamily: "Inter_400Regular"}}  
                           onChangeText={props.onChangeText}
+                          value={props.value}
                 >
-                    {props.value}
                 </TextArea>
             </TextContainer>
         </Container>

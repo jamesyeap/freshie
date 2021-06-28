@@ -27,13 +27,7 @@ export async function getClients_API(values) {
 		store.dispatch(getClients(response.data));
 		console.log("Successfully fetched list of clients!");
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -61,14 +55,8 @@ export async function getClientData_API(values) {
 
 		return (response.data);
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
-	}c
+		alert(e.response.data)
+	}
 }
 
 /* Gets a list of meal-plans for a client */
@@ -96,13 +84,7 @@ export async function getClientMealPlan_API(values) {
 
 		return (response.data);
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -130,13 +112,7 @@ export async function deleteClient_API(values) {
 
 		await getClients_API("Search");
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)	
 	}
 }
 
@@ -172,13 +148,7 @@ export async function assignClientMealPlan_API(values) {
 
 		await getClients_API();
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -214,13 +184,7 @@ export async function deleteClientMealPlan_API(values) {
 
 		getClients_API();
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-		} else {
-			console.log(e.request)
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -246,15 +210,7 @@ export async function getReferralCode_API() {
 		
 		console.log("Successfully fetched referral code!");
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-			console.log("ERROR")
-		} else {
-			console.log(e.request)
-			console.log("ERROR")
-		}
+		alert(e.response.data)
 	}
 }
 
@@ -287,14 +243,6 @@ export async function addRecipeToMealPlan_API(values) {
 		await getRecipeList_API("custom")
 		await getMealPlans_API();
 	} catch (e) {
-		if (e.response) {
-			store.dispatch(loading(false));
-			store.dispatch(error(e.response.data))
-			console.log(e.response);
-			console.log("ERROR")
-		} else {
-			console.log(e.request)
-			console.log("ERROR")
-		}
+		alert(e.response.data);	
 	}	
 }

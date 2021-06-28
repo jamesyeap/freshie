@@ -7,14 +7,14 @@ import { RegularText, HeaderMediumText, SubHeaderText } from '../../_atoms/Text'
 const TextContainer = styled.View`
 	flexDirection: column;
 	alignSelf: flex-start;
-	marginBottom: 20;
+	marginBottom: 20px;
 `;
 
 const ActionsContainer = styled.View`
 	flexDirection: column;
 	alignSelf: center;
 	justifyContent: center;
-	marginBottom: 20;
+	marginBottom: 20px;
 `;
 
 export const EatenMealsButtonModal = (props) => {
