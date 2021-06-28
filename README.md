@@ -8,13 +8,44 @@ Apollo 11
 Freshie is a mobile-application that helps personal trainers design nutrition programs for their clients.
 
 The application caters to three main groups of users: 
-  - personal trainers
-  - clients working with a personal trainer 
-  - users without a personal trainer
+  - [personal trainers](#personal-trainer)
+  - [clients](#clients)
+  - [users without a personal trainer](#regular-users)
+
+### Personal Trainer
+After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
+
+Upon signing in, three main sections will be shown.
+  - [List of Clients](#list-of-clients)
+  - [List of Meal Plans](#list-of-meal-plans)
+  - [List of Food Items](#list-of-food-items)
+
+#### List of Clients
+In this section, a personal trainer can access the relevant information for his clients, including:
+  - Meal plans assigned to them
+  - Their physical measurements (height, weight, etc)
+  - Calories they have consumed
+  - Target calories
+
+#### List of Meal Plans
+In this section, a personal trainer can create a meal plan, assign it to a specific client, and make the necessary changes to it as needed.
+
+A meal plan contains the following:
+  - The total calories for the food items contained in it.
+  - The food items.
+
+#### List of Food Items
+In this section, a personal trainer can create a food item. In addition to specifying how many calories it provides, he can also provide his client with information on:
+  - the ingredients needed to prepare it
+  - the steps to follow to prepare it
+
+### Clients
+
+### Regular Users
 
 ## Core Features Developed
   - Calculate target calories based on physical measurements [see how](#calculating-target-calories)
-  - Calorie tracking features [see components](./_components)
+  - Calorie tracking features
       - Pie-chart that indicates how many calories were consumed for the day (and how many are left)
       - List of food items consumed for the day (and in the past)
       - Bar-chart of calories consumed for the past few days
@@ -28,11 +59,11 @@ The application caters to three main groups of users:
   - Consume food items
 
 ## Problems Encountered
-  - 
+
 
 ## Appendix
 
-### Calculating target calories
+#### Calculating target calories
 ``` Javascript
 
 /* STEP 1: Calculate the user's basal metabolic rate.
