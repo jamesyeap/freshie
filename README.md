@@ -10,9 +10,9 @@ Freshie is a mobile-application that helps personal trainers design nutrition pr
 The application caters to three main groups of users: 
 
 <details><summary>Personal Trainer</summary>
-
-
+  <p></p>
 <ins>Signing up</ins>
+ 
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
 <ins>Home</ins>
