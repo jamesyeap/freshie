@@ -87,13 +87,15 @@ By and large, users without a personal trainer will be able to use the applicati
          - the ingredients needed to prepare the food item
          - the instructions for preparation
   - Consume food items
+    - Adds the selected food item to the user's history of consumed meals
+    - Updates the various calorie-tracking components in the application
 
 ## Problems Encountered
 
 
 ## Appendix
-
-#### Calculating target calories
+  
+### Calculating target calories
 ``` Javascript
 
 /* STEP 1: Calculate the user's basal metabolic rate.
