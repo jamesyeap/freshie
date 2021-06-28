@@ -8,7 +8,7 @@ Apollo 11
 Freshie is a mobile-application that helps personal trainers design nutrition programs for their clients.
 
 The application caters to three main groups of users: 
-  - [Personal Trainers](#personal-trainer)
+  - [Personal trainers](#personal-trainer)
   - [Clients](#clients)
   - [Users without a personal trainer](#regular-users)
 
