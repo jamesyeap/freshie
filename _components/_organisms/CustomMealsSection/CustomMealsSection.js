@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { addConsumedMeal_API } from '../../../_utilities/_api/User';
+import { getRecipeList_API } from '../../../_utilities/_api/Recipe';
 import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
@@ -15,6 +16,7 @@ function mapStateToProps(state) {
 export const CustomMealsSection = (props) => {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
@@ -41,6 +43,11 @@ export const CustomMealsSection = (props) => {
 	}
 	/* ************************************************************ */
 	
+	const handleRefresh = () => {
+		setRefreshing(true);
+		getRecipeList_API("custom");
+		setRefreshing(false);
+	}
 
 	return (
 		<>	
@@ -64,6 +71,8 @@ export const CustomMealsSection = (props) => {
 		 keyExtractor = { (item, index) => index.toString() }
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+		 onRefresh={handleRefresh}
+		 refreshing={refreshing}
 		/>
 		</>
 	)

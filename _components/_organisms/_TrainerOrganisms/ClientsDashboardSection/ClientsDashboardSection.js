@@ -3,17 +3,18 @@ import { FlatList } from 'react-native';
 import { connect } from 'react-redux';
 import { ClientItem } from '../../../_molecules/ClientItem';
 import { deleteClient_API } from '../../../../_utilities/_api/Trainer';
-import { store } from '../../../../_redux/store/store';
 import { ClientsButtonModal } from './ClientsButtonModal';
+import { getClients_API } from '../../../../_utilities/_api/Trainer'
 
 function mapStateToProps(state) {
-	const trainerState = state.trainer;
-	return trainerState;
+	const { clients } = state.trainer;
+	return { clients };
 }
 
 export function ClientsDashboardSection(props) {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [selectedClient, setSelectedClient] = useState(null);
+	const [refreshing, setRefreshing] = useState(null);
 
 	const handleSelect = (clientDetails) => {
 		setSelectedClient(clientDetails);
@@ -33,6 +34,12 @@ export function ClientsDashboardSection(props) {
 		setModalVisible(false);
 	}
 
+	const handleRefresh = () => {
+		setRefreshing(true);
+		getClients_API();
+		setRefreshing(false);
+	}
+
 	return (
 		<>
 		{modalVisible && <ClientsButtonModal 
@@ -44,11 +51,13 @@ export function ClientsDashboardSection(props) {
 		/>}
 
 		<FlatList
-		 data={store.getState().trainer.clients}
+		 data={props.data}
 		 renderItem={({ item }) => <ClientItem key={item.id.toString()} clientDetails={item} onPress={() => handleSelect(item)} />}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 keyExtractor={(item) => item.id.toString()}
+		 handleRefresh={handleRefresh}
+		 refreshing={refreshing}
 		/>
 
 		</>

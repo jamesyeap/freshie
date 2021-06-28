@@ -12,6 +12,7 @@ import MealsDashboardSection from '../../../_organisms/_TrainerOrganisms/MealsDa
 
 import { getMealPlans_API, getRecipeList_API, createMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { getClients_API, getReferralCode_API } from '../../../../_utilities/_api/Trainer';
+import { connect } from 'react-redux';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -74,8 +75,12 @@ const TabBar = (props) => {
 	)
 }
 
+function mapStateToProps(state) {
+	const { clients } = state.trainer;
+	return { clients }
+}
 
-export default function DashboardPage(props) {
+export function DashboardPage(props) {
 	const [loading, setLoading] = useState(true);
 	const [index, setIndex] = useState(0);
 	const [routes] = useState([
@@ -86,7 +91,7 @@ export default function DashboardPage(props) {
 	const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false);
 	const [newMealPlanName, setNewMealPlanName] = useState("");
 
-	const firstRoute = () => <ClientsDashboardSection navigation={props.navigation} />;
+	const firstRoute = () => <ClientsDashboardSection navigation={props.navigation} data={props.clients} />;
 	const secondRoute = () => <MealPlansDashboardSection navigation={props.navigation} />;
 	const thirdRoute = () => <MealsDashboardSection navigation={props.navigation} />;
 
@@ -152,3 +157,5 @@ export default function DashboardPage(props) {
 		)
 	}
 }
+
+export default connect(mapStateToProps)(DashboardPage);

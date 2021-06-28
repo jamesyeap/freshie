@@ -4,7 +4,7 @@ import { MealPlan } from '../../../_molecules/MealPlan';
 import { connect } from 'react-redux';
 import { MealButtonModal } from './MealButtonModal';
 import { addRecipeToMealPlan_API } from '../../../../_utilities/_api/Trainer';
-import { getRecipeList_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
+import { getMealPlans_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 
 function mapStateToProps(state) {
@@ -17,8 +17,7 @@ export const MealPlansDashboardSection = (props) => {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [mealModalVisible, setMealModalVisible] = useState(false);
 	const [mealPlanModalVisible, setMealPlanModalVisible] = useState(false);
-
-
+	const [refreshing, setRefreshing] = useState(false);
 
 	const handleSelectFoodItem = (foodItemDetails) => {
 		console.log(foodItemDetails)
@@ -92,6 +91,12 @@ export const MealPlansDashboardSection = (props) => {
 		setMealPlanModalVisible(false);
 	}
 
+	const handleRefresh = () => {
+		setRefreshing(true);
+		getMealPlans_API();
+		setRefreshing(false);
+	}
+
 	return (
 		<>
 		{/* Displays a popup with a list of buttons to interact with the foodItem */}
@@ -133,6 +138,8 @@ export const MealPlansDashboardSection = (props) => {
 		 keyExtractor = { (item, index) => index.toString() }
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }} 
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+		 onRefresh={handleRefresh}
+		 refreshing={refreshing}
 		/>
 		</>
 	)

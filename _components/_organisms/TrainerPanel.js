@@ -31,7 +31,7 @@ export const TrainerPanel = (props) => {
 			<Info 
 			label="Your Trainer"
 			labelColor="#B1CD61"
-			value="Lee Ah Kow"
+			value={props.data}
 			/>
 
 			<ButtonGroup>

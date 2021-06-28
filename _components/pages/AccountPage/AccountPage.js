@@ -68,8 +68,8 @@ const InfoEight = {
 
 function mapStateToProps(state) {
 	const { username } = state.auth;
-	const { caloriesConsumed, dailyCalories } = state.user;
-	return { username, caloriesConsumed, dailyCalories };
+	const { caloriesConsumed, dailyCalories, personalTrainer } = state.user;
+	return { username, caloriesConsumed, dailyCalories, personalTrainer };
 }
 
 export function AccountPage(props) {
@@ -127,6 +127,7 @@ export function AccountPage(props) {
 			/>
 
 			<TrainerPanel
+			data={props.personalTrainer}
 			/>
 
 			<MediumButton

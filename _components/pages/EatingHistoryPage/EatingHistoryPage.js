@@ -56,6 +56,7 @@ export default function EatingHistoryPage(props) {
 		setDateHeader(prettifyDate(date));
 	}, [date, day, dateHeader])
 
+
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()} />
@@ -82,6 +83,7 @@ export default function EatingHistoryPage(props) {
 			display="spinner"
 			themeVariant="light"
 			textColor="black"
+			date={date}
 			/>
 
 			<EatenMealsSection navigation={props.navigation} />

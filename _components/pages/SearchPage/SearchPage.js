@@ -44,7 +44,7 @@ export default function SearchPage (props) {
         useEffect(preload, []);
 
         const searchComponents = () => {
-                return (list.map( x => {return (<FoodItem key={x.toString()} itemDetails= {x} title= {x.title} value= {x.calories} setSelectedFoodItem={handleAddToMealPlan}/>)}))
+                return (list.map( x => {return (<FoodItem key={x.id.toString()} itemDetails= {x} title= {x.title} value= {x.calories} setSelectedFoodItem={handleAddToMealPlan}/>)}))
         }
 
         const onChangeMethod = (text) => {

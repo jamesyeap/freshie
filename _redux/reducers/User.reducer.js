@@ -14,6 +14,7 @@ const initialState = {
 	favouriteMeals:[],
 	loading: false,
 	error: null,
+	personalTrainer: null
 }
 
 export const userReducer = (state = initialState, action) => {
@@ -28,6 +29,8 @@ export const userReducer = (state = initialState, action) => {
 			return {...state, consumedMeals: action.payload};
 		case 'UPDATE_FAVOURITE_MEALS':
 			return {...state, favouriteMeals: action.payload};
+		case 'UPDATE_PERSONAL_TRAINER':
+			return {...state, personalTrainer: action.payload};
 		case 'LOADING': 
 			return {...state, loading: action.payload};
 		case 'ERROR':

@@ -4,6 +4,7 @@ import { FoodItem } from '../../_molecules/FoodItem';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
 import { addConsumedMeal_API } from '../../../_utilities/_api/User';
 import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
+import { getFavouriteMeals_API } from '../../../_utilities/_api/User';
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 
@@ -27,6 +28,7 @@ function mapStateToProps(state) {
 export const FavoriteMealsSection = (props) => {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
@@ -55,6 +57,12 @@ export const FavoriteMealsSection = (props) => {
 
 	console.log(selectedFoodItem);
 
+	const handleRefresh = () => {
+		setRefreshing(true);
+		getFavouriteMeals_API();
+		setRefreshing(false);
+	}
+
 	return (
 		<>
 		<FavoritesButtonModal
@@ -78,6 +86,8 @@ export const FavoriteMealsSection = (props) => {
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 keyExtractor = {(item) => item.id.toString()}
+		 onRefresh={handleRefresh}
+		 refreshing={refreshing}
 		/>
 		</>
 	)

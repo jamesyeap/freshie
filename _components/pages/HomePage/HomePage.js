@@ -10,7 +10,8 @@ import { SectionButton } from '../../_atoms/Button';
 import WeeklyChart from '../../_organisms/WeeklyChart';
 import { connect } from 'react-redux';
 import { createMealPlan_API } from '../../../_utilities/_api/Recipe';
-import {  updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API } from '../../../_utilities/_api/User';
+import {  updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API, getUserProfile_API } from '../../../_utilities/_api/User';
+import { CreateMealPlanModal } from './CreateMealPlanModal';
 
 const WelcomeText = styled(HeaderMediumText)`
 	textAlign: left; 
@@ -41,28 +42,14 @@ export function HomePage(props) {
 			month: today.getMonth() + 1,
 			year: today.getFullYear()
 		}
-		const getDateArray = () => {
-			const todate = new Date()// Sun Jun 27 2021 16:16:23 GMT+0800 (Singapore Standard Time)
-			const today = todate.getDay() // 0 (sunday)
-			const result = []
-			for (let i = today; i >= 0; i--) {
-				let currentDay = new Date(todate)
-				currentDay.setDate(currentDay.getDate() - i)
-				let value = {
-					day: currentDay.getDate(),
-					month: currentDay.getMonth() + 1,
-					year: currentDay.getFullYear()
-				}
-				result.push(value)
-			}
-			return result
-		}
+
 
 		setTimeout(() => {
-			getWeeklyConsumedMeals_API(getDateArray())
+			getWeeklyConsumedMeals_API()
 			getConsumedMeals_API(dateArgument, false);
 			updateDailyCalories_API();
 			getFavouriteMeals_API(); 
+			getUserProfile_API();
 		},0);
 
 		setLoading(false);
@@ -107,11 +94,20 @@ export function HomePage(props) {
 					<WeeklyChart weeklyCalories= {props.weeklyCalories} dailyCalories={props.dailyCalories}/>
 				</View>
 			</View>
+
 			<FAB 
 			variation="client"
 			gotoMeals={() => props.navigation.push("Meals")}
 			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 			gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
+			/>
+
+			<CreateMealPlanModal
+			modalVisible={showCreateMealPlanModal}
+			handleClose={handleCloseCreateMealPlanModal}
+			onPress={handleCreateMealPlan}
+			onChangeText={setNewMealPlanName}
+			value={newMealPlanName}
 			/>
 		</Container>
 	)

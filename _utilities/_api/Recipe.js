@@ -103,8 +103,12 @@ export async function addRecipe_API(values) {
 
 		await (getRecipeList_API("search"));
 		store.dispatch(loading(false));
+
+		return true;
 	} catch (e) {
 		alert(e.response.data)
+
+		return false;
 	}
 }
 

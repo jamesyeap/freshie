@@ -78,21 +78,19 @@ export default class RegisterPage extends Component {
   }
 
   goToNextStep = () => {
-    /*
     const requiredList = 
-      [this.state.userName, this.state.firstName, this.state.lastName, this.state.emailAddress, this.password, this.passwordConfirmed]
+      [this.state.userName, this.state.firstName, this.state.lastName, this.state.emailAddress, this.state.password1, this.state.password2]
     if (this.state.activeIndex === 0) {
       if (requiredList.every((x) => x === undefined)) {
         // this.setToastMessage("You have left some fields empty!")
         alert("You have left some fields empty!")
         return;
       }
-      if (this.state.password !== this.state.passwordConfirmed) {
+      if (this.state.password1 !== this.state.password2) {
         alert("Your passwords do not match!")
         return;
       } 
     }
-    */
 
     const {activeIndex: prevActiveIndex, completedStepIndex: prevCompletedStepIndex} = this.state;
     const createAccount = prevActiveIndex === 2;
@@ -161,8 +159,8 @@ export default class RegisterPage extends Component {
             <TextInput stacked={0} label="First Name" placeholder={"First Name"} onChangeText={this.onFirstNameEntered} value={firstName}/>
             <TextInput stacked={0} label="Last Name" placeholder={"Last Name"} onChangeText={this.onLastNameEntered} value={lastName}/>
             <TextInput stacked={0} label="Email Address" placeholder={"example@abc.com"} onChangeText={this.onEmailEntered} value={email}/>
-            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText={this.onPassword1} value={password1}/>
-            <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2}/>
+            <TextInput stacked={0} label="Password" placeholder={"Enter at least 8 characters"} onChangeText={this.onPassword1} value={password1} secureTextEntry />
+            <TextInput stacked={0} label="Re-password" placeholder={"Confirm your password"} onChangeText={this.onPassword2} value={password2} secureTextEntry />
           </ScrollView>
           <View style={{flexDirection: 'row', justifyContent: 'center'}}>
           {this.renderNextButton()}

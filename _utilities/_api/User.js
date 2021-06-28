@@ -1,6 +1,6 @@
 import axios from 'axios';
 import { store } from '../../_redux/store/store';
-import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loading, error, updateFavouriteMeals, updateWeeklyCalories } from '../../_redux/actions/User.actions';
+import { updateCaloriesConsumed, updateDailyCalories, updateConsumedMeals, loading, error, updateFavouriteMeals, updateWeeklyCalories, updatePersonalTrainer } from '../../_redux/actions/User.actions';
 import { URL } from './_constants';
 
 /* Get a list of meals consumed for the day */
@@ -96,7 +96,9 @@ export async function addConsumedMeal_API(values) {
 			month: today.getMonth() + 1,
 			year: today.getFullYear()
 		}
+
 		await getConsumedMeals_API(dateArgument, false);
+		await getWeeklyConsumedMeals_API();
 	} catch (e) {
 		store.dispatch(loading(false));
 		store.dispatch(error(e.response.status))
@@ -126,6 +128,31 @@ export async function updateDailyCalories_API() {
 		store.dispatch(updateDailyCalories(response.data.dailyCalories))
 		store.dispatch(loading(false));
 		console.log("Successfully updated daily calories!");
+	} catch (e) {
+		alert(e.response.data)
+	}
+}
+
+/* Get user profile details */
+export async function getUserProfile_API() {
+	try {
+		console.log("Fetching user profile...")
+
+		const { token, username } = store.getState().auth;
+
+		store.dispatch(loading(true));
+
+		const response = await axios({
+    			method: 'get',
+    			url: `${URL}/api/${username}/`,
+    			headers: {
+      				"Authorization": `Token ${token}`
+    			}
+		});
+
+		store.dispatch(updatePersonalTrainer(response.data.personalTrainer.username))
+		store.dispatch(loading(false));
+		console.log("Successfully fetched user profile!");
 	} catch (e) {
 		alert(e.response.data)
 	}
@@ -183,12 +210,15 @@ export async function getFavouriteMeals_API() {
 		store.dispatch(loading(false))
 
 		let favMeals = []
-		if (response.data !== "You have not added any favourties!") {
+
+		if (response.status !== 204) {
 			response.data.forEach(meal => {
 				favMeals.push(meal.meal)
 			})
+
+			store.dispatch(updateFavouriteMeals(favMeals))
 		}
-		store.dispatch(updateFavouriteMeals(favMeals))
+
 		console.log("added favourite meals!")	
 	} catch (e) {
 		alert(e.response.data)
@@ -219,7 +249,7 @@ export async function deleteFavouriteMeal_API(id) {
 	}	
 }
 
-export async function getWeeklyConsumedMeals_API(values) {
+export async function getWeeklyConsumedMeals_API() {
 	try {
 		console.log("getting weekly calories...")
 
@@ -228,13 +258,30 @@ export async function getWeeklyConsumedMeals_API(values) {
 		store.dispatch(loading(true))
 		//console.log(store.getState().user.loading)
 
+		const getDateArray = () => {
+			const todate = new Date()// Sun Jun 27 2021 16:16:23 GMT+0800 (Singapore Standard Time)
+			const today = todate.getDay() // 0 (sunday)
+			const result = []
+			for (let i = today; i >= 0; i--) {
+				let currentDay = new Date(todate)
+				currentDay.setDate(currentDay.getDate() - i)
+				let value = {
+					day: currentDay.getDate(),
+					month: currentDay.getMonth() + 1,
+					year: currentDay.getFullYear()
+				}
+				result.push(value)
+			}
+			return result
+		}
+
 		axios({
 			method: 'post',
 			url: `${URL}/api/${username}/weeklyCalories/`,
 			headers: {
 				"Authorization": `Token ${token}`
 			},
-			data: values
+			data: getDateArray()
 		}).then(response => {
 			const res = response.data
 			while(res.length < 7) {

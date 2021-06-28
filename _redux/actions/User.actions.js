@@ -38,6 +38,13 @@ export const updateFavouriteMeals = favouriteMealsList => {
 	}
 }
 
+export const updatePersonalTrainer = personalTrainer => {
+	return {
+		type: 'UPDATE_PERSONAL_TRAINER',
+		payload: personalTrainer 
+	}
+}
+
 /* Indicates loading status */
 export const loading = bool => {
 	return {

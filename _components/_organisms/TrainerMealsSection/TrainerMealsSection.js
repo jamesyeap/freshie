@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { MealPlan } from '../../_molecules/MealPlan';
 import { addConsumedMeal_API } from '../../../_utilities/_api/User';
-import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API } from '../../../_utilities/_api/Recipe'
+import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe'
 import { connect } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { MealButtonModal } from './MealButtonModal';
@@ -18,6 +18,7 @@ export const TrainerMealsSection = (props) => {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [mealModalVisible, setMealModalVisible] = useState(false);
 	const [mealPlanModalVisible, setMealPlanModalVisible] = useState(false);
+	const [refreshing, setRefreshing] = useState(false);
 
 	const handleSelectFoodItem = (foodItemDetails) => {
 		setSelectedFoodItem(foodItemDetails);
@@ -54,6 +55,7 @@ export const TrainerMealsSection = (props) => {
 		const removeFoodItemID = selectedFoodItem.id;
 
 		currRecipes = currRecipes.filter(x => x !== removeFoodItemID);
+		console.log(currRecipes);
 		
 		addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
 					  mealPlanTitle: selectedMealPlan.title,
@@ -61,7 +63,6 @@ export const TrainerMealsSection = (props) => {
 		})
 
 		setSelectedFoodItem(null);
-
 	}
 
 	const handleExpandMealPlan = (mealPlanDetails) => {
@@ -89,6 +90,12 @@ export const TrainerMealsSection = (props) => {
 	const handleCloseMealPlanModal = () => {
 		setSelectedMealPlan(null);
 		setMealPlanModalVisible(false);
+	}
+
+	const handleRefresh = () => {
+		setRefreshing(true);
+		getMealPlans_API();
+		setRefreshing(false);
 	}
 
 	/* ************************************************************ */
@@ -132,6 +139,8 @@ export const TrainerMealsSection = (props) => {
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}
+		 onRefresh={handleRefresh}
+		 refreshing={refreshing}
 		/>
 		</>
 	)

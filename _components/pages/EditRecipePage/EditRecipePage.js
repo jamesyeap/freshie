@@ -67,7 +67,7 @@ export default EditRecipePage = (props) => {
         ]
       );
 
-    const handleSave = () => {
+    const handleSave = async () => {
         if (id) {
             const values = {
                 data: {
@@ -83,8 +83,11 @@ export default EditRecipePage = (props) => {
             props.navigation.goBack()
         } else {
             console.log({ title, calories, ingredients, instructions, custom: true })
-            addRecipe_API({ title, calories, ingredients, instructions, custom: true })
-            props.navigation.goBack()
+            const status = await addRecipe_API({ title, calories, ingredients, instructions, custom: true })
+
+            if (status) {
+                props.navigation.goBack()
+            } 
         }
     }
 

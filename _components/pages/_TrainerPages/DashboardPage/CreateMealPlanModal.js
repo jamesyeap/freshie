@@ -43,9 +43,9 @@ export const CreateMealPlanModal = (props) => {
 const styles = StyleSheet.create({
 	centeredView: {
 	  flex: 1,
-	  justifyContent: "flex-end",
+	  justifyContent: "center",
 	  alignItems: "center",
-	  marginBottom: 22,
+	  marginBottom: 30
 	},
 	modalView: {
 	  margin: 20,

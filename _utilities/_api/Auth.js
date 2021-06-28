@@ -16,7 +16,7 @@ export async function loginAsync_API(values) {
             data: values
         });
 
-        //console.log(response.data)
+        console.log(response.data)
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
@@ -45,6 +45,7 @@ export async function signupAsync_API(values) {
         store.dispatch(loading(false));
     } catch (e) {
         alert(e.response.data)
+        console.log(e.response.data)
     }
 }
 
