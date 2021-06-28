@@ -14,6 +14,7 @@ The application caters to three main groups of users:
 
 
 <details><summary>Personal Trainer</summary>
+
 ##### Signing up
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
