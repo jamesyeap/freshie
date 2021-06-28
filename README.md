@@ -14,7 +14,7 @@ The application caters to three main groups of users:
 
 ## Core Features Developed
   - Calculate target calories based on physical measurements [see how](#calculating-target-calories)
-  - Calorie tracking features [see components](./components)
+  - Calorie tracking features [see components](./_components)
       - Pie-chart that indicates how many calories were consumed for the day (and how many are left)
       - List of food items consumed for the day (and in the past)
       - Bar-chart of calories consumed for the past few days
