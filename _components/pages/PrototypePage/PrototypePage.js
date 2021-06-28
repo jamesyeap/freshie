@@ -1,5 +1,9 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
+import { Ionicons } from '@expo/vector-icons';
+import * as ImagePicker from 'expo-image-picker';
+import { View, TouchableOpacity, Image } from 'react-native';
+import { HeaderMediumText } from '../../_atoms/Text';
 import { Container } from '../../_atoms/Container';
 
 /* Insert Components To Preview Here  */
@@ -21,9 +25,46 @@ const infoOne = {
 }
 
 export default function PrototypePage(props) {
+	const [personalTrainerCert, setPersonalTrainerCert] = useState(null)
+	const onImageUpload = personalTrainerCert => {
+		console.log("changed state")
+		setPersonalTrainerCert(personalTrainerCert)
+		setTimeout(() => {return}, 1000);
+	  }
+	const onImagePicker = async () => {
+		let perms = await ImagePicker.getMediaLibraryPermissionsAsync()
+		if (perms.accessPrivileges === "none") {
+			perms = await ImagePicker.requestMediaLibraryPermissionsAsync()
+			if (perms.accessPrivileges === "none") {
+			alert("Please go to settings and allow freshie to access your photos!")
+			}
+		} else {
+			let result = await ImagePicker.launchImageLibraryAsync({
+			mediaTypes: ImagePicker.MediaTypeOptions.All,
+			allowsEditing: true,
+			aspect: [4, 4],
+			quality: 1,
+			});
+
+			console.log(result);
+
+			if (!result.cancelled) {
+			onImageUpload(result.uri);
+			}
+		}
+	}
+    const iconPlaceholder = () => <Ionicons name="cloud-upload-outline" size={24}></Ionicons>
+    const imageUploaded = () => {
+      return (
+        <Image resizeMode="contain" style= {{width:"100%", height: "100%"}} source= {{uri: personalTrainerCert}} defaultSource={require("../../../assets/no-image-placeholder.jpeg")}></Image>
+      )
+    }
+    const imagePlaceholder = personalTrainerCert === undefined ? iconPlaceholder() : imageUploaded()
 	return (
 		<Container>
-			<ReferralCode />
-		</Container>
+          <TouchableOpacity onPress={() => onImagePicker()} style={{flex: 0.35, flexDirection: 'row', justifyContent:'center', alignItems: 'center', borderStyle: 'dashed', borderWidth: 1, borderColor: "#505050", width: "50%", height: "100%"}}>
+            {imagePlaceholder}
+          </TouchableOpacity>
+        </Container>
 	)
 }

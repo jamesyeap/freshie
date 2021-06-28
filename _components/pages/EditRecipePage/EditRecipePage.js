@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ScrollView, StyleSheet, Alert } from 'react-native'
+import { ScrollView, StyleSheet, Alert, TouchableOpacity } from 'react-native'
 import { BrandHeaderText } from '../../_atoms/Text'
 import { Container } from '../../_atoms/Container'
 import {  View } from 'react-native-ui-lib'
@@ -8,7 +8,9 @@ import { Avatar } from 'react-native-elements'
 import { TextInput } from '../../_molecules/TextInput'
 import { IconButton } from '../../_atoms/Button'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
+import * as ImagePicker from 'expo-image-picker'
 import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recipe';
+import axios from 'axios'
 
 /* This page is used for 
     - ADDING a NEW RECIPE 
@@ -30,6 +32,7 @@ export default EditRecipePage = (props) => {
     const [instructions, setInstructions] = useState("")
     const [id, setId] = useState(null);
     const [loading, setLoading] = useState(true);
+    const [image, setImage] = useState(require('../../../assets/signuppageicon.png'))
 
     const preload = () => {
         if (props.route.params.itemDetails) {
@@ -46,7 +49,23 @@ export default EditRecipePage = (props) => {
         }
     }
     
-    useEffect(preload)
+    useEffect(preload, [])
+
+    const alertLeave = async () => Alert.alert(
+        "Are you sure you want to leave without saving?",
+        "",
+        [
+          {
+            text: "Confirm",
+            onPress: () => props.navigation.goBack(),
+            style: "default",
+          }, 
+          {
+            text: "Cancel",
+            style: "cancel"
+          }
+        ]
+      );
 
     const handleSave = () => {
         if (id) {
@@ -74,33 +93,52 @@ export default EditRecipePage = (props) => {
             deleteRecipe_API(Number(id));
             props.navigation.goBack()
         } else {
-            Alert.alert(
-                "Are you sure you want to leave without saving?",
-                "",
-                [
-                  {
-                    text: "Confirm",
-                    onPress: () => props.navigation.goBack(),
-                    style: "default",
-                  }, 
-                  {
-                    text: "Cancel",
-                    style: "cancel"
-                  }
-                ]
-              );
+            return alertLeave()
         }
     };
+
+    // const onImagePicker = async () => {
+	// 	let perms = await ImagePicker.getMediaLibraryPermissionsAsync()
+	// 	if (perms.accessPrivileges === "none") {
+	// 		perms = await ImagePicker.requestMediaLibraryPermissionsAsync()
+	// 		if (perms.accessPrivileges === "none") {
+	// 		alert("Please go to settings and allow freshie to access your photos!")
+	// 		}
+	// 	} else {
+	// 		let result = await ImagePicker.launchImageLibraryAsync({
+	// 		mediaTypes: ImagePicker.MediaTypeOptions.All,
+	// 		allowsEditing: true,
+	// 		aspect: [4, 4],
+	// 		quality: 1,
+	// 		});
+
+	// 		//console.log(result);
+    //         console.log(image)
+	// 		if (!result.cancelled) {
+	// 		setImage({uri: result.uri});
+	// 		}
+
+    //         const response = await axios({
+    //             method: "post",
+    //             url: `${URL}/api/testing/`,
+    //             headers: {
+    //                 'content-type': 'multipart/form-data',
+    //                 "Authorization": `Token ${token}`
+    //             },
+    //         })
+    //         //console.log(image)
+	// 	}
+	// }
 
     if (loading) {
         return (<BrandHeaderText>Loading</BrandHeaderText>)
     } else {
         return (<Container>
-            <NavigationHeader goTo={() => props.navigation.goBack()} />
+            <NavigationHeader goTo={() => alertLeave()}/>
             <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', }}>
-                <View marginT-40 style={{ flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
-                    <Avatar containerStyle={{height: 200, width: 200}} rounded source={require('../../../assets/signuppageicon.png')}/>
-                </View>
+                <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
+                    <Avatar containerStyle={{height: 200, width: 200}} rounded source={image}/>
+                </TouchableOpacity>
                 <View style ={{flex: 0.6}}>
                     <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
                     <TextInput label="Calories" stacked="10px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
