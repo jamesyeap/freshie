@@ -12,9 +12,8 @@ The application caters to three main groups of users:
   - [Clients](#clients)
   - [Users without a personal trainer](#regular-users)
 
-### Personal Trainer
----
 
+<details><summary>Personal Trainer</summary>
 ##### Signing up
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
@@ -43,7 +42,7 @@ To add variety to his client's nutrition plan and ensure better adherence, the a
 In this section, a personal trainer can create a food item. In addition to specifying how many calories it provides, he can also provide his client with information on:
   - the ingredients needed to prepare it
   - the steps to follow to prepare it
-
+</details>
 
 
 ### Clients
