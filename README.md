@@ -18,7 +18,7 @@ The application caters to three main groups of users:
 ##### Signing up
 After a personal trainer creates an account, he will be assigned a code that he can give to his clients to sign up with the application.
 
-#### Home
+##### Home
 Upon signing in, three main sections will be shown:
   - [Clients](#list-of-clients)
   - [Meal Plans](#list-of-meal-plans)
@@ -30,7 +30,7 @@ In this section, a personal trainer can access the relevant information for his 
   - Physical measurements (height, weight, etc)
   - Target calories for the client
 
-#### Meal Plans
+###### Meal Plans
 In this section, a personal trainer can create a meal plan, assign it to a specific client, and make the necessary changes to it as needed.
 
 A meal plan contains the following:
@@ -39,7 +39,7 @@ A meal plan contains the following:
 
 To add variety to his client's nutrition plan and ensure better adherence, the application allows personal trainers to create multiple meal plans for the same client.
 
-#### Food Items
+###### Food Items
 In this section, a personal trainer can create a food item. In addition to specifying how many calories it provides, he can also provide his client with information on:
   - the ingredients needed to prepare it
   - the steps to follow to prepare it
