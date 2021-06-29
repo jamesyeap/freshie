@@ -1,7 +1,7 @@
 # Freshie
 A project made for NUS Orbital 2021
 
-[Click to open App](https://expo.io/@jamesyeap/freshie)
+[Link to App](https://expo.io/@jamesyeap/freshie)
   
 ## Level of Achievement
 Apollo 11
