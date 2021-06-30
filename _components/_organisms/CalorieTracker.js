@@ -3,9 +3,10 @@ import styled from 'styled-components';
 import { ProgressChart } from 'react-native-chart-kit';
 import { BigComponentContainer } from '../_atoms/Container';
 import { Info } from '../_molecules/Info';
+import { connect } from 'react-redux';
 
 const Container = styled(BigComponentContainer)`
-	backgroundColor: #F4F4F4;
+	backgroundColor: #152238;
 	padding: 17px;
 `;
 
@@ -18,7 +19,8 @@ export const InfoRowContainer = styled.View`
 const CaloriesEatenInfo = (props) => {
 	return (<Info
 		label="Eaten"
-		value={500}
+		value={props.value}
+		valueColor={"white"}
 		unit="kcal"
 		/>)
 }
@@ -26,22 +28,11 @@ const CaloriesEatenInfo = (props) => {
 const CaloriesLeftInfo = (props) => {
 	return (<Info
 		label="Left"
-		value={2500}
+		value={props.value}
+		valueColor={"white"}
 		unit="kcal"
 		/>)
 }
-
-// indicates how much the progress is filled 
-// values must be placed inside an array
-const data = [0.6];
-
-const chartConfig = {
-	   backgroundGradientFrom: "#000000",
-	   backgroundGradientFromOpacity: 0,
-	   backgroundGradientTo: "#000000",
-	   backgroundGradientToOpacity: 0,
-	   color: (opacity = 1) => `rgba(26, 255, 146, ${opacity})`,
-      };
 
 const CaloriesPieChartContainer = styled.View`
       flexDirection: column;
@@ -51,6 +42,18 @@ const CaloriesPieChartContainer = styled.View`
 `;
 
 const CaloriesPieChart = (props) => {
+	// indicates how much the progress is filled 
+	// values must be placed inside an array
+	const chartConfig = {
+		backgroundGradientFrom: "#000000",
+		backgroundGradientFromOpacity: 0,
+		backgroundGradientTo: "#000000",
+		backgroundGradientToOpacity: 0,
+		color: (opacity = 1) => props.value > 1 ? `rgba(255, 0, 0, ${opacity})` : `rgba(26, 255, 146, ${opacity})`,
+	   };
+
+	const data = [props.value > 1 ? props.value - 1 : props.value];
+
 	return (
 		<CaloriesPieChartContainer>
 			<ProgressChart
@@ -66,14 +69,21 @@ const CaloriesPieChart = (props) => {
 	)
 }
 
+function mapStateToProps(state) {
+	const { caloriesConsumed, dailyCalories, consumedMeals } = state.user;
+	return { caloriesConsumed, dailyCalories, consumedMeals };
+}
+
 export const CalorieTracker = (props) => {
 	return (
 		<Container>
 			<InfoRowContainer>
-				<CaloriesEatenInfo />
-				<CaloriesLeftInfo />
+				<CaloriesEatenInfo value={props.caloriesConsumed} />
+				<CaloriesLeftInfo value={props.dailyCalories - props.caloriesConsumed} />
 			</InfoRowContainer>
-				<CaloriesPieChart />
+				<CaloriesPieChart value={props.caloriesConsumed / props.dailyCalories} />
 		</Container>
 	)
 }
+
+export default connect(mapStateToProps)(CalorieTracker);

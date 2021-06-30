@@ -1,4 +1,3 @@
-import React from 'react';
 import styled from 'styled-components' 
 
 export const Container = styled.SafeAreaView`
@@ -6,6 +5,7 @@ export const Container = styled.SafeAreaView`
 	flexDirection: column;
 	justifyContent: flex-start;
 	alignItems: center;
+	backgroundColor: #FFFFFF;
 `;
 
 export const BigComponentContainer = styled.View`
@@ -25,6 +25,5 @@ export const SmallComponentContainer = styled.View`
 	height: 77px;
 	borderRadius: 10px;
 `;
-
 
 

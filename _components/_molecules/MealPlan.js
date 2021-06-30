@@ -1,18 +1,27 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
 import { RegularText, MediumText, SemiBoldText } from '../_atoms/Text';
 import { Info } from '../_molecules/Info';
 import { Divider, IconButton } from 'react-native-paper';
+import Collapsible from 'react-native-collapsible';
+import { FoodItem } from './FoodItem';
+import { SmallButton } from '../_atoms/Button';
+import { ButtonGroup } from '../_molecules/ButtonGroup';
 
-const MediumComponentContainer = styled(ParentContainer)`
+const MediumComponentContainer = styled.TouchableOpacity`
 	flexDirection: row;
+	width: 310px;
+	height: 120px;
+	borderRadius: 10px;
 	borderWidth: 1px;
-	backgroundColor: #FFFFFF;
+	backgroundColor: ${props => props.isOpen ? "#C2F1FB" : "#FFFFFF"};
 	borderColor: #E6F2FC;
 	padding: 13px 18px;
 	alignItems: center;
 	justifyContent: center;
+	marginTop: 12.5px;
+	marginBottom: ${props => props.isOpen ? 0 : "2px"};
 `;
 
 const MealTextContainer = styled.View`
@@ -25,13 +34,13 @@ const PreviewTextContainer = styled.View`
 `;
 
 const MealPlanNameText = styled(SemiBoldText)`
-	fontSize: 24;
-	lineHeight: 32;
+	fontSize: 24px;
+	lineHeight: 32px;
 `;
 
 const PreviewText = styled(RegularText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 `;
 
 const InfoContainer = styled.View`
@@ -43,35 +52,70 @@ const InfoContainer = styled.View`
 	paddingTop: 15px;
 `;
 
-export const MealPlan = (props) => {
+const CalorieText = styled(RegularText)`
+	fontSize: 14px;
+	lineHeight: 20px;
+`;
+
+const FoodItemListContainer = styled.View`
+	flexDirection: column;
+	marginBottom: 55px;
+`;
+
+const Wrapper = styled.View`
+	flexDirection: column;
+	alignItems: center;
+	justifyContent: center;
+`;
+
+export const MealPlan = ({ id, title, recipes, open, setVisible, ...props }) => {
+	let totalCalories = 0;
+
+	recipes.forEach(e => {
+		console.log(e.calories);
+		totalCalories += e.calories
+	});
+
 	return (
-		<MediumComponentContainer>
-			<MealTextContainer>
-				<MealPlanNameText>Meal Plan 1</MealPlanNameText>
-				<PreviewTextContainer>
-					<PreviewText>Taco</PreviewText>
-					<PreviewText>Fish n Chips</PreviewText>
-					<PreviewText>Steak</PreviewText>
-				</PreviewTextContainer>
-			</MealTextContainer>	
+		<Wrapper>
+			<MediumComponentContainer isOpen={open} onPress={() => props.handleSelectMealPlan({ id, title, recipes })}>
+				<MealTextContainer>
+					<MealPlanNameText>{title}</MealPlanNameText>
+					<PreviewTextContainer>
+						{ 
+							(recipes.length <= 3)
+								? recipes.map(e => <PreviewText key= {e.id.toString()} >{e.title} </PreviewText>) 
+								: recipes.slice(0, 2).map(e => <PreviewText key= {e.id.toString()} >{e.title}</PreviewText>)
+						}
+					</PreviewTextContainer>
+				</MealTextContainer>	
 
-			<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
+				<Divider style={{ width: 1, height: 70, marginLeft: "auto" }} />
 
-			<InfoContainer>
-				<Info
-				value={600}
-				unit="kcal"
-				/>
-				
-				<IconButton
-				icon="chevron-down"
-				size={35}
-				/>
-			</InfoContainer>
-		</MediumComponentContainer>
+				<InfoContainer>
+					<CalorieText>{`${totalCalories} kcal`}</CalorieText>
+					
+					<IconButton
+					icon={open ? "chevron-up" : "chevron-down"}
+					size={35}
+					onPress={() => props.handleExpandMealPlan({ id, title, recipes, ...props })}
+					/>
+				</InfoContainer>
+			</MediumComponentContainer>
+
+			<Collapsible collapsed={!open}>
+				{props.variation === "Trainer" && (<ButtonGroup containerStyle={{ width: "100%", alignItems: "center", justifyContent: "center" }}>
+					<SmallButton label="Assign to Client" onPress={props.handleAssignToClient} buttonStyle={{ width: 140, marginRight: 10 }} />
+					<SmallButton label="Add recipe" onPress={props.handleAddFoodItem} buttonStyle={{ width: 140 }} />
+				</ButtonGroup>)}
+
+				<FoodItemListContainer>
+					{
+						recipes.map(e => <FoodItem key={e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} setSelectedFoodItem={props.setSelectedFoodItem} />)
+					}
+				</FoodItemListContainer>
+			</Collapsible>
+		</Wrapper>
 	)
 }
 
-/* 
-			<Divider style={{ width: 1, height: 48 }} />
-*/

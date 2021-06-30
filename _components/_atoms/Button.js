@@ -2,6 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components/native';
 import { Checkbox as PaperCheckbox } from 'react-native-paper';
 import { SemiBoldText } from './Text';
+import { Ionicons } from '@expo/vector-icons';
+// see list of icons available at "https://icons.expo.fyi"
+import { TouchableOpacity } from 'react-native';
 
 /* List of Buttons
 	- Extra Small Button
@@ -11,6 +14,7 @@ import { SemiBoldText } from './Text';
 	- Text Button
 	- Checkbox
 	- Section Button
+	- Icon Button
 */
 
 // EXTRA SMALL BUTTON 
@@ -33,8 +37,8 @@ const ExtraSmallButtonContainer = styled.TouchableOpacity`
 `;
 
 export const ExtraSmallButtonText = styled(SemiBoldText)`
-	fontSize: 12;
-	lineHeight: 16;
+	fontSize: 12px;
+	lineHeight: 16px;
 	color: #FFFFFF;
 `;
 
@@ -49,27 +53,20 @@ const SmallButtonContainer = styled.TouchableOpacity`
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
-	backgroundColor: ${props => props.state === "default" 
-					? "#319795"
-					: props.state === "active"
-						? "#285E61"
-						: props.state === "disabled"
-							? "#319795" 
-							: "#319795" 
-			};
+	backgroundColor: ${props => props.isSelected ? "#1e5d5c" : "#319795"};
 	height: 32px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 `;
 
 export const SmallButtonText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #FFFFFF;
 `;
 
-export const SmallButton = ({label, state, onPress,...props}) => {
-	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress}>
+export const SmallButton = ({label, state, onPress, isSelected, buttonStyle,...props}) => {
+	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} isSelected={isSelected} style={buttonStyle} >
 			<SmallButtonText>{label}</SmallButtonText>
 		</SmallButtonContainer>);
 }
@@ -82,18 +79,18 @@ const MediumButtonContainer = styled.TouchableOpacity`
 	backgroundColor: ${props => props.backgroundColor ? props.backgroundColor : "#D53F8C"} 
 	height: 48px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 	padding: 10px 24px;
 `;
 
 export const MediumButtonText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 	color: #FFFFFF;
 `;
 
-export const MediumButton = ({label, backgroundColor, onPress,...props}) => {
-	return (<MediumButtonContainer margin={props.margin} backgroundColor={backgroundColor} onPress={onPress}>
+export const MediumButton = ({label, backgroundColor, onPress, buttonStyle, ...props}) => {
+	return (<MediumButtonContainer margin={props.margin} backgroundColor={backgroundColor} onPress={onPress} style={buttonStyle} >
 			<MediumButtonText>{label}</MediumButtonText>
 		</MediumButtonContainer>);
 }
@@ -114,17 +111,19 @@ const BigButtonContainer = styled.TouchableOpacity`
 	height: 48px;
 	width: 300px;
 	borderRadius: 6px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
+	marginTop: ${props => props.marginTop ? props.marginTop : 0};
 `;
 
+{/*}	margin: ${props => props.margin ? props.margin : 0};*/}
 export const BigButtonText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
+	fontSize: 18px;
+	lineHeight: 28px;
 	color: #FFFFFF;
 `;
 
-export const BigButton = ({label, state, onPress,...props}) => {
-	return (<BigButtonContainer margin={props.margin} state={state} onPress={onPress}>
+export const BigButton = ({label, state, buttonStyle, onPress,...props}) => {
+	return (<BigButtonContainer marginTop= {props.marginTop} margin={props.margin} state={state} onPress={onPress} style={buttonStyle} >
 			<BigButtonText>{label}</BigButtonText>
 		</BigButtonContainer>);
 }
@@ -134,18 +133,18 @@ const TextButtonContainer = styled.TouchableOpacity`
 	flexDirection: column;
 	justifyContent: center;
 	alignItems: center;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 `;
 
 export const TextButtonText = styled(SemiBoldText)`
-	fontSize: ${props => props.size === "xs" ? 12 : 14};
-	lineHeight: ${props => props.size === "xs" ? 16 : 20};
+	fontSize: ${props => props.size === "xs" ? "12px" : "14px"};
+	lineHeight: ${props => props.size === "xs" ? "16px" : "20px"};
 	color: #000000;
 `;
 
-export const TextButton = ({label, state, onPress, size,...props}) => {
-	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} {...props}>
-			<TextButtonText size={size} >{label}</TextButtonText>
+export const TextButton = ({label, state, onPress, size, buttonStyle, textStyle, ...props}) => {
+	return (<TextButtonContainer margin={props.margin} state={state} onPress={onPress} style={buttonStyle}>
+			<TextButtonText size={size} style={textStyle}>{label}</TextButtonText>
 		</TextButtonContainer>);
 }
 
@@ -156,8 +155,8 @@ const CheckboxContainer = styled.View`
 `;
 
 export const CheckboxText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #000000;
 	marginRight: 9px;
 `;
@@ -184,7 +183,7 @@ const SectionButtonContainer = styled.TouchableOpacity`
 	width: 310px;
 	height: 120px;
 	borderRadius: 10px;
-	margin: ${props => props.margin ? props.margin : "0px"};
+	margin: ${props => props.margin ? props.margin : 0};
 	padding: 15px;
 `;
 
@@ -196,14 +195,14 @@ const SectionButtonTextContainer = styled.View`
 `;
 
 export const SectionButtonMainText = styled(SemiBoldText)`
-	fontSize: 30;
-	lineHeight: 36;
+	fontSize: 30px;
+	lineHeight: 36px;
 	color: #FFFFFF;
 `;
 
 export const SectionButtonSubText = styled(SemiBoldText)`
-	fontSize: 14;
-	lineHeight: 20;
+	fontSize: 14px;
+	lineHeight: 20px;
 	color: #9277DB;
 `;
 
@@ -216,6 +215,64 @@ export const SectionButton = ({mainText, subText, onPress, ...props}) => {
 			</SectionButtonTextContainer>
 		</SectionButtonContainer>
 		);
+}
+
+// ICON BUTTON 
+const IconButtonContainer = styled.TouchableOpacity`
+	flexDirection: row;
+	justifyContent: center;
+	alignItems: center;
+	padding: 6px;
+	backgroundColor: ${props => props.color ? props.color : "transparent"}
+	borderRadius: 6px;
+`;
+
+const IconButtonText = styled(SemiBoldText)`
+	fontSize: 12px;
+	lineHeight: 16px;
+	color: #FFFFFF;
+	marginLeft: 8px; 
+`;
+
+export const IconButton = ({ iconName, iconSize, iconColor, buttonColor, buttonLabel, buttonStyle, onPress,...props }) => {
+	return (
+		<IconButtonContainer color={buttonColor} style={buttonStyle} onPress={onPress} >
+			<Ionicons
+			name={iconName}
+			size={iconSize}
+			color={iconColor ? iconColor : "#FFFFFF"}
+			/>
+
+			{buttonLabel && <IconButtonText>{buttonLabel}</IconButtonText>}
+		</IconButtonContainer>
+	)
+}
+
+export const EditButtonContainer = styled(TouchableOpacity)`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;	
+	backgroundColor: ${props => props.color ? props.color : "#000000"}
+	borderRadius: 6px;
+	width: 88px;
+	height: 32px;
+	margin: ${props => props.margin ? props.margin : 0}
+`
+export const EditButtonText = styled(SemiBoldText)`
+	fontSize: 18px;
+	lineHeight: 28px;
+	color: #FFFFFF;
+`;
+
+//export const EditButtonIcon = styled()
+
+export const EditButton = ({label, state, color, onPress, margin,...props}) => {
+	return (
+		<EditButtonContainer color= {color} margin= {margin} state= {state} onPress= {onPress}>
+			<Ionicons name={props.name} size={24}></Ionicons>
+			<EditButtonText>{label}</EditButtonText>
+		</EditButtonContainer>
+	)	
 }
 
 

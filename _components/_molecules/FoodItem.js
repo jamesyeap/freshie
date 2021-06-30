@@ -1,20 +1,19 @@
 import React from 'react';
+import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
-import { ExtraSmallButton, TextButton } from '../_atoms/Button';
-import { Divider, IconButton } from 'react-native-paper';
 import { Info } from './Info';
 
 const FoodItemContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	alignItems: center
 	width: 310px;
-	height: 77px;
+	minHeight: 77px;
 	borderRadius: 10px;
 	borderWidth: 1px;
 	borderColor: #E6F2FC;
 	backgroundColor: #FFFFFF;
-	margin: 12.5px;
+	margin: ${props => props.margin ? props.margin : "12.5px"};
 `;
 
 const FoodItemInfoContainer = styled.View`
@@ -23,45 +22,28 @@ const FoodItemInfoContainer = styled.View`
 `;
 
 const FoodItemNameText = styled(SemiBoldText)`
-	fontSize: 18;
-	lineHeight: 28;
-`;
-
-const ButtonsContainer = styled.View`
-	flexDirection: column;
-	alignItems: flex-end;
-	justifyContent: center;
-	marginLeft: 30px;
-	marginRight: 12px;
+	fontSize: 18px;
+	lineHeight: 28px;
 `;
 
 export const FoodItem = (props) => {
+
+	const { id, title, calories, ingredients, instructions } = props.itemDetails;
+
 	return (
-		<FoodItemContainer>
-			<IconButton
-			 icon="pizza"
-			 style={{ height: 50, width: 50, marginLeft: 21 }}
-			 onPress={() => console.log("Pressed")}
-			/>
+		<FoodItemContainer margin={props.margin} onPress={() => props.setSelectedFoodItem(props.itemDetails)} >
+			<Image 
+			source={require('../../assets/taco.png')}
+			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33 }}
+			/>		
+
 			<FoodItemInfoContainer>
-			<FoodItemNameText>Taco</FoodItemNameText>
-			<Info
-			 value={200}
-			 unit="kcal"
-			/>
+				<FoodItemNameText>{title}</FoodItemNameText>
+				<Info
+				value={calories}
+				unit= "kcal"
+				/>
 			</FoodItemInfoContainer>
-
-			<Divider style={{ width: 1, height: 48, marginLeft: auto }} />
-
-			<ButtonsContainer>
-				<ExtraSmallButton 
-				label="Consume"
-				/>
-				<TextButton 
-				label="Edit"
-				size="xs"
-				/>
-			</ButtonsContainer>
 		</FoodItemContainer>
 	);
 }
