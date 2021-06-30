@@ -20,7 +20,7 @@ export async function loginAsync_API(values) {
         store.dispatch(saveUser(response.data));
         store.dispatch(loading(false));
     } catch (e) {
-        alert(e.response.data.non_field_errors)
+        alert(e.response.data)
         console.log(e.response.data)
     }
 }
