@@ -1,6 +1,7 @@
 {
   "expo": {
     "name": "freshie",
+    "owner": "nus-orbital-2021",
     "slug": "freshie",
     "version": "1.0.0",
     "orientation": "portrait",
@@ -17,7 +18,8 @@
       "**/*"
     ],
     "ios": {
-      "supportsTablet": true
+      "supportsTablet": true,
+      "bundleIdentifier": "freshie-ios"
     },
     "android": {
       "adaptiveIcon": {
