@@ -6,8 +6,8 @@ import { HeaderMediumText } from '../../_atoms/Text';
 import { MediumButton } from '../../_atoms/Button';
 import { InfoPanel } from '../../_organisms/InfoPanel';
 import { TrainerPanel } from '../../_organisms/TrainerPanel';
-import { connect } from 'react-redux';
-import { logoutAsync_API } from '../../../_utilities/_api/Auth';
+import { connect, useDispatch } from 'react-redux';
+import { logoutAsync_API } from '../../../_redux/actions/Auth.actions';
 
 const NameText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -19,53 +19,6 @@ const NameText = styled(HeaderMediumText)`
 	alignSelf: flex-start;
 `;
 
-const InfoOne = {
-	label: "Height",
-	value: 180,
-	unit: "cm"
-}
-
-const InfoTwo = {
-	label: "Age",
-	value: 30,
-	unit: "years old"
-}
-
-const InfoThree = {
-	label: "Weight",
-	value: 75,
-	unit: "kg"
-}
-
-const InfoFour = {
-	label: "Target Weight",
-	value: 70,
-	unit: "kg"
-}
-
-const InfoFive = {
-	label: "BMR",
-	value: 70,
-	unit: "kg"
-}
-
-const InfoSix = {
-	label: "Activity Level",
-	value: "Slightly Active",
-}
-
-const InfoSeven = {
-	label: "Today's Calories",
-	value: 500,
-	unit: "kcal"
-}
-
-const InfoEight = {
-	label: "Target Calories",
-	value: 2500,
-	unit: "kcal"
-}
-
 function mapStateToProps(state) {
 	const { username } = state.auth;
 	const { caloriesConsumed, dailyCalories, personalTrainer } = state.user;
@@ -73,10 +26,13 @@ function mapStateToProps(state) {
 }
 
 export function AccountPage(props) {
+	const dispatch = useDispatch();
+
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()} />
 			<NameText>{props.username}</NameText>
+			
 			<InfoPanel 
 			 infoOne={{
 			   label: "Height",
@@ -132,7 +88,7 @@ export function AccountPage(props) {
 
 			<MediumButton
 			label="Log Out"
-			onPress={() => logoutAsync_API()}
+			onPress={() => dispatch(logoutAsync_API())}
 			/>
 		</Container>
 	)
