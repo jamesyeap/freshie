@@ -1,4 +1,4 @@
-import React from 'react';
+import React, { useRef } from 'react';
 import { Text } from 'react-native';
 import styled from 'styled-components';
 import { Container } from '../../_atoms/Container';
@@ -36,6 +36,7 @@ function mapStateToProps(state) {
 function LoginPage(props) {
 	const dispatch = useDispatch();
 
+
 	const handleLogin = (values) => {
 		dispatch(loginAsync_API(values));
 	}
@@ -49,6 +50,7 @@ function LoginPage(props) {
 		{({ handleChange, handleBlur, handleSubmit, values, touched, errors }) => (
 		<Container>
 			<BrandHeaderText>freshie</BrandHeaderText>
+			
 			<Header
 			 headerText="Hello, Welcome Back"
 			 subheaderText="Enter your credentials to continue"
@@ -99,6 +101,8 @@ function LoginPage(props) {
 			>
 				{props.error}
 			</Snackbar>
+
+			
 			
 		</Container>
 		)}
