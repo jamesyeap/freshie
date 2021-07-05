@@ -2,7 +2,6 @@ import axios from "axios";
 import { URL } from '../_constants';
 
 /* ACTION-VERBS */
-
 export const SAVE_USER = 'SAVE_USER';
 export const CLEAR_USER = 'CLEAR_USER';
 export const LOADING = 'LOADING';
@@ -37,6 +36,7 @@ export const logoutAsync_API = () => {
 
         // lets user know that the request is loading
         dispatch(loading())
+        alert("logging out")
 
         try {
             await axios({
