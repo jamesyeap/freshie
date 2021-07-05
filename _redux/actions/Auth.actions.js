@@ -36,13 +36,11 @@ export const logoutAsync_API = () => {
 
         // lets user know that the request is loading
         dispatch(loading())
-        alert("logging out")
 
         try {
             await axios({
                 method: "post",
                 url: `${URL}/logout/`,
-                data: arg
             })
 
             // if request is successful, clears user details from the state

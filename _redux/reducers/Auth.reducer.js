@@ -17,7 +17,7 @@ export const authReducer = (state = initialState, action) => {
 		case SAVE_USER: 
 			return { 
 				...state, 
-				token: action.payload.token,
+				token: action.payload.key,
 				username: action.payload.user.username,
 				firstName: action.payload.user.first_name,
 				lastName: action.payload.user.last_name,
