@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../../_molecules/FoodItem';
-import { getRecipeList_API, deleteRecipe_API } from '../../../../_utilities/_api/Recipe'
-import { connect } from 'react-redux';
+import { getRecipeList_API, deleteRecipe_API } from '../../../../_redux/actions/Recipes.actions'
+import { connect, useDispatch } from 'react-redux';
 import { MealsButtonModal } from './MealsButtonModal';
 
 function mapStateToProps(state) {
@@ -14,6 +14,8 @@ export function MealsDashboardSection (props) {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [showModal, setShowModal] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+
+	const dispatch = useDispatch();
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
@@ -30,13 +32,13 @@ export function MealsDashboardSection (props) {
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem.id)
+		dispatch(deleteRecipe_API(selectedFoodItem.id))
 	}
 	/* ************************************************************ */
 
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getRecipeList_API("search")
+		dispatch(getRecipeList_API("search"))
 		setRefreshing(false);
 	}
 

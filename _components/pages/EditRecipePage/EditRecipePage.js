@@ -3,14 +3,13 @@ import styled from 'styled-components'
 import { ScrollView, StyleSheet, Alert, TouchableOpacity } from 'react-native'
 import { BrandHeaderText } from '../../_atoms/Text'
 import { Container } from '../../_atoms/Container'
-import {  View } from 'react-native-ui-lib'
+import { View } from 'react-native-ui-lib'
 import { Avatar } from 'react-native-elements'
 import { TextInput } from '../../_molecules/TextInput'
 import { IconButton } from '../../_atoms/Button'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
-import * as ImagePicker from 'expo-image-picker'
-import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_utilities/_api/Recipe';
-import axios from 'axios'
+import { useDispatch } from 'react-redux'
+import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
 
 /* This page is used for 
     - ADDING a NEW RECIPE 
@@ -33,6 +32,8 @@ export default EditRecipePage = (props) => {
     const [id, setId] = useState(null);
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState(require('../../../assets/signuppageicon.png'))
+
+    const dispatch = useDispatch()
 
     const preload = () => {
         if (props.route.params.itemDetails) {
@@ -79,11 +80,11 @@ export default EditRecipePage = (props) => {
                 foodItemID: id
             }
 
-            editRecipe_API(values)
+            dispatch(editRecipe_API(values))
             props.navigation.goBack()
         } else {
             console.log({ title, calories, ingredients, instructions, custom: true })
-            const status = await addRecipe_API({ title, calories, ingredients, instructions, custom: true })
+            const status = dispatch(addRecipe_API({ title, calories, ingredients, instructions, custom: true }))
 
             if (status) {
                 props.navigation.goBack()
@@ -93,7 +94,7 @@ export default EditRecipePage = (props) => {
 
     const handleDelete = () => {
         if (id) {
-            deleteRecipe_API(Number(id));
+            dispatch(deleteRecipe_API(Number(id)));
             props.navigation.goBack()
         } else {
             return alertLeave()

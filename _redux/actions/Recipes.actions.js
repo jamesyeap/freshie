@@ -1,3 +1,258 @@
+import axios from "axios";
+import { URL } from '../_constants';
+import { useSelector } from "react-redux";
+
+/* ACTION-VERBS */
+export const ADD_RECIPE = 'ADD_RECIPE';
+export const GET_RECIPES = 'GET_RECIPES';
+export const GET_MEAL_PLANS = 'GET_MEAL_PLANS';
+export const LOADING = 'LOADING';
+export const ERROR = 'ERROR' ;
+
+/* MIDDLEWARE */
+
+/* Get a list of recipes for the user */
+export const getRecipeList_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+
+                    if (arg === "search") {
+                        const response = await axios({
+                            method: 'get',
+                            url: `${URL}/api/recipes/search/`,
+                            headers: {
+                                "Authorization": `Token ${token}`
+                            }
+                        });
+
+                        dispatch({ type: GET_RECIPES, payload: response.data })
+                    }
+
+                    if (arg === "custom") {
+                        const response = await axios({
+                            method: 'get',
+                            url: `${URL}/api/recipes/custom/`,
+                            headers: {
+                                "Authorization": `Token ${token}`
+                            }
+                        });
+                
+                        dispatch({ type: GET_RECIPES, payload: response.data })
+                    }
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Get a list of meal plans */
+export const getMealPlans_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+                    const response = await axios({
+                        method: 'get',
+                        url: `${URL}/api/${username}/mealplans/`,
+                        headers: {
+                            "Authorization": `Token ${token}`
+                        }
+                    });
+
+                    dispatch({ type: GET_MEAL_PLANS, payload: response.data });
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* WORK IN PROGRESS */
+/* Get the information about a specific recipe (eg ingredients needed, steps to prepare, etc...) */
+export const getRecipeDetails_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Adds a new recipe */
+export const addRecipe_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+
+                    const response = await axios({
+                        method: 'post',
+                        url: `${URL}/api/recipes/`,
+                        headers: {
+                            "Authorization": `Token ${token}`
+                        },
+                        data: arg
+                    });
+
+                    getRecipeList_API("search")
+
+                    return true;
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+
+                    return false;
+            }
+    }
+}
+
+/* Edits the recipe (eg ingredients needed, steps to prepare, etc...) */
+export const editRecipe_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+                    const response = await axios({
+                        method: 'post',
+                        url: `${URL}/api/recipes/edit/${values.foodItemID}/`,
+                        headers: {
+                            "Authorization": `Token ${token}`
+                        },
+                        data: arg.data
+                    })
+
+                    dispatch({ type: GET_MEAL_PLANS, payload: response.data })
+                    getRecipeList_API()
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Deletes the recipe */
+export const deleteRecipe_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+                    const response = await axios({
+                        method: 'delete',
+                        url: `${URL}/api/recipes/edit/${values}/`,
+                        headers: {
+                            "Authorization": `Token ${token}`
+                        }
+                    });
+
+                    dispatch(getRecipeList_API("custom"))
+                    dispatch(getMealPlans_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Create a new meal plan */
+export const createMealPlan_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+                    const response = await axios({
+                        method: 'post',
+                        url: `${URL}/api/${username}/add-mealplan/`,
+                        headers: {
+                            "Authorization": `Token ${token}`
+                        },
+                        data: arg
+                    });
+
+                    dispatch(getMealPlans_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Replace the recipes in a meal plan with an array of recipes
+	-> "meals" to be given in an array 
+*/
+export const addRecipeToMealPlan_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+
+                    const response = await axios({
+                        method: 'post',
+                        url: `${URL}/api/${username}/mealplan/${values.mealPlanID}/`,
+                        headers: {
+                              "Authorization": `Token ${token}`
+                        },
+                        data: {
+                            title: arg.mealPlanTitle,
+                            meals: arg.recipeIDList
+                        }
+                    });
+                    
+                    dispatch(getMealPlans_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* Delete meal plan */
+export const deleteMealPlan_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = useSelector(state => state.auth);
+                    const response = await axios({
+                        method: 'delete',
+                        url: `${URL}/api/${username}/mealplan/${values}/`,
+                        headers: {
+                              "Authorization": `Token ${token}`
+                        },
+                    });
+                    
+                    dispatch(getMealPlans_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+/* ACTION-CREATORS */
 export const getRecipes = (recipes) => ({
     type: 'GET_RECIPES',
     payload: recipes

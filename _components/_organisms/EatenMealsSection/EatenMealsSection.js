@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { EatenMealsButtonModal } from './EatenMealsButtonModal';
-import { deleteConsumedMeal_API } from '../../../_utilities/_api/User';
+import { deleteConsumedMeal_API } from '../../../_redux/actions/Client.actions';
 
 function mapStateToProps(state) {
 	const { consumedMeals } = state.user;
@@ -13,6 +13,7 @@ function mapStateToProps(state) {
 const EatenMealsSection = (props) => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
+	const dispatch = useDispatch();
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleEdit = () => {
@@ -21,7 +22,7 @@ const EatenMealsSection = (props) => {
 	}
 
 	const handleDelete = () => {
-		deleteConsumedMeal_API(selectedFoodItem.id);
+		dispatch(deleteConsumedMeal_API(selectedFoodItem.id))
 		props.navigation.navigate("Home");
 	}
 

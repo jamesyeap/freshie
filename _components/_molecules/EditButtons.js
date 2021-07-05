@@ -2,14 +2,14 @@ import React from 'react'
 import { View } from 'react-native'
 import { IconButton } from '../_atoms/Button'
 import { StyleSheet } from 'react-native';
-import { addRecipe_API, editRecipe_API } from '../../_utilities/_api/Recipe';
+import { addRecipe_API, editRecipe_API } from '../../_redux/actions/Recipes.actions';
+import { useDispatch } from 'react-redux';
 
 export const EditButtonGroup = (props) => {
-
+    const dispatch = useDispatch();
+    
     const handleSave = () => {
         if (props.itemDetails.id) {
-            console.log(itemDetails);
-            
             const { title, calories, ingredients, instructions } = props.itemDetails;
             const values = {
                 data: {
@@ -21,11 +21,10 @@ export const EditButtonGroup = (props) => {
                 foodItemID: props.itemDetails.id
             }
 
-            editRecipe_API(values)
+            dispatch(editRecipe_API(values))
             props.navigation.goBack()
         } else {
-            console.log(props.itemDetails);
-            addRecipe_API(props.itemDetails)
+            dispatch(addRecipe_API(props.itemDetails))
             props.navigation.goBack()
         }
     }

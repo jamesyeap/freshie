@@ -1,10 +1,10 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { MealPlan } from '../../../_molecules/MealPlan';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { MealButtonModal } from './MealButtonModal';
-import { addRecipeToMealPlan_API } from '../../../../_utilities/_api/Trainer';
-import { getRecipeList_API, getMealPlans_API, deleteMealPlan_API } from '../../../../_utilities/_api/Recipe';
+import { addRecipeToMealPlan_API } from '../../../../_redux/actions/Trainer.actions';
+import { getRecipeList_API, getMealPlans_API, deleteMealPlan_API } from '../../../../_redux/actions/Recipes.actions';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 
 function mapStateToProps(state) {
@@ -18,6 +18,8 @@ export const MealPlansDashboardSection = (props) => {
 	const [mealModalVisible, setMealModalVisible] = useState(false);
 	const [mealPlanModalVisible, setMealPlanModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+
+	const dispatch = useDispatch();
 
 	const handleSelectFoodItem = (foodItemDetails) => {
 		console.log(foodItemDetails)
@@ -51,10 +53,10 @@ export const MealPlansDashboardSection = (props) => {
 			currRecipes = currRecipes.filter(x => x !== removeFoodItemID)
 		}
 
-		addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
+		dispatch(addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
 					  mealPlanTitle: selectedMealPlan.title,
 					  recipeIDList: currRecipes
-		})
+		}))
 
 		setSelectedFoodItem(null);
 		setSelectedMealPlan(null);
@@ -77,7 +79,7 @@ export const MealPlansDashboardSection = (props) => {
 
 	/* Add a food item to the meal plan template */
 	const handleAddFoodItem = async () => {
-		await getRecipeList_API("search");
+		dispatch(getRecipeList_API("search"));
 		props.navigation.push("Search", { mealPlan: selectedMealPlan, variation: "ChooseRecipe" })
 	}
 
@@ -86,7 +88,7 @@ export const MealPlansDashboardSection = (props) => {
 	}
 
 	const handleDeleteMealPlan = () => {
-		deleteMealPlan_API(selectedMealPlan.id);
+		dispatch(deleteMealPlan_API(selectedMealPlan.id));
 	}
 
 	const handleCloseMealPlanModal = () => {
@@ -96,7 +98,7 @@ export const MealPlansDashboardSection = (props) => {
 
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getMealPlans_API();
+		dispatch(getMealPlans_API());
 		setRefreshing(false);
 	}
 

@@ -2,23 +2,10 @@ import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
-import { addConsumedMeal_API } from '../../../_utilities/_api/User';
-import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
-import { getFavouriteMeals_API } from '../../../_utilities/_api/User';
-import { connect } from 'react-redux';
+import { addConsumedMeal_API, getFavouriteMeals_API } from '../../../_redux/actions/Client.actions';
+import { deleteRecipe_API } from '../../../_redux/actions/Recipes.actions'
+import { connect, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
-
-/* mock example
-const data = [
-	{
-		id: 0,
-		title: "Egg Sandwich",
-		calories: 500,
-		instructions: "Just make lah bro.",
-		ingredients: "Egg. Bread. What more do you want sia."
-	}
-]
-*/
 
 function mapStateToProps(state) {
 	const { favouriteMeals } = state.user;
@@ -29,6 +16,8 @@ export const FavoriteMealsSection = (props) => {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	
+	const dispatch = useDispatch()
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
@@ -39,7 +28,7 @@ export const FavoriteMealsSection = (props) => {
 	const handleConsume = () => {
 		console.log(selectedFoodItem);
 		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
-		addConsumedMeal_API(obj);
+		dispatch(addConsumedMeal_API(obj));
 		props.navigation.navigate("Home");
 	}
 
@@ -49,17 +38,15 @@ export const FavoriteMealsSection = (props) => {
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem.id);
+		dispatch(deleteRecipe_API(selectedFoodItem.id));
 		props.navigation.navigate("Home");
 	}
 
 	/* ************************************************************ */
 
-	console.log(selectedFoodItem);
-
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getFavouriteMeals_API();
+		dispatch(getFavouriteMeals_API());
 		setRefreshing(false);
 	}
 

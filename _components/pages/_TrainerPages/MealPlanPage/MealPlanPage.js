@@ -1,13 +1,13 @@
 import React, { useState } from 'react';
-import styled from 'styled-components';
 import { FlatList } from 'react-native';
+import { useDispatch } from 'react-redux';
 
 import { Container } from '../../../_atoms/Container';
 import { FoodItem } from '../../../_molecules/FoodItem';
 import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { HeaderMediumText } from '../../../_atoms/Text';
 import { MediumButton } from '../../../_atoms/Button';
-import { deleteClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
+import { deleteClientMealPlan_API } from '../../../../_redux/actions/Trainer.actions';
 
 export default function MealPlanPage(props) {
 	const { id, title, meal } = props.route.params.mealPlanDetails;
@@ -33,7 +33,7 @@ export default function MealPlanPage(props) {
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem);
+		dispatch(deleteRecipe_API(selectedFoodItem));
 		props.navigation.navigate("Home");
 	}
 

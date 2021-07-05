@@ -8,20 +8,11 @@ import { FAB } from '../../_molecules/FAB';
 import CalorieTracker from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
 import WeeklyChart from '../../_organisms/WeeklyChart';
-import { connect } from 'react-redux';
-import { createMealPlan_API } from '../../../_utilities/_api/Recipe';
-import {  updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API, getUserProfile_API } from '../../../_utilities/_api/User';
+import { connect, useDispatch } from 'react-redux';
+import { createMealPlan_API } from '../../../_redux/actions/Recipes.actions';
+import getDateArgument from '../../../_utilities/_helperFunctions/getDateArgument';
+import { updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API, getUserProfile_API } from '../../../_redux/actions/Client.actions';
 import { CreateMealPlanModal } from './CreateMealPlanModal';
-
-const WelcomeText = styled(HeaderMediumText)`
-	textAlign: left; 
-	marginTop: 19px;
-	marginBottom: 19px;
-	marginLeft: 20px;
-	marginRight: auto;
-	flexWrap: wrap;
-	alignSelf: flex-start;
-`;
 
 function mapStateToProps(state) {
 	const { username } = state.auth;
@@ -34,22 +25,17 @@ export function HomePage(props) {
 	const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false);
 	const [newMealPlanName, setNewMealPlanName] = useState("");
 
+	const dispatch = useDispatch();
+
 	const loadData = () => {
 		console.log("Loading data");
-		const today = new Date();
-		const dateArgument = {
-			day: today.getDate(),
-			month: today.getMonth() + 1,
-			year: today.getFullYear()
-		}
-
 
 		setTimeout(() => {
-			getWeeklyConsumedMeals_API()
-			getConsumedMeals_API(dateArgument, false);
-			updateDailyCalories_API();
-			getFavouriteMeals_API(); 
-			getUserProfile_API();
+			dispatch(getWeeklyConsumedMeals_API())
+			dispatch(getConsumedMeals_API(getDateArgument(), false));
+			dispatch(updateDailyCalories_API())
+			dispatch(getFavouriteMeals_API()); 
+			dispatch(getUserProfile_API());
 		},0);
 
 		setLoading(false);
@@ -58,7 +44,7 @@ export function HomePage(props) {
 	useEffect(loadData, []);
 
 	const handleCreateMealPlan = () => {
-		createMealPlan_API({ title: newMealPlanName })
+		dispatch(createMealPlan_API({ title: newMealPlanName }))
 		setNewMealPlanName("");
 	}
 

@@ -2,8 +2,8 @@ import React, { useReducer } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { ButtonModal } from '../../_molecules/ButtonModal';
-import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
-import { connect } from 'react-redux';
+import { deleteRecipe_API } from '../../../_redux/actions/Recipes.actions'
+import { connect, useDispatch } from 'react-redux';
 
 const selectedFoodItemActions = {
 	SET_SELECTED_ITEM: "SET_SELECTED_ITEM",
@@ -30,6 +30,8 @@ export function MealsDashboardSection (props) {
 		showModal: false
 	});
 
+	const dispatch = useDispatch();
+
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
 		dispatch({ type: selectedFoodItemAction.SET_SELECTED_ITEM, 
@@ -47,7 +49,7 @@ export function MealsDashboardSection (props) {
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API()
+		dispatch(deleteRecipe_API())
 	}
 
 	/* ************************************************************ */

@@ -3,10 +3,11 @@ import styled from 'styled-components';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { RegularText } from '../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
+import { useDispatch } from 'react-redux';
 import TrainerMealsSection from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
 import CustomMealsSection from '../../_organisms/CustomMealsSection/CustomMealsSection';
 import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
-import { getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe';
+import { getRecipeList_API, getMealPlans_API } from '../../../_redux/actions/Recipes.actions';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -84,8 +85,8 @@ export default function MealsPage(props) {
 
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
-		getRecipeList_API("custom");
-		getMealPlans_API();
+		dispatch(getRecipeList_API("custom"));
+		dispatch(getMealPlans_API());
 	}, []);
 
 	return (

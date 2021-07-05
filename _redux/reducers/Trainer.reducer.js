@@ -9,11 +9,11 @@ const initialState = {
 export const trainerReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case 'FETCH_CLIENTS':
-			return {...state, clients: action.payload};
+			return {...state, clients: action.payload, loading: false };
 		case 'FETCH_REFERRAL_CODE':
-			return {...state, referralCode: action.payload};
+			return {...state, referralCode: action.payload, loading: false };
 		case 'LOADING': 
-			return {...state, loading: action.payload};
+			return {...state, loading: true };
 		case 'ERROR':
 			return {...state, error: action.payload}
 		default:

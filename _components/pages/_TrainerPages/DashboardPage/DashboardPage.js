@@ -10,9 +10,9 @@ import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/C
 import MealPlansDashboardSection from '../../../_organisms/_TrainerOrganisms/MealPlansDashboardSection/MealPlansDashboardSection';
 import MealsDashboardSection from '../../../_organisms/_TrainerOrganisms/MealsDashboardSection/MealsDashboardSection';
 
-import { getMealPlans_API, getRecipeList_API, createMealPlan_API } from '../../../../_utilities/_api/Recipe';
-import { getClients_API, getReferralCode_API } from '../../../../_utilities/_api/Trainer';
-import { connect } from 'react-redux';
+import { getMealPlans_API, getRecipeList_API, createMealPlan_API } from '../../../../_redux/actions/Recipes.actions';
+import { getClients_API, getReferralCode_API } from '../../../../_redux/actions/Trainer.actions';
+import { connect, useDispatch } from 'react-redux';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -91,6 +91,8 @@ export function DashboardPage(props) {
 	const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false);
 	const [newMealPlanName, setNewMealPlanName] = useState("");
 
+	const dispatch = useDispatch();
+
 	const firstRoute = () => <ClientsDashboardSection navigation={props.navigation} data={props.clients} />;
 	const secondRoute = () => <MealPlansDashboardSection navigation={props.navigation} />;
 	const thirdRoute = () => <MealsDashboardSection navigation={props.navigation} />;
@@ -103,10 +105,10 @@ export function DashboardPage(props) {
 
 	const loadData = () => {
 	// 	/* PRELOAD DATA */
-		getRecipeList_API("custom");
-		getMealPlans_API();	
-		getClients_API();
-		getReferralCode_API();
+		dispatch(getRecipeList_API("custom"));
+		dispatch(getMealPlans_API());	
+		dispatch(getClients_API());
+		dispatch(getReferralCode_API());
 		
 		setLoading(false);
 	}

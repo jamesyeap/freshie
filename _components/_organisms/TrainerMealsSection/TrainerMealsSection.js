@@ -1,9 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { MealPlan } from '../../_molecules/MealPlan';
-import { addConsumedMeal_API } from '../../../_utilities/_api/User';
-import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe'
-import { connect } from 'react-redux';
+import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
+import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API, getMealPlans_API } from '../../../_redux/actions/Recipes.actions'
+import { connect, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { MealButtonModal } from './MealButtonModal';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
@@ -20,6 +20,8 @@ export const TrainerMealsSection = (props) => {
 	const [mealPlanModalVisible, setMealPlanModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 
+	const dispatch = useDispatch()
+
 	const handleSelectFoodItem = (foodItemDetails) => {
 		setSelectedFoodItem(foodItemDetails);
 		setMealModalVisible(true);
@@ -32,9 +34,8 @@ export const TrainerMealsSection = (props) => {
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleConsume = () => {
-		console.log(selectedFoodItem);
 		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
-		addConsumedMeal_API(obj);
+		dispatch(addConsumedMeal_API(obj));
 		props.navigation.navigate("Home");
 	}
 
@@ -57,10 +58,10 @@ export const TrainerMealsSection = (props) => {
 		currRecipes = currRecipes.filter(x => x !== removeFoodItemID);
 		console.log(currRecipes);
 		
-		addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
+		dispatch(addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
 					  mealPlanTitle: selectedMealPlan.title,
 					  recipeIDList: currRecipes
-		})
+		}))
 
 		setSelectedFoodItem(null);
 	}
@@ -79,12 +80,12 @@ export const TrainerMealsSection = (props) => {
 	}
 
 	const handleAddFoodItem = async () => {
-		await getRecipeList_API("search");
+		dispatch(getRecipeList_API("search"));
 		props.navigation.push("Search", { mealPlan: selectedMealPlan, variation: "ChooseRecipe" })
 	}
 
 	const handleDeleteMealPlan = () => {
-		deleteMealPlan_API(selectedMealPlan.id);
+		dispatch(deleteMealPlan_API(selectedMealPlan.id));
 	}
 
 	const handleCloseMealPlanModal = () => {
@@ -94,7 +95,7 @@ export const TrainerMealsSection = (props) => {
 
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getMealPlans_API();
+		dispatch(getMealPlans_API());
 		setRefreshing(false);
 	}
 

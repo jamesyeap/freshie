@@ -1,10 +1,11 @@
 import React, { useEffect, useState } from 'react'
 import { Container } from '../../_atoms/Container'
 import { SearchBar } from 'react-native-elements'
-import { getRecipeList_API } from '../../../_utilities/_api/Recipe'
+import { getRecipeList_API } from '../../../_redux/actions/Recipes.actions'
 import { FoodItem } from '../../_molecules/FoodItem'
 import { store } from '../../../_redux/store/store';
-import { getClients_API, addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_utilities/_api/Trainer'
+import { getClients_API, addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_redux/actions/Trainer.actions'
+import { useDispatch } from 'react-redux'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { ClientItem } from '../../_molecules/ClientItem'
 import { IconButton } from '../../_atoms/Button';
@@ -12,6 +13,8 @@ import { IconButton } from '../../_atoms/Button';
 export default function SearchPage (props) {
     const [search, setSearch] = useState("");
     const [list, setList] = useState([]);
+
+    const dispatch = useDispatch();
 
     /* The details of the mealPlan */
     const { mealPlan } = props.route.params;
@@ -21,7 +24,7 @@ export default function SearchPage (props) {
         mealPlan.recipes.forEach(x => currRecipes.push(x.id));
         currRecipes.push(foodItem.id);
 
-        addRecipeToMealPlan_API({ mealPlanID: mealPlan.id, mealPlanTitle: mealPlan.title, recipeIDList: currRecipes })
+        dispatch(addRecipeToMealPlan_API({ mealPlanID: mealPlan.id, mealPlanTitle: mealPlan.title, recipeIDList: currRecipes }))
 
         props.navigation.goBack();
     }
@@ -80,7 +83,7 @@ export default function SearchPage (props) {
 
     } else {
         const preload = () => {
-            getClients_API("search")
+            dispatch(getClients_API("search"))
             const theClients = store.getState().trainer.clients;
             setList(theClients)
         }
@@ -88,7 +91,7 @@ export default function SearchPage (props) {
         useEffect(preload, []);
 
         const searchComponents = () => {
-                return (list.map( x => {return (<ClientItem key={x.id.toString()} clientDetails={x} onPress={() => handleAssignToClient(x.username)} />)}))
+                return (list.map( x => {return (<ClientItem key={x.id.toString()} clientDetails={x} onPress={() => dispatch(handleAssignToClient(x.username))} />)}))
         }
 
         const onChangeMethod = (text) => {

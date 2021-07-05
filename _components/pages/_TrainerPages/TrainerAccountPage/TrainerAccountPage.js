@@ -5,8 +5,8 @@ import { NavigationHeader } from '../../../_molecules/NavigationHeader';
 import { HeaderMediumText } from '../../../_atoms/Text';
 import { BigButton } from '../../../_atoms/Button';
 import ReferralCode from '../../../_molecules/ReferralCode';
-import { connect } from 'react-redux';
-import { logoutAsync_API } from '../../../../_utilities/_api/Auth';
+import { connect, useDispatch } from 'react-redux';
+import { logoutAsync_API } from '../../../../_redux/actions/Auth.actions';
 
 const NameText = styled(HeaderMediumText)`
 	textAlign: left;
@@ -35,7 +35,7 @@ export function TrainerAccountPage(props) {
 			<BigButton
 			label="Log Out"
 			buttonStyle={{ marginTop: 15, backgroundColor: "#D53F8C" }}
-			onPress={() => logoutAsync_API()}
+			onPress={() => dispatch(logoutAsync_API())}
 			/>
 		</Container>
 	)

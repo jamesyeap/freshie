@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
-import { addConsumedMeal_API } from '../../../_utilities/_api/User';
-import { getRecipeList_API } from '../../../_utilities/_api/Recipe';
-import { deleteRecipe_API } from '../../../_utilities/_api/Recipe'
-import { connect } from 'react-redux';
+import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
+import { getRecipeList_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
+import { connect, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { CustomMealsButtonModal } from './CustomMealsButtonModal';
 
@@ -18,6 +17,8 @@ export const CustomMealsSection = (props) => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
 
+	const dispatch = useDispatch()
+
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleSelectFoodItem = (foodItem) => {
 		setSelectedFoodItem(foodItem);
@@ -28,7 +29,7 @@ export const CustomMealsSection = (props) => {
 		console.log(selectedFoodItem);
 
 		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
-		addConsumedMeal_API(obj);
+		dispatch(addConsumedMeal_API(obj));
 		
 		props.navigation.navigate("Home");
 	}
@@ -39,13 +40,13 @@ export const CustomMealsSection = (props) => {
 	}
 
 	const handleDelete = () => {
-		deleteRecipe_API(selectedFoodItem.id);
+		dispatch(deleteRecipe_API(selectedFoodItem.id));
 	}
 	/* ************************************************************ */
 	
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getRecipeList_API("custom");
+		dispatch(getRecipeList_API("custom"));
 		setRefreshing(false);
 	}
 
