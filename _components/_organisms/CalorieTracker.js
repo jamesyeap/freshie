@@ -70,7 +70,7 @@ const CaloriesPieChart = (props) => {
 }
 
 function mapStateToProps(state) {
-	const { caloriesConsumed, dailyCalories, consumedMeals } = state.user;
+	const { caloriesConsumed, dailyCalories, consumedMeals } = state.client;
 	return { caloriesConsumed, dailyCalories, consumedMeals };
 }
 

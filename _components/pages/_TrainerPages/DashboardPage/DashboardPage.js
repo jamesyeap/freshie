@@ -105,12 +105,12 @@ export function DashboardPage(props) {
 
 	const loadData = () => {
 	// 	/* PRELOAD DATA */
-		dispatch(getRecipeList_API("custom"));
-		dispatch(getMealPlans_API());	
-		dispatch(getClients_API());
-		dispatch(getReferralCode_API());
-		
-		setLoading(false);
+		Promise.all(
+			dispatch(getRecipeList_API("custom")),
+			dispatch(getMealPlans_API()),
+			dispatch(getClients_API()),
+			dispatch(getReferralCode_API()),
+		).then(setLoading(false));
 	}
 
 	useEffect(loadData, []);

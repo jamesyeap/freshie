@@ -36,8 +36,8 @@ function mapStateToProps(state) {
 function LoginPage(props) {
 	const dispatch = useDispatch();
 
-
 	const handleLogin = (values) => {
+		console.log(values)
 		dispatch(loginAsync_API(values));
 	}
 
@@ -58,7 +58,7 @@ function LoginPage(props) {
 
 			<TextInput
 			label="Username"
-			placeholder="ahBengWithBang"
+			placeholder="enter your username!"
 			onChangeText={handleChange('username')}
 			onBlur={handleBlur('username')}
 			value={values.username}
@@ -69,6 +69,7 @@ function LoginPage(props) {
 
 			<TextInput
 			label="Password"
+			placeholder="enter your password!"
 			onChangeText={handleChange('password')}
 			onBlur={handleBlur('password')}
 			value={values.password}

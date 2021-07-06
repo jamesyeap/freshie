@@ -1,13 +1,13 @@
 import axios from "axios";
 import { URL } from '../_constants';
-import { useSelector } from "react-redux";
 
 /* ACTION-VERBS */
 export const ADD_RECIPE = 'ADD_RECIPE';
 export const GET_RECIPES = 'GET_RECIPES';
 export const GET_MEAL_PLANS = 'GET_MEAL_PLANS';
-export const LOADING = 'LOADING';
-export const ERROR = 'ERROR' ;
+export const LOADING = 'RECIPES/LOADING';
+export const ERROR = 'RECIPES/ERROR' ;
+export const ACKNOWLEDGE = 'RECIPES/ACKNOWLEDGE'
 
 /* MIDDLEWARE */
 
@@ -18,7 +18,7 @@ export const getRecipeList_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth; 
 
                     if (arg === "search") {
                         const response = await axios({
@@ -57,7 +57,7 @@ export const getMealPlans_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'get',
                         url: `${URL}/api/${username}/mealplans/`,
@@ -82,7 +82,7 @@ export const getRecipeDetails_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
             } catch (e) {
                     // alerts user to an error	
@@ -98,7 +98,7 @@ export const addRecipe_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                     const response = await axios({
                         method: 'post',
@@ -109,7 +109,7 @@ export const addRecipe_API = (arg) => {
                         data: arg
                     });
 
-                    getRecipeList_API("search")
+                    dispatch(getRecipeList_API("search"))
 
                     return true;
             } catch (e) {
@@ -128,18 +128,17 @@ export const editRecipe_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'post',
-                        url: `${URL}/api/recipes/edit/${values.foodItemID}/`,
+                        url: `${URL}/api/recipes/edit/${arg.foodItemID}/`,
                         headers: {
                             "Authorization": `Token ${token}`
                         },
                         data: arg.data
                     })
-
-                    dispatch({ type: GET_MEAL_PLANS, payload: response.data })
-                    getRecipeList_API()
+                    
+                    dispatch(getRecipeList_API("search"))
             } catch (e) {
                     // alerts user to an error	
                     dispatch(error(e.message))
@@ -154,10 +153,10 @@ export const deleteRecipe_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'delete',
-                        url: `${URL}/api/recipes/edit/${values}/`,
+                        url: `${URL}/api/recipes/edit/${arg}/`,
                         headers: {
                             "Authorization": `Token ${token}`
                         }
@@ -179,7 +178,7 @@ export const createMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'post',
                         url: `${URL}/api/${username}/add-mealplan/`,
@@ -206,11 +205,11 @@ export const addRecipeToMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                     const response = await axios({
                         method: 'post',
-                        url: `${URL}/api/${username}/mealplan/${values.mealPlanID}/`,
+                        url: `${URL}/api/${username}/mealplan/${arg.mealPlanID}/`,
                         headers: {
                               "Authorization": `Token ${token}`
                         },
@@ -235,10 +234,10 @@ export const deleteMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'delete',
-                        url: `${URL}/api/${username}/mealplan/${values}/`,
+                        url: `${URL}/api/${username}/mealplan/${arg}/`,
                         headers: {
                               "Authorization": `Token ${token}`
                         },
@@ -254,26 +253,29 @@ export const deleteMealPlan_API = (arg) => {
 
 /* ACTION-CREATORS */
 export const getRecipes = (recipes) => ({
-    type: 'GET_RECIPES',
+    type: GET_RECIPES,
     payload: recipes
 })
 
 export const addRecipes = (recipe) => ({
-    type: 'ADD_RECIPES',
+    type: ADD_RECIPE,
     payload: recipe
 })
 
 export const getMealPlans = (mealPlans) => ({
-    type: 'GET_MEAL_PLANS',
+    type: GET_MEAL_PLANS,
     payload: mealPlans
 })
 
-export const loading = bool => ({
-    type: 'LOADING',
-    isLoading: bool,
+export const loading = () => ({
+    type: LOADING
 });
 
 export const error = error => ({
-    type: 'ERROR',
-    error,
+    type: ERROR,
+    error: error,
 });
+
+export const acknowledge = () => ({
+    type: ACKNOWLEDGE
+})

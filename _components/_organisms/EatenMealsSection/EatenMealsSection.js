@@ -1,12 +1,13 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { connect, useDispatch } from 'react-redux';
 import { EatenMealsButtonModal } from './EatenMealsButtonModal';
+import EmptyComponent from './EmptyComponent';
 import { deleteConsumedMeal_API } from '../../../_redux/actions/Client.actions';
 
 function mapStateToProps(state) {
-	const { consumedMeals } = state.user;
+	const { consumedMeals } = state.client;
 	return { consumedMeals };
 }
 
@@ -51,6 +52,7 @@ const EatenMealsSection = (props) => {
 		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+		 ListEmptyComponent={<EmptyComponent />}
 		/>
 
 		</>

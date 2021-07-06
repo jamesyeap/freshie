@@ -1,6 +1,5 @@
 import axios from "axios";
 import { URL } from '../_constants';
-import { useSelector } from "react-redux";
 import countCaloriesConsumed from '../../_utilities/_helperFunctions/calculateCaloriesConsumed'
 import getDateArgument from '../../_utilities/_helperFunctions/getDateArgument';
 
@@ -11,8 +10,9 @@ export const UPDATE_WEEKLY_CALORIES = 'UPDATE_WEEKLY_CALORIES'
 export const UPDATE_CONSUMED_MEALS = 'UPDATE_CONSUMED_MEALS'
 export const UPDATE_FAVOURITE_MEALS = 'UPDATE_FAVOURITE_MEALS'
 export const UPDATE_PERSONAL_TRAINER = 'UPDATE_PERSONAL_TRAINER'
-export const LOADING = 'LOADING'
-export const ERROR = 'ERROR'
+export const LOADING = 'CLIENT/LOADING'
+export const ERROR = 'CLIENT/ERROR'
+export const ACKNOWLEDGE = 'CLIENT/ACKNOWLEDGE'
         
 /* MIDDLEWARE */
 // Gets a list of all the meals that the user has consumed in the past
@@ -22,13 +22,14 @@ export const getConsumedMeals_API = (arg) => {
                 dispatch(loading())
 
                 try {
+                        const { username, token } = getState().auth;
                         const response = await axios({
                                 method: 'post',
                                 url: `${URL}/api/${username}/consumed-meals/`,
                                 headers: {
                                           "Authorization": `Token ${token}`
                                 }, 
-                                    data: values
+                                    data: arg.dateArgument
                             });
 
                         /* De-structure the data received */
@@ -43,7 +44,7 @@ export const getConsumedMeals_API = (arg) => {
 
                         dispatch({ type: UPDATE_CONSUMED_MEALS, payload: consumedMealsArray })
                         
-                        if (!searchOnly) {
+                        if (!arg.searchOnly) {
                                 // Calculate the new amount of total calories consumed 
                                 //      from the new array of consumed meals               
                                 const newCaloriesConsumed = countCaloriesConsumed(consumedMealsArray);
@@ -64,7 +65,7 @@ export const addConsumedMeal_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'post',
@@ -75,8 +76,8 @@ export const addConsumedMeal_API = (arg) => {
                             data: arg
                         });
 
-                        getConsumedMeals_API(getDateArgument(), false);
-                        getWeeklyConsumedMeals_API();
+                        dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false }));
+                        dispatch(getWeeklyConsumedMeals_API());
                 } catch (e) {
                         // alerts user to an error	
                         dispatch(error(e.message))
@@ -92,7 +93,7 @@ export const updateDailyCalories_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'get',
@@ -118,7 +119,7 @@ export const getUserProfile_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'get',
@@ -128,7 +129,11 @@ export const getUserProfile_API = (arg) => {
                                 }
                         });
 
-                        dispatch({ type: UPDATE_PERSONAL_TRAINER, payload: response.data.personalTrainer.username })
+                        if (response.data.personalTrainer) {
+                                // if user has a personal trainer, update his account page with the name of his/her personal trainer
+                                dispatch({ type: UPDATE_PERSONAL_TRAINER, payload: response.data.personalTrainer.username })
+                        }
+
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))
@@ -143,17 +148,17 @@ export const deleteConsumedMeal_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'delete',
-                                url: `${URL}/api/${username}/consumed-meal/${values}/`,
+                                url: `${URL}/api/${username}/consumed-meal/${arg}/`,
                                 headers: {
                                           "Authorization": `Token ${token}`
                                 }
                         });
 
-                        getConsumedMeals_API(getDateArgument(), false);
+                        dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false }));
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))
@@ -167,7 +172,7 @@ export const getWeeklyConsumedMeals_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const getDateArray = () => {
                                 const todate = new Date()// Sun Jun 27 2021 16:16:23 GMT+0800 (Singapore Standard Time)
@@ -215,7 +220,7 @@ export const getFavouriteMeals_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'get',
@@ -246,7 +251,7 @@ export const deleteFavouriteMeal_API = (arg) => {
                 dispatch(loading())
 
                 try {
-                        const { username, token } = useSelector(state => state.auth);
+                        const { username, token } = getState().auth;
 
                         const response = await axios({
                                 method: 'delete',
@@ -256,7 +261,7 @@ export const deleteFavouriteMeal_API = (arg) => {
                                 }
                         })
 
-                        getFavouriteMeals_API();
+                        dispatch(getFavouriteMeals_API());
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))
@@ -312,17 +317,20 @@ export const updatePersonalTrainer = personalTrainer => {
 }
 
 /* Indicates loading status */
-export const loading = bool => {
+export const loading = () => {
         return {
-                type: 'LOADING',
-                payload: bool
+                type: ERROR,
         }
 }
 
 /* Determines what error message to display in the popup (if any are encountered) */
 export const error = error => {
         return {
-                type: 'ERROR',
-                payload: error
+                type: ERROR,
+                error: error
         }
 }
+
+export const acknowledge = () => ({
+        type: ACKNOWLEDGE,
+})

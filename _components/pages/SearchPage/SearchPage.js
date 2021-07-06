@@ -5,7 +5,7 @@ import { getRecipeList_API } from '../../../_redux/actions/Recipes.actions'
 import { FoodItem } from '../../_molecules/FoodItem'
 import { store } from '../../../_redux/store/store';
 import { getClients_API, addRecipeToMealPlan_API, assignClientMealPlan_API } from '../../../_redux/actions/Trainer.actions'
-import { useDispatch } from 'react-redux'
+import { useDispatch, useSelector } from 'react-redux'
 import { ScrollView, View, SafeAreaView } from 'react-native'
 import { ClientItem } from '../../_molecules/ClientItem'
 import { IconButton } from '../../_atoms/Button';
@@ -39,7 +39,7 @@ export default function SearchPage (props) {
 
     if (searchVariation === "ChooseRecipe") {
         const preload = () => {
-            getRecipeList_API("search");
+            dispatch(getRecipeList_API("search"));
             const theRecipes = store.getState().recipe.recipes;
             setList(theRecipes)
         }

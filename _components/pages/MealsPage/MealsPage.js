@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { NavigationHeader } from '../../_molecules/NavigationHeader';
 import { RegularText } from '../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
-import { useDispatch } from 'react-redux';
 import TrainerMealsSection from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
 import CustomMealsSection from '../../_organisms/CustomMealsSection/CustomMealsSection';
 import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
-import { getRecipeList_API, getMealPlans_API } from '../../../_redux/actions/Recipes.actions';
+import { getRecipeList_API, getMealPlans_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
 
 /* 
 	Didn't use the one from Atoms folder as "alignItems" causes the 
@@ -73,6 +74,9 @@ export default function MealsPage(props) {
 		{ key: 'third', title: 'Third' }
 	      ]);
 	
+	const dispatch = useDispatch();
+	const { loading, error } = useSelector(state => state.recipe);
+	
 	const secondRoute = () => <CustomMealsSection navigation={props.navigation}  />;
 	const firstRoute = () => <TrainerMealsSection navigation={props.navigation}  />;
 	const thirdRoute = () => <FavoriteMealsSection navigation={props.navigation}  />;
@@ -99,8 +103,22 @@ export default function MealsPage(props) {
 			renderTabBar={props => <TabBar key={index} index={index} setIndex={setIndex} {...props} />}
 			onIndexChange={setIndex}
 			sceneContainerStyle={{ alignItems: "center" }}
-		
 			/>
+
+			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loading}>Loading</Snackbar>
+			<Snackbar 
+			 style={{ backgroundColor: "#F87171", marginBottom: 40 }}
+			 visible={error}
+			 onDismiss={() => dispatch(acknowledge())}
+			 action={{
+			 label: 'ok',
+			 onPress: () => {
+				dispatch(acknowledge())
+			 	}
+			 }}
+			>
+				{error}
+			</Snackbar>
 		</Container>
 	)
 }

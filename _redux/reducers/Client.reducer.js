@@ -1,5 +1,4 @@
 /* State management for "CLIENT" */
-
 import { 
 	UPDATE_CALORIES_CONSUMED, 
 	UPDATE_DAILY_CALORIES,
@@ -9,6 +8,7 @@ import {
 	UPDATE_PERSONAL_TRAINER,
 	LOADING,
 	ERROR,
+	ACKNOWLEDGE
 } from "../actions/Client.actions";
 
 const initialState = {
@@ -28,7 +28,7 @@ const initialState = {
 	personalTrainer: null
 }
 
-export const userReducer = (state = initialState, action) => {
+export const clientReducer = (state = initialState, action) => {
 	switch (action.type) {
 		case UPDATE_CALORIES_CONSUMED:
 			return {...state, caloriesConsumed: action.payload, loading: false };
@@ -43,9 +43,11 @@ export const userReducer = (state = initialState, action) => {
 		case UPDATE_PERSONAL_TRAINER:
 			return {...state, personalTrainer: action.payload, loading: false };
 		case LOADING: 
-			return {...state, loading: true};
+			return {...state, loading: true };
 		case ERROR:
-			return {...state, error: action.payload, loading: false };
+			return {...state, error: action.error, loading: false };
+		case ACKNOWLEDGE:
+			return { ...state, error: null }
 		default:
 			return state;
 	}

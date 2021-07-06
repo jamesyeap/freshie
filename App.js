@@ -4,6 +4,7 @@ import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPa
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
+import { Provider as PaperProvider } from 'react-native-paper';
 import { store } from './_redux/store/store'; 
 import Portal from '@burstware/react-native-portal'
 import RootStackScreen from './_navigation/RootStackScreen';
@@ -22,11 +23,13 @@ export default function App() {
 
   return (
     <Portal.Host>
-      <Provider store={store}>
-        <NavigationContainer>
-          <RootStackScreen />
-        </NavigationContainer>
-      </Provider>
+      <PaperProvider>
+        <Provider store={store}>
+          <NavigationContainer>
+            <RootStackScreen />
+          </NavigationContainer>
+        </Provider>
+      </PaperProvider>
     </Portal.Host>
   )
 }

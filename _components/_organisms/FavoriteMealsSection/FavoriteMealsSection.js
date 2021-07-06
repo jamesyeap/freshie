@@ -8,7 +8,7 @@ import { connect, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 
 function mapStateToProps(state) {
-	const { favouriteMeals } = state.user;
+	const { favouriteMeals } = state.client;
 	return { favouriteMeals };
 }
 

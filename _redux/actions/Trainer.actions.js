@@ -1,12 +1,14 @@
 
 import axios from "axios";
 import { URL } from '../_constants';
-import { useDispatch, useSelector } from "react-redux";
 import { getMealPlans_API, getRecipeList_API } from "./Recipes.actions";
 
 /* ACTION-VERBS */
 export const FETCH_CLIENTS = 'FETCH_CLIENTS'
 export const FETCH_REFERRAL_CODE = 'FETCH_REFERRAL_CODE';
+export const LOADING = 'TRAINER/LOADING'
+export const ERROR = 'TRAINER/ERROR'
+export const ACKNOWLEDGE = 'TRAINER/ACKNOWLEDGE'
 
 /* MIDDLEWARE */
 export const getClients_API = () => {
@@ -15,7 +17,7 @@ export const getClients_API = () => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
                     const response = await axios({
                         method: 'get',
                         url: `${URL}/api/${username}/clients/`,
@@ -38,7 +40,7 @@ export const deleteClient_API = (arg) => {
             dispatch(loading())
 
             try {
-                const { username, token } = useSelector(state => state.auth);
+                const { username, token } = getState().auth;
 
 
 		const response = await axios({
@@ -64,7 +66,7 @@ export const assignClientMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                     const response = await axios({
                         method: 'post',
@@ -89,16 +91,16 @@ export const deleteClientMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                     const response = await axios({
                         method: 'delete',
-                        url: `${URL}/api/${username}/client/${values.clientUsername}/remove-meal-plan/`,
+                        url: `${URL}/api/${username}/client/${arg.clientUsername}/remove-meal-plan/`,
                         headers: {
                                   "Authorization": `Token ${token}`
                         }, 
                         data: {
-                            mealPlanID: values.mealPlanID,
+                            mealPlanID: arg.mealPlanID,
                         }
                     });
 
@@ -117,7 +119,7 @@ export const getReferralCode_API = (arg) => {
 
            
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                 const response = await axios({
                         method: 'get',
@@ -141,17 +143,17 @@ export const addRecipeToMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = useSelector(state => state.auth);
+                    const { username, token } = getState().auth;
 
                     const response = await axios({
                         method: 'post',
-                        url: `${URL}/api/${username}/mealplan/${values.mealPlanID}/`,
+                        url: `${URL}/api/${username}/mealplan/${arg.mealPlanID}/`,
                         headers: {
                                   "Authorization": `Token ${token}`
                         },
                         data: {
-                            title: values.mealPlanTitle,
-                            meals: values.recipeIDList
+                            title: arg.mealPlanTitle,
+                            meals: arg.recipeIDList
                         }
                         });
 
@@ -167,37 +169,41 @@ export const addRecipeToMealPlan_API = (arg) => {
 /* ACTION-CREATORS */
 export const getClients = listOfClients => {
 	return {
-		type: 'FETCH_CLIENTS',
+		type: FETCH_CLIENTS,
 		payload: listOfClients
 	};
 }
 
 export const getReferralCode = referralCode => {
 	return {
-		type: 'FETCH_REFERRAL_CODE',
+		type: FETCH_REFERRAL_CODE,
 		payload: referralCode
 	}
 }
 
 export const loading = boolean => {
 	return {
-		type: 'LOADING',
+		type: LOADING,
 		payload: boolean
 	}
 }
 
 export const error = error => {
 	return {
-		type: 'ERROR',
-		payload: error
+		type: ERROR,
+		error: error
 	}
 }
+
+export const acknowledge = () => ({
+        type: ACKNOWLEDGE,
+})
 
 /* OTHER FUNCTIONS THAT ARE NOT PART OF REDUX */
 // view -> client's data (GET)
 export async function getClientData_API(values) {
 	try {
-		const { token, username } = useSelector(state => state.auth);
+		const { token, username } = getState().auth;
 
 		const response = await axios({
     			method: 'get',
@@ -215,10 +221,8 @@ export async function getClientData_API(values) {
 
 // Gets a list of meal-plans for a client 
 export async function getClientMealPlan_API(values) {
-        const dispatch = useDispatch();
-
 	try {
-		const { token, username } = useSelector(state => state.auth);
+		const { token, username } = getState().auth;
 
 		const response = await axios({
     			method: 'get',
@@ -233,3 +237,6 @@ export async function getClientMealPlan_API(values) {
 		alert(e.response.data)
 	}
 }
+
+
+
