@@ -15,3 +15,4 @@ export {default as TrainerAccountPage} from './_TrainerPages/TrainerAccountPage/
 export {default as RecipePage} from './RecipePage/RecipePage';
 export {default as MealPlanPage} from './_TrainerPages/MealPlanPage/MealPlanPage';
 export {default as SearchPage} from './SearchPage/SearchPage'
+export {default as RestaurantsPage} from './RestaurantsPage/RestaurantsPage'

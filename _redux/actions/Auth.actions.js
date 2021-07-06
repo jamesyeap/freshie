@@ -23,6 +23,8 @@ export const loginAsync_API = (arg) => {
                 data: arg
             })
 
+            console.log(response.data.key)
+
             // if request is successful, saves user details in state
             dispatch({ type: SAVE_USER, payload: response.data })
         } catch (e) {
