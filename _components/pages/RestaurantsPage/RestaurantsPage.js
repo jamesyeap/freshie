@@ -1,11 +1,14 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
-import { StyleSheet, Text, View, Dimensions } from 'react-native'
+import { StyleSheet, Text, View, Dimensions, ScrollView, FlatList, SafeAreaView, Animated as AnimatedRN} from 'react-native'
 import { Container } from '../../_atoms/Container'
-import MapView, { Marker, PROVIDER_GOOGLE } from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE, Overlay, Animated, AnimatedRegion} from 'react-native-maps'
 import * as Location from 'expo-location';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Restaurant } from '../../_molecules/Restaurant';
-
+import { SearchBar } from 'react-native-elements';
+import { IconButton } from '../../_atoms/Button';
+import Constants from 'expo-constants';
+import { ComponentsColors } from 'react-native-ui-lib';
 
 const fakeMenuItems = [
     {
@@ -34,33 +37,36 @@ const fakeMenuItems = [
     }
 ]
 
-const fakeRestaurants = [
-    {
-        id: 1,
-        name: "Subway",
-        latitude: 1.3459395,
-        longitude: 103.7482784,
-        menuItems: fakeMenuItems
-    },
-    {
-        id: 2,
-        name: "McDonalds",
-        latitude: 1.3459395,
-        longitude: 103.7417322,
-        menuItems: fakeMenuItems
-    }, 
-    {
-        id: 3, 
-        name: "Sri Sun Express",
-        latitude: 1.3478364,
-        longitude: 103.7318886,
-        menuItems: fakeMenuItems
-    }
-]
-
 export default function RestaurantsPage() {
-    const [location, setLocation] = useState(null);
-    const [index, setIndex] = useState(1)
+    const fakeRestaurants = [
+        {
+            id: 1,
+            name: "Subway",
+            latitude: 1.3497273,
+            longitude: 103.7494751,
+            menuItems: fakeMenuItems
+        },
+        {
+            id: 2,
+            name: "McDonalds",
+            latitude: 1.3479198,
+            longitude: 103.7443839,
+            menuItems: fakeMenuItems
+        }, 
+        {
+            id: 3, 
+            name: "Sri Sun Express",
+            latitude: 1.3504691,
+            longitude: 103.7456429,
+            menuItems: fakeMenuItems
+        }
+    ]
+    const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
+    const [location , setLocation] = useState(new AnimatedRegion(null))
+    const [index, setIndex] = useState(0)
+    const [loading, setLoading] = useState(true)
+
+    let currentLocation = new AnimatedRegion(location)
 
     const Restaurants = () => {
         return (
@@ -69,8 +75,8 @@ export default function RestaurantsPage() {
                                     return (<Marker key={rest.id} coordinate={{
                                             longitude: rest.longitude, 
                                             latitude: rest.latitude, 
-                                            latitudeDelta: 0.0922,
-                                            longitudeDelta: 0.0421}}
+                                            latitudeDelta: 0.02,
+                                            longitudeDelta: 0.01}}
                                             title= {rest.name}
                                             ></Marker>)
                                     }
@@ -79,20 +85,28 @@ export default function RestaurantsPage() {
     }
 
     useEffect(() => {
-        (async () => {
-          let { status } = await Location.requestForegroundPermissionsAsync();
-          if (status !== 'granted') {
+        const preload = async () => {
+            let { status } = await Location.requestForegroundPermissionsAsync();
+            if (status !== 'granted') {
             setErrorMsg('Permission to access location was denied');
             return;
-          }
-    
-          let location = await Location.getCurrentPositionAsync({});
-          setLocation(location);
-          console.log(location)
-        })();
+            }
+
+            let currlocation = await Location.getCurrentPositionAsync({});
+            const currentUserLocation = new AnimatedRegion({
+                latitude: currlocation.coords.latitude,
+                longitude: currlocation.coords.longitude,
+                latitudeDelta: 0.02,
+                longitudeDelta: 0.01,
+            });
+            setLocation(currentUserLocation)
+            setUserLocation(currentUserLocation)
+        }
+        preload().then(setLoading(false))
       }, []);
 
-    const bottomSheetRef = useRef(null);
+    const bottomSheetRef = useRef(null)
+    const mapView = useRef(null)
     
     const indexToggle = () => {
         if (index == 0) {
@@ -106,36 +120,85 @@ export default function RestaurantsPage() {
 
     // variables
     const snapPoints = useMemo(() => ['20%', '50%'], []);
-
     // callbacks
     const handleSheetChanges = useCallback((index) => {
-    console.log('handleSheetChanges', index);
     }, []);  
+    const searchBar = () => {
+        return (
+            <View style={{position: 'absolute', borderWidth: 0, top: 0 , width: "100%"}}>
+                <IconButton
+                iconName={"arrow-back"}
+                iconSize={30}
+                iconColor="black"
+                buttonStyle={{position: 'absolute', left: 5, top: 48}}
+                onPress={() => props.navigation.goBack()}
+                />
+                <SearchBar  autoCapitalize="none" 
+                            lightTheme platform="ios" 
+                            placeholder="search for..." 
+                            inputContainerStyle={{height: 35}}
+                            buttonStyle={{position: 'absolute', right: 10}}
+                            inputContainerStyle={{height: 50, alignSelf: 'center', width: "100%", backgroundColor: "silver"}}
+                            containerStyle={{height: 50, width:"76%", alignSelf: 'flex-end', borderRadius: 10, top: 45, right: 47, backgroundColor: "silver"}}/>
+                <IconButton iconColor="black" 
+                            iconName="compass" 
+                            buttonStyle={{position: 'absolute', right: 5, top: 48}} 
+                            iconSize={30}
+                            onPress={() => goToUser()}></IconButton>
+            </View>
+        )
+    }
+    const animateTo = async (region) => {
+        currentLocation.timing({...region, duration: 1000, useNativeDriver: false}).start()
+    }
 
-    const initialLocation = location ? {
-        latitude: location.coords.latitude,
-        longitude: location.coords.longitude,
-        latitudeDelta: 0.0922,
-        longitudeDelta: 0.0421,
-    } : location
+    const goToUser = async () => {
+        let currlocation = await Location.getCurrentPositionAsync({});
+        const now = {
+            longitude: currlocation.coords.longitude,
+            latitude: currlocation.coords.latitude,
+            latitudeDelta: 0.02,
+            longitudeDelta: 0.01, 
+        }
+        animateTo(now)
+    }
 
     return (
         <View>
-            <MapView style={styles.map} region={initialLocation} provider= {PROVIDER_GOOGLE}>
-            {/* <Marker coordinate={initialLocation}></Marker> */}
+            <Animated loadingEnabled={loading} ref={mapView} style={styles.map} region={currentLocation} provider= {PROVIDER_GOOGLE} showMyLocationButton={true} showsUserLocation={true} mapPadding={{bottom: 200}}>
             {Restaurants()}
+            {searchBar()}
             <BottomSheet
                 ref={bottomSheetRef}
                 index={index}
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
             >
-                <BottomSheetScrollView decelerationRate={'fast'} snapToInterval={390} snapToAlignment={"center"} 
-                    disableIntervalMomentum horizontal={true} contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: index == 0 ? 580 : 550}}>
-                    {fakeRestaurants.map(rest => <Restaurant id= {rest.id} name={rest.name} index={index} indexToggle={indexToggle} key= {rest.id.toString()} menuItems= {rest.menuItems}></Restaurant>)}
-                </BottomSheetScrollView>
+                <FlatList data={fakeRestaurants}
+                          keyExtractor={(item) => item.id.toString()}
+                          renderItem={({item}) => {
+                            return <Restaurant  key={item.id.toString()} 
+                                                location= {{longitude: item.longitude, latitude: item.latitude, latitudeDelta: 0.02, longitudeDelta: 0.01}} 
+                                                id= {item.id} 
+                                                animate={animateTo}
+                                                name={item.name} 
+                                                index={index} 
+                                                indexToggle={indexToggle} 
+                                                key= {item.id.toString()} 
+                                                menuItems= {item.menuItems}></Restaurant>}
+                          }
+                          directionalLockEnabled={true} 
+                          decelerationRate={'fast'} 
+                          snapToInterval={390} 
+                          snapToAlignment={"center"} 
+                          automaticallyAdjustContentInsets={false}
+                          disableIntervalMomentum horizontal={true} 
+                          contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: 550}}>
+                    {/* {fakeRestaurants.map(rest => <Restaurant id= {rest.id} name={rest.name} index={index} indexToggle={indexToggle} key= {rest.id.toString()} menuItems= {rest.menuItems}></Restaurant>)} */}
+                </FlatList>
             </BottomSheet>
-            </MapView>
+            
+            </Animated>
         </View>
     )
 }
@@ -143,9 +206,8 @@ export default function RestaurantsPage() {
 const styles = StyleSheet.create({
     container: {
       flex: 1,
-      backgroundColor: '#fff',
-      alignItems: 'center',
-      justifyContent: 'center',
+      flexDirection: 'column',
+      backgroundColor: '#fff'
     },
     map: {
       width: Dimensions.get('window').width,

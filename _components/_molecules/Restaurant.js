@@ -3,11 +3,12 @@ import styled from 'styled-components';
 import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
 import { RegularText, MediumText, SemiBoldText } from '../_atoms/Text';
 import { Info } from './Info';
-import { Divider, IconButton } from 'react-native-paper';
+import { Divider } from 'react-native-paper';
 import Collapsible from 'react-native-collapsible';
 import { MenuItem } from './MenuItem';
-import { SmallButton } from '../_atoms/Button';
+import { IconButton } from '../_atoms/Button';
 import { ButtonGroup } from './ButtonGroup';
+
 
 const MediumComponentContainer = styled.TouchableOpacity`
 	flexDirection: row;
@@ -65,18 +66,14 @@ const Wrapper = styled.View`
 	width: 390px
 `;
 
-export const Restaurant = ({ id, name, menuItems, index, indexToggle, setVisible, ...props }) => {
+export const Restaurant = ({ id, name, menuItems, index, animate, indexToggle, location, setVisible, ...props }) => {
 	const [expand, setExpand] = useState(false)
-
-	// useEffect(() => setExpand(open), [])
-
+	
 	return (
 		<Wrapper>
-			<MediumComponentContainer style= {{marginBottom: expand ? 30 : 0 }}
+			<MediumComponentContainer style= {{marginBottom: 20}}
 					onPress={() => {
-						indexToggle()
-						setExpand(!expand)
-						console.log(expand)
+						animate(location)
 					}
 					}>
 				<RestaurantTextContainer>
@@ -93,8 +90,16 @@ export const Restaurant = ({ id, name, menuItems, index, indexToggle, setVisible
 				<Divider style={{ width: 1, height: 70}} />
 
 				<InfoContainer>
-					<CalorieText>{`picture here maybe`}</CalorieText>
+					
+					
 				</InfoContainer>
+				<IconButton iconSize={24} 
+							iconColor="black" 
+							iconName= "ellipsis-vertical" 
+							onPress={() => { 
+								indexToggle()
+								setExpand(!expand)
+				}}/>
 			</MediumComponentContainer>
 
 			{/* <Collapsible collapsed={!expand}> */}
