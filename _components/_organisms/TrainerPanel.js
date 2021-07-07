@@ -1,6 +1,7 @@
 import React from 'react';
 import styled from 'styled-components';
 import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
+import { useSelector } from 'react-redux';
 import { IconButton } from '../_atoms/Button';
 import { Info } from '../_molecules/Info';
 
@@ -26,12 +27,14 @@ const ButtonGroup = styled.View`
 `;
 
 export const TrainerPanel = (props) => {
+	const { personalTrainer } = useSelector(state => state.client)
+
 	return (
-		<MediumComponentContainer>
+		<MediumComponentContainer style={props.style}>
 			<Info 
 			label="Your Trainer"
 			labelColor="#B1CD61"
-			value={props.data}
+			value={personalTrainer ? personalTrainer : "No Trainer"}
 			/>
 
 			<ButtonGroup>

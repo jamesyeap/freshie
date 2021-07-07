@@ -22,9 +22,12 @@ const MediumComponentContainer = styled(ParentContainer)`
 	minHeight: 150px;
 `;
 
-export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour, ...props}) => {
+export const InfoPanel = ({infoOne, infoTwo, infoThree, infoFour,...props}) => {
 	return (
-	<MediumComponentContainer backgroundColor={props.backgroundColor} >
+	<MediumComponentContainer 
+		backgroundColor={props.backgroundColor} 
+		style={props.style} 
+	>
 		<InfoRowContainer>
 			{infoOne &&
 				<Info
