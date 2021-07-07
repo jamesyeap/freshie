@@ -1,12 +1,9 @@
 import React, { useEffect, useState, useRef } from 'react';
 import { View, Animated, StyleSheet, Dimensions, useWindowDimensions } from 'react-native';
 import { HeaderMediumText, RegularText } from '../../_atoms/Text';
-import { FAB } from '../../_molecules/FAB';
 import { useDispatch, useSelector } from 'react-redux';
-import { createMealPlan_API } from '../../../_redux/actions/Recipes.actions';
 import getDateArgument from '../../../_utilities/_helperFunctions/getDateArgument';
 import { updateDailyCalories_API, getConsumedMeals_API, getFavouriteMeals_API, getWeeklyConsumedMeals_API, getUserProfile_API } from '../../../_redux/actions/Client.actions';
-import { CreateMealPlanModal } from './CreateMealPlanModal';
 import AccountSection from './AccountSection';
 import { Header as AccountSectionHeader } from './AccountSection'
 import MainSection from './MainSection';
@@ -14,7 +11,6 @@ import { Header as MainSectionHeader } from './MainSection'
 import { Snackbar } from 'react-native-paper';
 import { acknowledge as clientAcknowledge } from '../../../_redux/actions/Client.actions'
 import { acknowledge as recipeAcknowledge } from '../../../_redux/actions/Recipes.actions'
-import Collapsible from 'react-native-collapsible';
 
 // get the height of the user's screen
 const { height } = Dimensions.get('window')
@@ -96,21 +92,6 @@ export default function HomePage(props) {
 			<AccountSection style={{ height: height }} scrolling={scrolling} navigation={props.navigation} />
 			<MainSection style={{ height: height }} scrolling={scrolling} navigation={props.navigation} />
 		</Animated.ScrollView>
-		
-		{/* <FAB 
-			variation="client"
-			gotoMeals={() => props.navigation.push("Meals")}
-			gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
-			gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
-		/> */}
-
-		{/* <CreateMealPlanModal
-			modalVisible={showCreateMealPlanModal}
-			handleClose={handleCloseCreateMealPlanModal}
-			onPress={handleCreateMealPlan}
-			onChangeText={setNewMealPlanName}
-			value={newMealPlanName}
-		/> */}
 
 		<Snackbar 
 			style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} 

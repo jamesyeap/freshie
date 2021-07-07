@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
+import { HeaderMediumText } from '../../_atoms/Text';
 import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
 import { getRecipeList_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { CustomMealsButtonModal } from './CustomMealsButtonModal';
+import Constants from 'expo-constants';
 
-function mapStateToProps(state) {
-	const { recipes } = state.recipe;
-	return { recipes };
+const { width } = Dimensions.get('window')
+
+export function Header({ scrolling }) {
+	const translation = scrolling.interpolate({
+		inputRange: [0, width , 2 * width],
+		outputRange: [-130, 0, -130],
+		extrapolate: 'clamp',
+	  })
+
+	 const opacity = scrolling.interpolate({
+		inputRange: [0, width , 2 * width],
+		outputRange: [0, 1, 0],
+		extrapolate: 'clamp',
+	 })
+
+	return (
+		<>
+		<Animated.View
+			style={{
+				...styles.header,
+				transform: [
+					{ translateY: translation }
+				]
+			}}
+			opacity={opacity}
+		>	
+			<View style={styles.headerText}>
+				<HeaderMediumText>What's good?</HeaderMediumText>
+			</View>
+		</Animated.View>
+	</>
+	)
 }
 
-export const CustomMealsSection = (props) => {
+export default function CustomMealsSection(props) {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const { recipes } = useSelector(state => state.recipe)
 
 	const dispatch = useDispatch()
 
@@ -62,7 +94,7 @@ export const CustomMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={props.recipes}
+		 data={recipes}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     key={item.id.toString()}
 		 				     itemDetails={item} 
@@ -79,4 +111,22 @@ export const CustomMealsSection = (props) => {
 	)
 }
 
-export default connect(mapStateToProps)(CustomMealsSection);
+const styles = StyleSheet.create({
+	header: {
+		position: 'absolute',
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		top: 0,
+		left: 0,
+		right: 0,
+		height: 130,
+		backgroundColor: "#FDE68A",
+		padding: 20,
+		zIndex: 1000,
+	}, 
+	headerText: {
+		flexDirection: "column",
+		paddingLeft: 30
+	}
+
+})

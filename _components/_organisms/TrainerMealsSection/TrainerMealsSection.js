@@ -1,24 +1,56 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Dimensions, Animated, StyleSheet, View } from 'react-native';
 import { MealPlan } from '../../_molecules/MealPlan';
 import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
+import { HeaderMediumText } from '../../_atoms/Text';
 import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API, getMealPlans_API } from '../../../_redux/actions/Recipes.actions'
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { MealButtonModal } from './MealButtonModal';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
+import Constants from 'expo-constants';
 
-function mapStateToProps(state) {
-	const { mealPlans } = state.recipe;
-	return { mealPlans };
+const { width } = Dimensions.get('window')
+
+export function Header({ scrolling }) {
+	const translation = scrolling.interpolate({
+		inputRange: [-width, 0 , width],
+		outputRange: [-130, 0, -130],
+		extrapolate: 'clamp',
+	  })
+
+	 const opacity = scrolling.interpolate({
+		inputRange: [-width, 0 , width],
+		outputRange: [0, 1, 0],
+		extrapolate: 'clamp',
+	 })
+
+	return (
+		<>
+		<Animated.View
+			style={{
+				...styles.header,
+				transform: [
+					{ translateY: translation }
+				]
+			}}
+			opacity={opacity}
+		>	
+			<View style={styles.headerText}>
+				<HeaderMediumText>Your Meal Plans!</HeaderMediumText>
+			</View>
+		</Animated.View>
+	</>
+	)
 }
 
-export const TrainerMealsSection = (props) => {
+export default function TrainerMealsSection (props) {
 	const [selectedMealPlan, setSelectedMealPlan] = useState(null);
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [mealModalVisible, setMealModalVisible] = useState(false);
 	const [mealPlanModalVisible, setMealPlanModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const { mealPlans } = useSelector(state => state.recipe);
 
 	const dispatch = useDispatch()
 
@@ -122,7 +154,7 @@ export const TrainerMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={props.mealPlans}
+		 data={mealPlans}
 		 renderItem={({item}) => <MealPlan id={item.id} 
 		 				   key={item.id.toString()}
 		 				   title={item.title}
@@ -147,5 +179,23 @@ export const TrainerMealsSection = (props) => {
 	)
 }
 
-export default connect(mapStateToProps)(TrainerMealsSection);
+const styles = StyleSheet.create({
+	header: {
+		position: 'absolute',
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		top: 0,
+		left: 0,
+		right: 0,
+		height: 130,
+		backgroundColor: "#A7F3D0",
+		padding: 20,
+		zIndex: 1000,
+	}, 
+	headerText: {
+		flexDirection: "column",
+		paddingLeft: 30
+	}
+
+})
 

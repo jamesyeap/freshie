@@ -1,21 +1,53 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
 import { addConsumedMeal_API, getFavouriteMeals_API } from '../../../_redux/actions/Client.actions';
+import { HeaderMediumText } from '../../_atoms/Text';
 import { deleteRecipe_API } from '../../../_redux/actions/Recipes.actions'
-import { connect, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
+import Constants from 'expo-constants';
 
-function mapStateToProps(state) {
-	const { favouriteMeals } = state.client;
-	return { favouriteMeals };
+const { width } = Dimensions.get('window')
+
+export function Header({ scrolling }) {
+	const translation = scrolling.interpolate({
+		inputRange: [width, 2 * width , 3 * width],
+		outputRange: [-130, 0, -130],
+		extrapolate: 'clamp',
+	  })
+
+	 const opacity = scrolling.interpolate({
+		inputRange: [width, 2 * width , 3 * width],
+		outputRange: [0, 1, 0],
+		extrapolate: 'clamp',
+	 })
+
+	return (
+		<>
+		<Animated.View
+			style={{
+				...styles.header,
+				transform: [
+					{ translateY: translation }
+				]
+			}}
+			opacity={opacity}
+		>	
+			<View style={styles.headerText}>
+				<HeaderMediumText>Your Favorites!</HeaderMediumText>
+			</View>
+		</Animated.View>
+	</>
+	)
 }
 
-export const FavoriteMealsSection = (props) => {
+export default function FavoriteMealsSection(props) {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
+	const { favoriteMeals } = useSelector(state => state.recipe);
 	
 	const dispatch = useDispatch()
 
@@ -62,7 +94,7 @@ export const FavoriteMealsSection = (props) => {
 		/>
 
 		<FlatList
-		 data={props.favouriteMeals}
+		 data={favoriteMeals}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     id={item.id}
 		 				     itemDetails={item} 
@@ -80,4 +112,22 @@ export const FavoriteMealsSection = (props) => {
 	)
 }
 
-export default connect(mapStateToProps)(FavoriteMealsSection);
+const styles = StyleSheet.create({
+	header: {
+		position: 'absolute',
+		flexDirection: 'column',
+		justifyContent: 'flex-end',
+		top: 0,
+		left: 0,
+		right: 0,
+		height: 130,
+		backgroundColor: "#FBCFE8",
+		padding: 20,
+		zIndex: 1000,
+	}, 
+	headerText: {
+		flexDirection: "column",
+		paddingLeft: 30
+	}
+
+})
