@@ -29,7 +29,7 @@ export function RegisterPage(props) {
   const [gender, setGender] = useState(undefined);
   const [activityLevel, setActivityLevel] = useState(undefined);
   const [hasPersonalTrainer, setHasPersonalTrainer] = useState(undefined);
-  const [referralCode, setReferralCode] = useState("");
+  const [referralCode, setReferralCode] = useState("none");
   const [username, setUsername] = useState(undefined);
   const [email, setEmail] = useState(undefined);
   const [firstName, setFirstName] = useState(undefined);
@@ -108,17 +108,29 @@ export function RegisterPage(props) {
     /* Calculate the maximum calories the client needs to eat to hit goal */
     const calories = Math.round(calculateCalories(weight, height, age, gender, activityLevel));
     
-    dispatch(signupAsync_API({ 
-      username, 
-      email,
-      firstName,
-      lastName,
-      password1,
-      password2,
-      isPersonalTrainer: props.route.params.isPersonalTrainer, 
-      calories, 
-      age 
-    }));
+    if (!props.route.params.isPersonalTrainer) {
+      dispatch(signupAsync_API({
+        username, 
+        email,
+        firstName,
+        lastName,
+        password1,
+        password2,
+        isPersonalTrainer: false, 
+        calories, 
+        referralCode 
+      }))
+    } else {
+      dispatch(signupAsync_API({ 
+        username, 
+        email,
+        firstName,
+        lastName,
+        password1,
+        password2,
+        isPersonalTrainer: true, 
+      }))
+    }
   }
 
   const renderNextButton = disabled => {

@@ -1,18 +1,20 @@
 import React, { useState } from 'react';
-import { FlatList } from 'react-native';
+import { FlatList, View, Text } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { EatenMealsButtonModal } from './EatenMealsButtonModal';
-import { deleteConsumedMeal_API } from '../../../_utilities/_api/User';
+import EmptyComponent from './EmptyComponent';
+import { deleteConsumedMeal_API } from '../../../_redux/actions/Client.actions';
 
 function mapStateToProps(state) {
-	const { consumedMeals } = state.user;
+	const { consumedMeals } = state.client;
 	return { consumedMeals };
 }
 
 const EatenMealsSection = (props) => {
 	const [modalVisible, setModalVisible] = useState(false);
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
+	const dispatch = useDispatch();
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleEdit = () => {
@@ -21,7 +23,7 @@ const EatenMealsSection = (props) => {
 	}
 
 	const handleDelete = () => {
-		deleteConsumedMeal_API(selectedFoodItem.id);
+		dispatch(deleteConsumedMeal_API(selectedFoodItem.id))
 		props.navigation.navigate("Home");
 	}
 
@@ -50,6 +52,7 @@ const EatenMealsSection = (props) => {
 		 keyExtractor={(item) => item.id.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
+		 ListEmptyComponent={<EmptyComponent />}
 		/>
 
 		</>

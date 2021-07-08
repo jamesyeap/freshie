@@ -9,7 +9,7 @@ import { InfoPanel } from '../../../_organisms/InfoPanel';
 import { AccountPanel } from '../../../_molecules/AccountPanel';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader'
 import MealPlansSection from '../../../_organisms/_TrainerOrganisms/MealPlansSection';
-import { getClientMealPlan_API } from '../../../../_utilities/_api/Trainer';
+import { getClientMealPlan_API } from '../../../../_redux/actions/Trainer.actions';
 
 const InfoOne = {
 	label: "Height",

@@ -2,12 +2,11 @@ import axios from "axios";
 import { URL } from '../_constants';
 
 /* ACTION-VERBS */
-
 export const SAVE_USER = 'SAVE_USER';
 export const CLEAR_USER = 'CLEAR_USER';
-export const LOADING = 'LOADING';
-export const ERROR = 'ERROR';
-export const ACKNOWLEDGE = 'ACKNOWLEDGE'
+export const LOADING = 'AUTH/LOADING';
+export const ERROR = 'AUTH/ERROR';
+export const ACKNOWLEDGE = 'AUTH/ACKNOWLEDGE'
 
 /* MIDDLEWARE */
 export const loginAsync_API = (arg) => {
@@ -29,7 +28,7 @@ export const loginAsync_API = (arg) => {
             dispatch({ type: SAVE_USER, payload: response.data })
         } catch (e) {
             // alerts user to an error
-            dispatch(error(e.message))
+            dispatch(error(e.response.data.non_field_errors))
         }
     }
 }
@@ -44,7 +43,6 @@ export const logoutAsync_API = () => {
             await axios({
                 method: "post",
                 url: `${URL}/logout/`,
-                data: arg
             })
 
             // if request is successful, clears user details from the state
@@ -73,8 +71,8 @@ export const signupAsync_API = (arg) => {
             dispatch({ type: SAVE_USER, payload: response.data })
         } catch (e) {
             // alerts user to an error
-            console.log(e)
-            dispatch(error(e.message))
+            console.log(e.response)
+            dispatch(error(e.response.data))
         }
     }
 }

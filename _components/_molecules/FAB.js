@@ -1,15 +1,15 @@
 import React, { useState } from 'react';
-import { FAB as ParentFAB, Portal, Provider } from 'react-native-paper';
+import { FAB as ParentFAB, Portal } from 'react-native-paper';
 
 export const FAB = (props) => {
   const [state, setState] = useState({ open: false });
-
   const onStateChange = ({ open }) => setState({ open });
-
   const { open } = state;
   
   const fabStyle = {
 	  backgroundColor: "#AFEEEE",
+    position: 'fixed',
+    zIndex: 1000,
   }
 
   const buttonChoices = () => {
@@ -85,11 +85,9 @@ export const FAB = (props) => {
   }
 
   return (
-    <Provider>
       <Portal>
         {buttonChoices()}
       </Portal>
-    </Provider>
   );
 };
 

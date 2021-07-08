@@ -1,17 +1,21 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useRef } from 'react';
 import styled from 'styled-components';
-import { NavigationHeader } from '../../_molecules/NavigationHeader';
+import { Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { RegularText } from '../../_atoms/Text';
-import { TabView, SceneMap } from 'react-native-tab-view';
-import TrainerMealsSection from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
-import CustomMealsSection from '../../_organisms/CustomMealsSection/CustomMealsSection';
-import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
-import { getRecipeList_API, getMealPlans_API } from '../../../_utilities/_api/Recipe';
 
-/* 
-	Didn't use the one from Atoms folder as "alignItems" causes the 
-	TabView component to not render at all.
-*/
+import TrainerMealsSection from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
+import { Header as TrainerMealsHeader } from '../../_organisms/TrainerMealsSection/TrainerMealsSection';
+
+import CustomMealsSection from '../../_organisms/CustomMealsSection/CustomMealsSection';
+import { Header as CustomMealsHeader } from '../../_organisms/CustomMealsSection/CustomMealsSection';
+
+import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
+import { Header as FavoriteMealsHeader } from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
+
+import { getRecipeList_API, getMealPlans_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
+import { useSelector, useDispatch } from 'react-redux';
+import { Snackbar } from 'react-native-paper';
+
 const Container = styled.SafeAreaView`
 	flex: 1;
 	flexDirection: column;
@@ -45,62 +49,88 @@ const TabButtonText = styled(RegularText)`
 	color: ${props => props.isSelected ? "#2B6CB0" : "#4A5568"};
 `;
 
-const TabButton = (props) => {
-	return (
-		<TabButtonContainer isSelected={props.isSelected} onPress={props.onPress}>
-			<TabButtonText isSelected={props.isSelected} >{props.title}</TabButtonText>
-		</TabButtonContainer>
-	)
-}
 
-const TabBar = (props) => {
-	return (
-		<TabBarContainer>
-			<TabButton title="Trainer" onPress={() => props.setIndex(0)} isSelected={props.index === 0} />
-			<TabButton title="Custom" onPress={() => props.setIndex(1)}  isSelected={props.index === 1} />
-			<TabButton title="Favorites" onPress={() => props.setIndex(2)} isSelected={props.index === 2} />
-		</TabBarContainer>
-	)
-}
-      
+const { height, width } = Dimensions.get('window')
 
 export default function MealsPage(props) {
-	const [index, setIndex] = useState(0);
-	const [routes] = useState([
-		{ key: 'first', title: 'First' },
-		{ key: 'second', title: 'Second' },
-		{ key: 'third', title: 'Third' }
-	      ]);
+	const dispatch = useDispatch();
+	const { loading, error } = useSelector(state => state.recipe);
+	const scrolling = useRef(new Animated.Value(0)).current;
 	
-	const secondRoute = () => <CustomMealsSection navigation={props.navigation}  />;
-	const firstRoute = () => <TrainerMealsSection navigation={props.navigation}  />;
-	const thirdRoute = () => <FavoriteMealsSection navigation={props.navigation}  />;
-
-	const renderScene = SceneMap({
-		first: firstRoute,
-		second: secondRoute,
-		third: thirdRoute
-	})
-
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
-		getRecipeList_API("custom");
-		getMealPlans_API();
+		dispatch(getRecipeList_API("custom"));
+		dispatch(getMealPlans_API());
 	}, []);
 
 	return (
 		<Container>
-			<NavigationHeader goTo={() => props.navigation.goBack()}/>
+			{/* Header */}
+			<TrainerMealsHeader scrolling={scrolling} />
+			<CustomMealsHeader scrolling={scrolling} />
+			<FavoriteMealsHeader scrolling={scrolling} />
 
-			<TabView
-			navigationState={{ index, routes }}
-			renderScene={renderScene}
-			renderTabBar={props => <TabBar key={index} index={index} setIndex={setIndex} {...props} />}
-			onIndexChange={setIndex}
-			sceneContainerStyle={{ alignItems: "center" }}
-		
-			/>
+			<Animated.ScrollView
+			style={{ flex: 1 }}
+			onScroll={
+				// updates the variable "scrolling" as user 
+				//		moves down/up the page
+				Animated.event([
+					{
+						nativeEvent: {
+							contentOffset: {
+								x: scrolling
+							}
+						}
+					}
+				],	{ useNativeDriver: true }
+			)}
+			showsHorizontalScrollIndicator={false}
+			// onScroll will be run every 16ms
+			scrollEventThrottle={16}
+
+			// props to make homepage snap to each page
+			decelerationRate={0}
+			snapToInterval={width}
+			snapToAlignment="center"
+			horizontal
+			>
+				<View style={styles.scrollContainer}>
+					<TrainerMealsSection navigation={props.navigation} />
+				</View>
+
+				<View style={styles.scrollContainer}>
+					<CustomMealsSection navigation={props.navigation} />
+				</View>
+
+				<View style={styles.scrollContainer}>
+					<FavoriteMealsSection navigation={props.navigation} />
+				</View>
+			</Animated.ScrollView>
+
+			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loading}>Loading</Snackbar>
+			<Snackbar 
+			 style={{ backgroundColor: "#F87171", marginBottom: 40 }}
+			 visible={error}
+			 onDismiss={() => dispatch(acknowledge())}
+			 action={{
+			 label: 'ok',
+			 onPress: () => {
+				dispatch(acknowledge())
+			 	}
+			 }}
+			>
+				{error}
+			</Snackbar>
 		</Container>
 	)
 }
+
+const styles = StyleSheet.create({
+	scrollContainer: {
+		height: height,
+		width: width,
+		paddingTop: 100
+	}
+})
 

@@ -1,10 +1,9 @@
 import React, { useState } from 'react';
 import { FlatList, RefreshControl } from 'react-native';
-import { connect } from 'react-redux';
+import { connect, useDispatch } from 'react-redux';
 import { ClientItem } from '../../../_molecules/ClientItem';
-import { deleteClient_API } from '../../../../_utilities/_api/Trainer';
+import { getClients_API, deleteClient_API } from '../../../../_redux/actions/Trainer.actions';
 import { ClientsButtonModal } from './ClientsButtonModal';
-import { getClients_API } from '../../../../_utilities/_api/Trainer'
 
 function mapStateToProps(state) {
 	const { clients } = state.trainer;
@@ -16,6 +15,8 @@ export function ClientsDashboardSection(props) {
 	const [selectedClient, setSelectedClient] = useState(null);
 	const [refreshing, setRefreshing] = useState(false);
 
+	const dispatch = useDispatch();
+
 	const handleSelect = (clientDetails) => {
 		setSelectedClient(clientDetails);
 		setModalVisible(true);
@@ -26,7 +27,7 @@ export function ClientsDashboardSection(props) {
 	}
 
 	const handleDelete = () => {
-		deleteClient_API(selectedClient.username)
+		dispatch(deleteClient_API(selectedClient.username))
 	}
 
 	const handleClose = () => {
@@ -36,7 +37,7 @@ export function ClientsDashboardSection(props) {
 
 	const handleRefresh = () => {
 		setRefreshing(true);
-		getClients_API();
+		dispatch(getClients_API());
 		setRefreshing(false);
 	}
 
