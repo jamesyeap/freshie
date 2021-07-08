@@ -23,8 +23,6 @@ const SectionToggleButtonText = styled(MediumText)`
 	lineHeight: 24px;
 `;
 
-
-
 const SectionToggleButton = (props) => {
 	const iconToShow = props.IsToggled ? "chevron-up-circle" : "chevron-down-circle";
 	return (
@@ -38,7 +36,7 @@ const SectionToggleButton = (props) => {
 	)
 }
 
-export default RecipePage = (props) => {
+export default function RecipePage(props) {
     const itemDetails = props.route.params.itemDetails;
     const [expandIngredients, setExpandIngredients] = useState(true);
     const [expandInstructions, setExpandInstructions] = useState(true);

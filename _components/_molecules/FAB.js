@@ -63,7 +63,7 @@ export const FAB = (props) => {
             {
               icon: 'silverware-fork-knife',
               label: 'Restaurants',
-              onPress: () => console.log("Hello"),
+              onPress: () => props.gotoRestaurants(),
               small: false,
             },
             {

@@ -1,3 +1,4 @@
+/*
 import React from 'react'
 import { Provider } from 'react-redux';
 import { store } from '../../../_redux/store/store'
@@ -51,6 +52,7 @@ it("should let user type in username and password", async () => {
 	expect(usernameTextInput).toHaveProp('value', 'bob')
 	expect(passwordTextInput).toHaveProp('value', 'jamesjames123')
 })
+*/
 
 
 

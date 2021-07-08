@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
-import { ClientPage, DashboardPage, EditMealPlanPage, EditRecipePage, AddItemPage, TrainerAccountPage, RecipePage, MealPlanPage, SearchPage } from '../_components/pages/index';
+import { ClientPage, DashboardPage, EditMealPlanPage, AddItemPage, TrainerAccountPage, RecipePage, MealPlanPage, SearchPage } from '../_components/pages/index';
 
 const TrainerStack = createStackNavigator();
 

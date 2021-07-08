@@ -9,7 +9,7 @@ import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { loginAsync_API, acknowledge } from '../../../_redux/actions/Auth.actions';
-import { connect, useSelector, useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 
 const OptionsContainer = styled.View`

@@ -24,44 +24,25 @@ const Container = styled.SafeAreaView`
 	backgroundColor: #CCD7E0;
 `;
 
-const TabBarContainer = styled.View`
-	flexDirection: row;
-	justifyContent: center;
-	alignItems: center;
-	width: 355px;
-	alignSelf: center;
-	marginTop: 20px;
-	marginBottom: 20px;
-`;
-
-const TabButtonContainer = styled.TouchableOpacity`
-	flexDirection: row;
-	justifyContent: center;
-	alignItems: center;
-	width: 91px;
-	padding: 8px;
-	borderBottomColor: ${props => props.isSelected ? "#2B6CB0" : "#CCD7E0"}
-	borderBottomWidth: ${props => props.isSelected ? "1px" : 0 };
-`;
-
-const TabButtonText = styled(RegularText)`
-	fontSize: 16px;
-	lineHeight: 24px;
-	color: ${props => props.isSelected ? "#2B6CB0" : "#4A5568"};
-`;
-
 const { height, width } = Dimensions.get('window')
 
 export default function MealsPage(props) {
 	const dispatch = useDispatch();
+	const [preloading, setPreloading] = useState(true)
 	const { loading, error } = useSelector(state => state.recipe);
 	const scrolling = useRef(new Animated.Value(0)).current;
 	
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
-		dispatch(getRecipeList_API("custom"));
-		dispatch(getMealPlans_API());
+		Promise.all(
+			dispatch(getRecipeList_API("custom")),
+			dispatch(getMealPlans_API())
+		).then(setPreloading(false))
 	}, []);
+
+	if (preloading) {
+		return <View><RegularText>Loading</RegularText></View>
+	}
 
 	return (
 		<Container style={styles.container}>

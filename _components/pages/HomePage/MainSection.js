@@ -89,6 +89,7 @@ export default function MainSection(props) {
 					gotoMeals={() => props.navigation.push("Meals")}
 					gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 					gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
+					gotoRestaurants={() => props.navigation.push("Restaurants")}
 				/>
 
 				<CreateMealPlanModal

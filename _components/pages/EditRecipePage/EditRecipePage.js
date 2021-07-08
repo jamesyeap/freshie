@@ -24,7 +24,7 @@ const ButtonGroup = styled.View`
     flexDirection: column
 `;
 
-export default EditRecipePage = (props) => {
+export default function EditRecipePage(props) {
     const [title, setTitle] = useState("")
     const [calories, setCalories] = useState("")
     const [ingredients, setIngredients] = useState("")

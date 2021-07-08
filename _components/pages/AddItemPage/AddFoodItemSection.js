@@ -134,7 +134,7 @@ export default function AddFoodItemSection (props) {
     if (loading) {
         return (<BrandHeaderText>Loading</BrandHeaderText>)
     } else {
-        return (<Container style={{ marginTop: 100 }}>
+        return (<Container>
             <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', }}>
                 <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={image}/>
