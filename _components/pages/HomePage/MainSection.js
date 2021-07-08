@@ -6,6 +6,7 @@ import CalorieTracker from '../../_organisms/CalorieTracker';
 import { SectionButton } from '../../_atoms/Button';
 import WeeklyChart from '../../_organisms/WeeklyChart';
 import { FAB } from '../../_molecules/FAB';
+import { Provider } from 'react-native-paper';
 import { CreateMealPlanModal } from './CreateMealPlanModal';
 import { createMealPlan_API } from '../../../_redux/actions/Recipes.actions';
 
@@ -66,37 +67,39 @@ export default function MainSection(props) {
 	}
 	
 	return (
-		<View style={{ ...styles.wrapper, height: height }}>
-			<View style={styles.container}>
-				<CalorieTracker />
+		<Provider>
+			<View style={{ ...styles.wrapper, height: height }}>
+				<View style={styles.container}>
+					<CalorieTracker />
 
-				<SectionButton
-				mainText="Eating History"
-				subText="See what you've been eating"
-				margin="21px"
-				onPress={() => props.navigation.push("EatingHistory")}
+					<SectionButton
+					mainText="Eating History"
+					subText="See what you've been eating"
+					margin="21px"
+					onPress={() => props.navigation.push("EatingHistory")}
+					/>
+				</View>
+
+				<View style={{flex: 0.2, marginTop: 50}}>
+					<WeeklyChart weeklyCalories={weeklyCalories} dailyCalories={dailyCalories}/>
+				</View>
+
+				<FAB 
+					variation="client"
+					gotoMeals={() => props.navigation.push("Meals")}
+					gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
+					gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
+				/>
+
+				<CreateMealPlanModal
+					modalVisible={showCreateMealPlanModal}
+					handleClose={handleCloseCreateMealPlanModal}
+					onPress={handleCreateMealPlan}
+					onChangeText={setNewMealPlanName}
+					value={newMealPlanName}
 				/>
 			</View>
-
-			<View style={{flex: 0.2, marginTop: 50}}>
-				<WeeklyChart weeklyCalories={weeklyCalories} dailyCalories={dailyCalories}/>
-			</View>
-
-			<FAB 
-				variation="client"
-				gotoMeals={() => props.navigation.push("Meals")}
-				gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
-				gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
-			/>
-
-			<CreateMealPlanModal
-				modalVisible={showCreateMealPlanModal}
-				handleClose={handleCloseCreateMealPlanModal}
-				onPress={handleCreateMealPlan}
-				onChangeText={setNewMealPlanName}
-				value={newMealPlanName}
-			/>
-		</View>
+		</Provider>
 	)
 	
 }

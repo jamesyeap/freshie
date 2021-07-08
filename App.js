@@ -22,15 +22,11 @@ export default function App() {
   }
 
   return (
-    <Portal.Host>
-      <PaperProvider>
         <Provider store={store}>
           <NavigationContainer>
             <RootStackScreen />
           </NavigationContainer>
         </Provider>
-      </PaperProvider>
-    </Portal.Host>
   )
 }
 

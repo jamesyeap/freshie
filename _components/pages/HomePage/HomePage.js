@@ -11,6 +11,7 @@ import { Header as MainSectionHeader } from './MainSection'
 import { Snackbar } from 'react-native-paper';
 import { acknowledge as clientAcknowledge } from '../../../_redux/actions/Client.actions'
 import { acknowledge as recipeAcknowledge } from '../../../_redux/actions/Recipes.actions'
+import DotProgress from './DotProgress';
 
 // get the height of the user's screen
 const { height } = Dimensions.get('window')
@@ -92,6 +93,8 @@ export default function HomePage(props) {
 			<AccountSection style={{ height: height }} scrolling={scrolling} navigation={props.navigation} />
 			<MainSection style={{ height: height }} scrolling={scrolling} navigation={props.navigation} />
 		</Animated.ScrollView>
+
+		<DotProgress scrolling={scrolling} />
 
 		<Snackbar 
 			style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} 

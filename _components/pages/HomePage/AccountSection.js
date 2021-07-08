@@ -64,6 +64,7 @@ export default function AccountSection({ scrolling }) {
 					snapToAlignment="start"
 					contentContainerStyle={ styles.biographyScrollView }
 					showsHorizontalScrollIndicator={false}
+					style={{ marginLeft: 20}}
 				>
 					<InfoPanel 
 						labelColor="#60A5FA"

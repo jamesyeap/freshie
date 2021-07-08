@@ -77,8 +77,8 @@ export default function LoginPage(props) {
 			/>
 
 			<OptionsContainer>
-				<Checkbox label="Remember me"/>
-				<TextButton label="Forgot Password?" />
+				<Checkbox testID="remember-me" label="Remember me"/>
+				<TextButton testID="forgot-password" label="Forgot Password?" />
 			</OptionsContainer>
 
 			<BigButton label="Sign In" state="active" onPress={handleSubmit}/>

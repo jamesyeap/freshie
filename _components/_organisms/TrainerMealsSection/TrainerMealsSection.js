@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, Dimensions, Animated, StyleSheet, View } from 'react-native';
 import { MealPlan } from '../../_molecules/MealPlan';
 import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
-import { HeaderMediumText } from '../../_atoms/Text';
+import { BrandHeaderText } from '../../_atoms/Text';
 import { addRecipeToMealPlan_API, deleteMealPlan_API, getRecipeList_API, getMealPlans_API } from '../../../_redux/actions/Recipes.actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
@@ -10,7 +10,7 @@ import { MealButtonModal } from './MealButtonModal';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
 import Constants from 'expo-constants';
 
-const { width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 export function Header({ scrolling }) {
 	const translation = scrolling.interpolate({
@@ -36,8 +36,8 @@ export function Header({ scrolling }) {
 			}}
 			opacity={opacity}
 		>	
-			<View style={styles.headerText}>
-				<HeaderMediumText>Your Meal Plans!</HeaderMediumText>
+			<View style={styles.headerTextContainer}>
+				<BrandHeaderText style={styles.headerText}>Your Meal Plans!</BrandHeaderText>
 			</View>
 		</Animated.View>
 	</>
@@ -169,7 +169,7 @@ export default function TrainerMealsSection (props) {
 						   variation="Client"
 						   />}
 		 keyExtractor = { (item, index) => index.toString() }
-		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
+		 style={styles.container}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}
 		 onRefresh={handleRefresh}
@@ -180,22 +180,29 @@ export default function TrainerMealsSection (props) {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		alignSelf: 'center',
+		backgroundColor: "#FFFBEB",
+		height: height,
+		width: width,
+	},
 	header: {
 		position: 'absolute',
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-		top: 0,
+		top: 30,
 		left: 0,
 		right: 0,
-		height: 130,
-		backgroundColor: "#A7F3D0",
+		height: 100,
 		padding: 20,
 		zIndex: 1000,
 	}, 
 	headerText: {
+		fontSize: 28
+	},
+	headerTextContainer: {
 		flexDirection: "column",
-		paddingLeft: 30
+		paddingLeft: 10,
 	}
-
 })
 

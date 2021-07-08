@@ -7,7 +7,7 @@ export const FAB = (props) => {
   const { open } = state;
   
   const fabStyle = {
-	  backgroundColor: "#AFEEEE",
+	  backgroundColor: "#D1FAE5",
     position: 'fixed',
     zIndex: 1000,
   }
@@ -18,7 +18,7 @@ export const FAB = (props) => {
         <ParentFAB.Group
 	        fabStyle={fabStyle}
           open={open}
-          icon={open ? 'minus' : 'plus'}
+          icon={open ? 'minus' : 'menu'}
           actions={[
             {
               icon: 'food-drumstick',
@@ -46,7 +46,7 @@ export const FAB = (props) => {
         <ParentFAB.Group
 	        fabStyle={fabStyle}
           open={open}
-          icon={open ? 'minus' : 'plus'}
+          icon={open ? 'minus' : 'menu'}
           actions={[
             {
               icon: 'plus',

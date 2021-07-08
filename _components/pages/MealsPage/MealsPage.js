@@ -15,6 +15,7 @@ import { Header as FavoriteMealsHeader } from '../../_organisms/FavoriteMealsSec
 import { getRecipeList_API, getMealPlans_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
+import FAB from './FAB.js'
 
 const Container = styled.SafeAreaView`
 	flex: 1;
@@ -49,13 +50,18 @@ const TabButtonText = styled(RegularText)`
 	color: ${props => props.isSelected ? "#2B6CB0" : "#4A5568"};
 `;
 
-
 const { height, width } = Dimensions.get('window')
 
 export default function MealsPage(props) {
 	const dispatch = useDispatch();
 	const { loading, error } = useSelector(state => state.recipe);
 	const scrolling = useRef(new Animated.Value(0)).current;
+
+	const colorInterpolation = scrolling.interpolate({
+		inputRange: [-width, width, 3 * width],
+		outputRange: ["rgb(255, 251, 235)", "rgb(236, 253, 245)", "rgb(254, 242, 242)"],
+		extrapolate: 'clamp',
+	})
 	
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
@@ -64,7 +70,7 @@ export default function MealsPage(props) {
 	}, []);
 
 	return (
-		<Container>
+		<Container style={styles.container}>
 			{/* Header */}
 			<TrainerMealsHeader scrolling={scrolling} />
 			<CustomMealsHeader scrolling={scrolling} />
@@ -95,6 +101,7 @@ export default function MealsPage(props) {
 			snapToAlignment="center"
 			horizontal
 			>
+
 				<View style={styles.scrollContainer}>
 					<TrainerMealsSection navigation={props.navigation} />
 				</View>
@@ -106,6 +113,8 @@ export default function MealsPage(props) {
 				<View style={styles.scrollContainer}>
 					<FavoriteMealsSection navigation={props.navigation} />
 				</View>
+			
+
 			</Animated.ScrollView>
 
 			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loading}>Loading</Snackbar>
@@ -122,15 +131,22 @@ export default function MealsPage(props) {
 			>
 				{error}
 			</Snackbar>
+
+			<FAB navigation={props.navigation} />
 		</Container>
 	)
 }
 
 const styles = StyleSheet.create({
+	container: {
+		height: '100%',
+		backgroundColor: "#FFFBEB"
+	},
 	scrollContainer: {
 		height: height,
 		width: width,
-		paddingTop: 100
+		paddingTop: 100,
+		backgroundColor: "#FFFBEB"
 	}
 })
 

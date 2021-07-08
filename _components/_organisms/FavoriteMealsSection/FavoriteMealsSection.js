@@ -3,13 +3,13 @@ import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
 import { addConsumedMeal_API, getFavouriteMeals_API } from '../../../_redux/actions/Client.actions';
-import { HeaderMediumText } from '../../_atoms/Text';
+import { BrandHeaderText } from '../../_atoms/Text';
 import { deleteRecipe_API } from '../../../_redux/actions/Recipes.actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import Constants from 'expo-constants';
 
-const { width } = Dimensions.get('window')
+const { height, width } = Dimensions.get('window')
 
 export function Header({ scrolling }) {
 	const translation = scrolling.interpolate({
@@ -35,8 +35,8 @@ export function Header({ scrolling }) {
 			}}
 			opacity={opacity}
 		>	
-			<View style={styles.headerText}>
-				<HeaderMediumText>Your Favorites!</HeaderMediumText>
+			<View style={styles.headerTextContainer}>
+				<BrandHeaderText style={styles.headerText}>Your Favorites!</BrandHeaderText>
 			</View>
 		</Animated.View>
 	</>
@@ -102,7 +102,7 @@ export default function FavoriteMealsSection(props) {
 						     setSelectedFoodItem={handleSelectFoodItem} 
 						     key={item.id.toString()}
 					   />}
-		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
+		 style={styles.container}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 keyExtractor = {(item) => item.id.toString()}
 		 onRefresh={handleRefresh}
@@ -113,21 +113,28 @@ export default function FavoriteMealsSection(props) {
 }
 
 const styles = StyleSheet.create({
+	container: {
+		alignSelf: 'center',
+		backgroundColor: "#FFFBEB",
+		height: height,
+		width: width,
+	},
 	header: {
 		position: 'absolute',
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-		top: 0,
+		top: 30,
 		left: 0,
 		right: 0,
-		height: 130,
-		backgroundColor: "#FBCFE8",
+		height: 100,
 		padding: 20,
 		zIndex: 1000,
 	}, 
 	headerText: {
+		fontSize: 28
+	},
+	headerTextContainer: {
 		flexDirection: "column",
-		paddingLeft: 30
+		paddingLeft: 10,
 	}
-
 })
