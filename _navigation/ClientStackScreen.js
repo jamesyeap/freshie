@@ -1,6 +1,6 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
-import { HomePage, MealsPage, EatingHistoryPage, EditRecipePage, RecipePage, SearchPage} from '../_components/pages/index';
+import { HomePage, MealsPage, EatingHistoryPage, EditRecipePage, AddItemPage, RecipePage, SearchPage} from '../_components/pages/index';
 
 const ClientStack = createStackNavigator();
 
@@ -11,6 +11,6 @@ export const ClientStackScreen = () => (
 		<ClientStack.Screen name="Recipe" component={RecipePage}/>
 		<ClientStack.Screen name="Search" component={SearchPage}/>
 		<ClientStack.Screen name="EatingHistory" component={EatingHistoryPage} />
-		<ClientStack.Screen name="EditRecipe" component={EditRecipePage} />
+		<ClientStack.Screen name="EditRecipe" component={AddItemPage} />
 	</ClientStack.Navigator>
 )

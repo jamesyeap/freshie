@@ -165,7 +165,7 @@ const styles = StyleSheet.create({
 		alignItems: "center",
 	},
 	infoPanel: {
-		marginLeft: 40,
-		marginRight: 40
+		marginLeft: 10,
+		marginRight: 10
 	}
 })

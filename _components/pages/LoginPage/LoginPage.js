@@ -1,6 +1,6 @@
 import React, { useRef } from 'react';
 import { Text } from 'react-native';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { Container } from '../../_atoms/Container';
 import { BrandHeaderText } from '../../_atoms/Text';
 import { Header } from '../../_molecules/Header';
@@ -9,7 +9,7 @@ import { BigButton, TextButton, Checkbox } from '../../_atoms/Button';
 import { Formik } from 'formik';
 import * as Yup from 'yup';
 import { loginAsync_API, acknowledge } from '../../../_redux/actions/Auth.actions';
-import { connect, useDispatch } from 'react-redux';
+import { connect, useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 
 const OptionsContainer = styled.View`
@@ -28,16 +28,12 @@ const LoginSchema = Yup.object().shape({
 
 })
 
-function mapStateToProps(state) {
-	const { loading, error } = state.auth;
-	return { loading, error };
-}
+export default function LoginPage(props) {
+	const { loading, error } = useSelector(state => state.auth)
 
-function LoginPage(props) {
 	const dispatch = useDispatch();
 
 	const handleLogin = (values) => {
-		console.log(values)
 		dispatch(loginAsync_API(values));
 	}
 
@@ -65,6 +61,7 @@ function LoginPage(props) {
 			feedbackMessage={errors.username}
 			touched={touched.username}
 			autoCapitalize="none"
+			testID="username-input"
 			/>
 
 			<TextInput
@@ -88,10 +85,10 @@ function LoginPage(props) {
 
 			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")} buttonStyle={{ marginTop: 20 }}/>
 
-			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={props.loading}>Loading</Snackbar>
+			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loading}>Loading</Snackbar>
 			<Snackbar 
 			 style={{ backgroundColor: "#F87171", marginBottom: 40 }}
-			 visible={props.error}
+			 visible={error}
 			 onDismiss={() => dispatch(acknowledge())}
 			 action={{
 			 label: 'ok',
@@ -100,7 +97,7 @@ function LoginPage(props) {
 			 	}
 			 }}
 			>
-				{props.error}
+				{error}
 			</Snackbar>
 
 			
@@ -110,5 +107,3 @@ function LoginPage(props) {
 		</Formik>
 	)
 }
-
-export default connect(mapStateToProps)(LoginPage);

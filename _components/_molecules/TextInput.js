@@ -1,5 +1,5 @@
 import React from 'react';
-import styled from 'styled-components';
+import styled from 'styled-components/native';
 import { RegularText, MediumText } from '../_atoms/Text';
 
 const TextInputContainer = styled.View`

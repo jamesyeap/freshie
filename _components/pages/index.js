@@ -8,6 +8,7 @@ export {default as EatingHistoryPage} from '../pages/EatingHistoryPage/EatingHis
 export {default as SignupPage} from '../pages/SignupPage/SignupPage';
 export {default as RegisterPage} from '../pages/RegisterPage/RegisterPage';
 export {default as EditRecipePage} from '../pages/EditRecipePage/EditRecipePage';
+export {default as AddItemPage} from '../pages/AddItemPage.js/AddItemPage';
 export {default as ClientPage} from '../pages/_TrainerPages/ClientPage/ClientPage';
 export {default as EditMealPlanPage} from '../pages/_TrainerPages/EditMealPlanPage/EditMealPlanPage';
 export {default as TrainerAccountPage} from './_TrainerPages/TrainerAccountPage/TrainerAccountPage';

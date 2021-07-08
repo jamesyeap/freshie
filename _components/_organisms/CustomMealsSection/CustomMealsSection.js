@@ -7,7 +7,6 @@ import { getRecipeList_API, deleteRecipe_API } from '../../../_redux/actions/Rec
 import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { CustomMealsButtonModal } from './CustomMealsButtonModal';
-import Constants from 'expo-constants';
 
 const { width } = Dimensions.get('window')
 
