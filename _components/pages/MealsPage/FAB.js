@@ -13,8 +13,6 @@ export default function FAB({ navigation }) {
 		position: 'fixed',
 		bottom: 20,
 		right: 20,
-		height: 0.8 * height,
-		width: width,
 	}
 
 	return (

@@ -56,12 +56,6 @@ export default function MealsPage(props) {
 	const dispatch = useDispatch();
 	const { loading, error } = useSelector(state => state.recipe);
 	const scrolling = useRef(new Animated.Value(0)).current;
-
-	const colorInterpolation = scrolling.interpolate({
-		inputRange: [-width, width, 3 * width],
-		outputRange: ["rgb(255, 251, 235)", "rgb(236, 253, 245)", "rgb(254, 242, 242)"],
-		extrapolate: 'clamp',
-	})
 	
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
