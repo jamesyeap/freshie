@@ -1,10 +1,11 @@
 # Freshie
 A project made for NUS Orbital 2021
-
-Test our app [here](https://expo.io/@jamesyeap/freshie)! :)
-  
+ 
 ## Level of Achievement
 Apollo 11
+
+## Documentation
+Follow our team's progress [here](https://freshieorbital.gitbook.io/team-fitbob/)!
   
 ## Project Scope
 Freshie is a mobile-application that helps personal trainers design nutrition programs for their clients.
