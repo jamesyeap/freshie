@@ -88,6 +88,9 @@ export default function HomePage(props) {
 		 decelerationRate={0}
 		 snapToInterval={height}
 		 snapToAlignment="top"
+
+		 // sets the default position as the homepage
+		 contentOffset={{x: 0, y: height}}
 		>
 
 			<AccountSection style={{ height: height }} scrolling={scrolling} navigation={props.navigation} />
@@ -138,6 +141,7 @@ const styles = StyleSheet.create({
 	wrapper: {
 		flex: 1,
 		// paddingTop: Constants.statusBarHeight,
+		backgroundColor: "#ECFDF5"
 	},
 	container: {
 		flex: 1,
@@ -166,143 +170,3 @@ const styles = StyleSheet.create({
 })
 
 
-
-/*
-
-export default function SnapToIntervalView(props) {
-  const scrolling = useRef(new Animated.Value(0)).current;
-
-  const translationOne = scrolling.interpolate({
-    inputRange: [-height, 0, height],
-    outputRange: [-100, 0, -100],
-    extrapolate: 'clamp',
-  })
-
-  const translationTwo = scrolling.interpolate({
-    inputRange: [0, height, 2 * height],
-    outputRange: [-100, 0, -100],
-    extrapolate: 'clamp',
-  })
-
-  const translationThree = scrolling.interpolate({
-    inputRange: [height, 2 * height, 3 * height],
-    outputRange: [-100, 0, -100],
-    extrapolate: 'clamp',
-  })
-
-  const translationFour = scrolling.interpolate({
-    inputRange: [2 * height, 3 * height, 4 * height],
-    outputRange: [-100, 0, -100],
-    extrapolate: 'clamp',
-  })
-
-  return (
-    <>
-      
-      <Animated.View 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 100,
-          backgroundColor: "tomato",
-          transform: [
-            { translateY: translationOne }
-          ],
-          zIndex: 1000,
-        }}
-      />
-
-      
-      <Animated.View 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 100,
-          backgroundColor: "yellow",
-          transform: [
-            { translateY: translationTwo }
-          ],
-          zIndex: 1000,
-        }}
-      />
-
-      
-      <Animated.View 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 100,
-          backgroundColor: "green",
-          transform: [
-            { translateY: translationThree }
-          ],
-          zIndex: 1000,
-        }}
-      />
-
-      
-      <Animated.View 
-        style={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          right: 0,
-          height: 100,
-          backgroundColor: "pink",
-          transform: [
-            { translateY: translationFour }
-          ],
-          zIndex: 1000,
-        }}
-      />
-
-      <Animated.ScrollView
-        onScroll={Animated.event([
-          {
-            nativeEvent: {
-              contentOffset: {
-                y: scrolling,
-              }
-            }
-          }
-        ],
-         { useNativeDriver: true }
-        )}
-        // onScroll will be run every 16ms
-        scrollEventThrottle={16}
-        ref={(scrollView) => { scrollView }}
-        style={{ 
-          flex: 1,
-        }}
-        decelerationRate={0}
-        snapToInterval={height}
-        snapToAlignment="top"
-      >
-        <View style={styles.item1} />
-        <View style={styles.item2} />
-        <View style={styles.item1} />
-        <View style={styles.item2} />
-
-      </Animated.ScrollView>
-    </>
-  )
-}
-
-const styles = StyleSheet.create({
-  item1: {
-    height: height,
-    backgroundColor: "blue",
-  },
-  item2: {
-    height: height,
-    backgroundColor: "red",
-  }
-})
-
-*/

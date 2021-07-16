@@ -2,12 +2,10 @@ import React, { useState } from 'react';
 import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { FavoritesButtonModal } from './FavoriteMealsButtonModal';
-import { addConsumedMeal_API, getFavouriteMeals_API } from '../../../_redux/actions/Client.actions';
+import { addConsumedMeal_API, getFavouriteMeals_API, deleteFavouriteMeal_API } from '../../../_redux/actions/Client.actions';
 import { BrandHeaderText } from '../../_atoms/Text';
-import { deleteRecipe_API } from '../../../_redux/actions/Recipes.actions'
 import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
-import Constants from 'expo-constants';
 
 const { height, width } = Dimensions.get('window')
 
@@ -47,7 +45,7 @@ export default function FavoriteMealsSection(props) {
 	const [selectedFoodItem, setSelectedFoodItem] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
 	const [refreshing, setRefreshing] = useState(false);
-	const { favoriteMeals } = useSelector(state => state.recipe);
+	const { favouriteMeals } = useSelector(state => state.client);
 	
 	const dispatch = useDispatch()
 
@@ -70,8 +68,7 @@ export default function FavoriteMealsSection(props) {
 	}
 
 	const handleDelete = () => {
-		dispatch(deleteRecipe_API(selectedFoodItem.id));
-		props.navigation.navigate("Home");
+		dispatch(deleteFavouriteMeal_API(selectedFoodItem.favID));
 	}
 
 	/* ************************************************************ */
@@ -94,10 +91,10 @@ export default function FavoriteMealsSection(props) {
 		/>
 
 		<FlatList
-		 data={favoriteMeals}
+		 data={favouriteMeals}
 		 renderItem={({ item }) => <FoodItem navigation={props.navigation} 
 		 				     id={item.id}
-		 				     itemDetails={item} 
+		 				     itemDetails={{ ...item.meal, favID: item.id }} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} 
 						     key={item.id.toString()}

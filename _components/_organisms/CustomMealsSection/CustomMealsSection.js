@@ -2,7 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { BrandHeaderText } from '../../_atoms/Text';
-import { addConsumedMeal_API } from '../../../_redux/actions/Client.actions';
+import { addConsumedMeal_API, addFavouriteMeal_API } from '../../../_redux/actions/Client.actions';
 import { getRecipeList_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
@@ -73,6 +73,10 @@ export default function CustomMealsSection(props) {
 	const handleDelete = () => {
 		dispatch(deleteRecipe_API(selectedFoodItem.id));
 	}
+
+	const handleFavourite = () => {
+		dispatch(addFavouriteMeal_API(selectedFoodItem.id))
+	}
 	/* ************************************************************ */
 	
 	const handleRefresh = () => {
@@ -89,6 +93,7 @@ export default function CustomMealsSection(props) {
 		handleConsume={handleConsume}
 		handleEdit={handleEdit}
 		handleDelete={handleDelete}	
+		handleFavourite={handleFavourite}
 		itemDetails={selectedFoodItem}
 		/>
 

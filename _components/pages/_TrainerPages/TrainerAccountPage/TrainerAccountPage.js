@@ -24,6 +24,8 @@ function mapStateToProps(state) {
 }
 
 export function TrainerAccountPage(props) {
+	const dispatch = useDispatch()
+	
 	return (
 		<Container>
 			<NavigationHeader goTo={() => props.navigation.goBack()} />

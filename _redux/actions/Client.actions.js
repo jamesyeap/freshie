@@ -73,10 +73,10 @@ export const addConsumedMeal_API = (arg) => {
                                 headers: {
                                           "Authorization": `Token ${token}`
                                 },
-                            data: arg
+                                data: arg
                         });
 
-                        dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false }));
+                        dispatch(getConsumedMeals_API({ dateArgument: getDateArgument() }));
                         dispatch(getWeeklyConsumedMeals_API());
                 } catch (e) {
                         // alerts user to an error	
@@ -158,7 +158,8 @@ export const deleteConsumedMeal_API = (arg) => {
                                 }
                         });
 
-                        dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false }));
+                        await dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false }));
+                        await dispatch(getWeeklyConsumedMeals_API());
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))
@@ -193,7 +194,7 @@ export const getWeeklyConsumedMeals_API = (arg) => {
         
                         const response = await axios({
                                 method: 'post',
-                                url: `${URL}/api/${username}/weeklyCalories/`,
+                                url: `${URL}/api/${username}/weekly-calories/`,
                                 headers: {
                                         "Authorization": `Token ${token}`
                                 },
@@ -214,7 +215,7 @@ export const getWeeklyConsumedMeals_API = (arg) => {
         }
 }
 
-export const getFavouriteMeals_API = (arg) => {
+export const getFavouriteMeals_API = () => {
         return async (dispatch, getState) => {
                 // lets user know that the request is loading
                 dispatch(loading())
@@ -230,15 +231,40 @@ export const getFavouriteMeals_API = (arg) => {
                                 }
                         })
 
-                        let favMeals = []
-                        if (response.status !== 204) {
-                                response.data.forEach(meal => {
-                                        favMeals.push(meal.meal)
-                                })
-                                dispatch({ type: UPDATE_FAVOURITE_MEALS, payload: favMeals })
+                        if (response.status === 204) {
+                                dispatch({ type: UPDATE_FAVOURITE_MEALS, payload: []})
+                        } else {
+                                dispatch({ type: UPDATE_FAVOURITE_MEALS, payload: response.data })
                         }
                 } catch (e) {
                 // alerts user to an error	
+                dispatch(error(e.message))
+
+                }
+        }
+}
+
+export const addFavouriteMeal_API = (arg) => {
+        return async (dispatch, getState) => {
+                // lets user know that the request is loading
+                dispatch(loading())
+
+                try {
+                        const { username, token } = getState().auth;
+
+                        const response = await axios({
+                                method: 'post',
+                                url: `${URL}/api/${username}/add-fav-meal/`,
+                                headers: {
+                                        "Authorization": `Token ${token}`	
+                                },
+                                data: { recipeID: arg }
+                        })
+
+                        await dispatch(getFavouriteMeals_API())
+                } catch (e) {
+                // alerts user to an error	
+                alert(e)
                 dispatch(error(e.message))
 
                 }
@@ -255,13 +281,13 @@ export const deleteFavouriteMeal_API = (arg) => {
 
                         const response = await axios({
                                 method: 'delete',
-                                url: `${URL}/api/${username}/fav-meals/${id}`,
+                                url: `${URL}/api/${username}/fav-meal/${arg}/`,
                                 headers: {
                                         "Authorization": `Token ${token}`	
                                 }
                         })
 
-                        dispatch(getFavouriteMeals_API());
+                        await dispatch(getFavouriteMeals_API());
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))

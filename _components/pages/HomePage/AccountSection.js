@@ -35,7 +35,7 @@ export function Header({ scrolling }) {
 			opacity={opacity}
 		>	
 			<View style={styles.headerText}>
-				<RegularText>More about you!</RegularText>
+				<RegularText>More about you,</RegularText>
 				<HeaderMediumText style={{ textAlign: 'left' }}>
 					{username}!
 				</HeaderMediumText>
@@ -153,7 +153,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 130,
-		backgroundColor: "#A7F3D0",
 		padding: 20,
 		zIndex: 1000,
 	}, 

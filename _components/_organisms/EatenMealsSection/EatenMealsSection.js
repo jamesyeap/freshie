@@ -24,7 +24,6 @@ const EatenMealsSection = (props) => {
 
 	const handleDelete = () => {
 		dispatch(deleteConsumedMeal_API(selectedFoodItem.id))
-		props.navigation.navigate("Home");
 	}
 
 	const handleSelectFoodItem = (foodItem) => {

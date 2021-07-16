@@ -8,7 +8,6 @@ import { useSelector, useDispatch } from 'react-redux';
 import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 import { MealButtonModal } from './MealButtonModal';
 import { MealPlanButtonModal } from './MealPlanButtonModal';
-import Constants from 'expo-constants';
 
 const { height, width } = Dimensions.get('window')
 

@@ -81,7 +81,7 @@ export default function MainSection(props) {
 				</View>
 
 				<View style={{flex: 0.2, marginTop: 50}}>
-					<WeeklyChart weeklyCalories={weeklyCalories} dailyCalories={dailyCalories}/>
+					<WeeklyChart />
 				</View>
 
 				<FAB 
@@ -125,7 +125,6 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 130,
-		backgroundColor: "#93C5FD",
 		padding: 20,
 		zIndex: 1000,
 	}, 

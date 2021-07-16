@@ -116,7 +116,7 @@ export function DashboardPage(props) {
 	useEffect(loadData, []);
 
 	const handleCreateMealPlan = () => {
-		createMealPlan_API({ title: newMealPlanName })
+		dispatch(createMealPlan_API({ title: newMealPlanName }))
 		setNewMealPlanName("");
 	}
 
@@ -154,6 +154,7 @@ export function DashboardPage(props) {
 				handleClose={handleCloseCreateMealPlanModal}
 				onChangeText={(value) => setNewMealPlanName(value)}
 				onPress={handleCreateMealPlan}
+				value={newMealPlanName}
 				/>
 			</Container>
 		)

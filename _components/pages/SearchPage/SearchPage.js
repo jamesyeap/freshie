@@ -30,7 +30,7 @@ export default function SearchPage (props) {
     }
 
     const handleAssignToClient = (clientUsername) => {
-        assignClientMealPlan_API({ mealPlanID: mealPlan.id, clientUsername })
+        dispatch(assignClientMealPlan_API({ mealPlanID: mealPlan.id, clientUsername }))
 
         props.navigation.goBack();
     }
@@ -91,7 +91,7 @@ export default function SearchPage (props) {
         useEffect(preload, []);
 
         const searchComponents = () => {
-                return (list.map( x => {return (<ClientItem key={x.id.toString()} clientDetails={x} onPress={() => dispatch(handleAssignToClient(x.username))} />)}))
+                return (list.map( x => {return (<ClientItem key={x.id.toString()} clientDetails={x} onPress={() => handleAssignToClient(x.username)} />)}))
         }
 
         const onChangeMethod = (text) => {

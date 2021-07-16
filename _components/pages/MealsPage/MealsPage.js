@@ -29,7 +29,8 @@ const { height, width } = Dimensions.get('window')
 export default function MealsPage(props) {
 	const dispatch = useDispatch();
 	const [preloading, setPreloading] = useState(true)
-	const { loading, error } = useSelector(state => state.recipe);
+	const { loadingRecipe, errorRecipe } = useSelector(state => state.recipe);
+	const { loadingClient, errorClient } = useSelector(state => state.client);
 	const scrolling = useRef(new Animated.Value(0)).current;
 	
 	// Fetches list of recipes before rendering the page
@@ -92,10 +93,10 @@ export default function MealsPage(props) {
 
 			</Animated.ScrollView>
 
-			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loading}>Loading</Snackbar>
+			<Snackbar style={{ backgroundColor: "#60A5FA", marginBottom: 40 }} visible={loadingClient || loadingRecipe}>Loading</Snackbar>
 			<Snackbar 
 			 style={{ backgroundColor: "#F87171", marginBottom: 40 }}
-			 visible={error}
+			 visible={errorRecipe || errorClient}
 			 onDismiss={() => dispatch(acknowledge())}
 			 action={{
 			 label: 'ok',
@@ -104,7 +105,7 @@ export default function MealsPage(props) {
 			 	}
 			 }}
 			>
-				{error}
+				{errorRecipe || errorClient}
 			</Snackbar>
 
 			<FAB navigation={props.navigation} />

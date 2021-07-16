@@ -31,7 +31,7 @@ export const CreateMealPlanModal = (props) => {
 					 label={props.label ? props.label : null}
 					 />
 				<ButtonGroup containerStyle={{ width: 200 }} >
-					<SmallButton buttonStyle={{ width: 70 }} label="Assign" onPress={() => handleButtonPress(props.onPress)}/>
+					<SmallButton buttonStyle={{ width: 70 }} label="Add" onPress={() => handleButtonPress(props.onPress)}/>
 					<TextButton label="Close" onPress={() => handleButtonPress(() => props.handleClose())} />
 				</ButtonGroup>
 				</View>

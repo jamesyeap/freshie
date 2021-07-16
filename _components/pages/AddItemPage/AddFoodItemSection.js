@@ -135,22 +135,23 @@ export default function AddFoodItemSection (props) {
         return (<BrandHeaderText>Loading</BrandHeaderText>)
     } else {
         return (<Container>
-            <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column', }}>
+            <ScrollView containerStyle={{flex: 1, flexDirection: 'column', }}>
                 <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={image}/>
                 </TouchableOpacity>
-                <View style ={{flex: 0.6}}>
+                <View>
                     <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
                     <TextInput label="Calories" stacked="10px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
                     <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/>
                     <TextInput multiline={true} label="Instructions" placeholder={instructions} onChangeText={val => setInstructions(val)} value={instructions}/>
                 </View>
+                
+                <View style={{flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
+                    <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+                    <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
+                </View>
             </ScrollView>
 
-            <View style={{flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
-                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
-                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
-            </View>
         </Container>)
     }
 }

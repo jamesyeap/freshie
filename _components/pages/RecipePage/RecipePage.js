@@ -72,14 +72,18 @@ export default function RecipePage(props) {
 
                 <View style ={{flex: 0.5, borderWidth:0, justifyContent: 'space-around', alignItems: 'center', justifyContent: 'center'}}>
                     <SectionToggleButton IsToggled={expandIngredients} onPress={() => setExpandIngredients(!expandIngredients)} label={"Ingredients You'll Need!"}/>
-                    <Collapsible collapsed={!expandIngredients} containerStyle={{ alignItems: 'flex-start' }}>
-                        <MediumText style={{ textAlign: 'left' }}>{ itemDetails.ingredients }</MediumText>
+                    <Collapsible collapsed={!expandIngredients}>
+                        <View style={{ width: 250, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                            <MediumText>{ itemDetails.ingredients }</MediumText>
+                        </View>
                     </Collapsible>
 
 
                     <SectionToggleButton IsToggled={expandInstructions} onPress={() => setExpandInstructions(!expandInstructions)} label={"Instructions!"}/>
                     <Collapsible collapsed={!expandInstructions}>
-                        <MediumText>{ itemDetails.instructions }</MediumText>
+                        <View style={{ width: 250, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start'}}>
+                            <MediumText>{ itemDetails.instructions }</MediumText>
+                        </View>
                     </Collapsible>
 
 

@@ -1,8 +1,7 @@
 import React from 'react'
+import { useSelector } from 'react-redux';
 import { BarChart } from 'react-native-chart-kit'
-import { Dimensions, View, SafeAreaView } from "react-native";
-
-const screenWidth = Dimensions.get("window").width;
+import { View, SafeAreaView } from "react-native";
 
 export default function WeeklyChart(props) {
     const chartConfig = {
@@ -16,8 +15,7 @@ export default function WeeklyChart(props) {
         barPercentage: 0.5,
         barRadius: 3,
     };
-    const weeklyCalories = props.weeklyCalories
-    const dailyCalories = props.dailyCalories
+    const { weeklyCalories, dailyCalories } = useSelector(state => state.client)
     const data = {
         labels: [ "S", "M", "T", "W", "T", "F", "S"],
         datasets: [
