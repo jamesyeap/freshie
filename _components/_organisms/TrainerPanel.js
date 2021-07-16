@@ -1,7 +1,10 @@
-import React from 'react';
+import React, { useState } from 'react';
 import styled from 'styled-components';
 import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
-import { useSelector } from 'react-redux';
+import { TextInput } from '../_molecules/TextInput';
+import { MediumButton } from '../_atoms/Button';
+import { useSelector, useDispatch } from 'react-redux';
+import { addPersonalTrainer_API } from '../../_redux/actions/Client.actions'
 import { IconButton } from '../_atoms/Button';
 import { Info } from '../_molecules/Info';
 
@@ -26,8 +29,18 @@ const ButtonGroup = styled.View`
 	marginRight: 15px;
 `;
 
+const ReferralCodeContainer = styled.View`
+	flexDirection: column;
+	justifyContent: center;
+	alignItems: center;
+	width: 150px;
+	
+`
+
 export const TrainerPanel = (props) => {
 	const { personalTrainer } = useSelector(state => state.client)
+	const [referralCode, setReferralCode] = useState("");
+	const dispatch = useDispatch();
 
 	return (
 		<MediumComponentContainer style={props.style}>
@@ -37,11 +50,28 @@ export const TrainerPanel = (props) => {
 			value={personalTrainer ? personalTrainer : "No Trainer"}
 			/>
 
-			<ButtonGroup>
-				<IconButton iconName="call" buttonLabel="Call" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }}/>
-				<IconButton iconName="chatbox-ellipses" buttonLabel="Chat" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }} />
-				<IconButton iconName="md-mail" buttonLabel="Email" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }} />
-			</ButtonGroup>
+			{personalTrainer  
+				? (<ButtonGroup>
+					<IconButton iconName="call" buttonLabel="Call" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }}/>
+					<IconButton iconName="chatbox-ellipses" buttonLabel="Chat" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }} />
+					<IconButton iconName="md-mail" buttonLabel="Email" buttonStyle={{ width: 90, margin: 5, backgroundColor: "#319795" }} />
+				</ButtonGroup>)
+				: (
+					<ReferralCodeContainer>
+						<TextInput 
+							value={referralCode} 
+							onChangeText={setReferralCode} 
+							inputStyle={{ width: 150 }} 
+							placeholder="referralCode"
+						/>
+						<MediumButton 
+							label={"Add Trainer"} 
+							onPress={() => dispatch(addPersonalTrainer_API(referralCode))} 
+							buttonStyle={{ backgroundColor: "#60A5FA" }}
+						/>
+					</ReferralCodeContainer>
+				)
+			}
 		</MediumComponentContainer>
 	)
 }

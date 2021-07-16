@@ -2,6 +2,7 @@ import React, { useState } from 'react';
 import { FlatList, Animated, View, Dimensions, StyleSheet } from 'react-native';
 import { FoodItem } from '../../_molecules/FoodItem';
 import { BrandHeaderText } from '../../_atoms/Text';
+import { IconButton } from '../../_atoms/Button';
 import { addConsumedMeal_API, addFavouriteMeal_API } from '../../../_redux/actions/Client.actions';
 import { getRecipeList_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
 import { useSelector, useDispatch } from 'react-redux';
@@ -10,7 +11,7 @@ import { CustomMealsButtonModal } from './CustomMealsButtonModal';
 
 const { height, width } = Dimensions.get('window')
 
-export function Header({ scrolling }) {
+export function Header({ scrolling, navigation }) {
 	const translation = scrolling.interpolate({
 		inputRange: [0, width , 2 * width],
 		outputRange: [-130, 0, -130],
@@ -35,6 +36,13 @@ export function Header({ scrolling }) {
 			opacity={opacity}
 		>	
 			<View style={styles.headerTextContainer}>
+				<IconButton
+				iconName="arrow-back"
+				iconSize={25}
+				iconColor="black"
+				buttonStyle={{ marginLeft: 30 }}
+				onPress={() => navigation.navigate("Home")}
+				/>
 				<BrandHeaderText style={styles.headerText}>Meals</BrandHeaderText>
 			</View>
 		</Animated.View>
@@ -130,14 +138,17 @@ const styles = StyleSheet.create({
 		left: 0,
 		right: 0,
 		height: 100,
-		padding: 20,
+		paddingTop: 20,
+		paddingBottom: 20,
 		zIndex: 1000,
 	}, 
 	headerText: {
-		fontSize: 28
+		fontSize: 28,
+		paddingLeft: 10
 	},
 	headerTextContainer: {
-		flexDirection: "column",
-		paddingLeft: 15,
+		flexDirection: "row",
+		paddingLeft: 5,
+		alignItems: "center",
 	}
 })

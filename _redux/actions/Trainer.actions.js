@@ -2,6 +2,7 @@
 import axios from "axios";
 import { URL } from '../_constants';
 import { getMealPlans_API, getRecipeList_API } from "./Recipes.actions";
+import { store } from '../store/store'
 
 /* ACTION-VERBS */
 export const FETCH_CLIENTS = 'FETCH_CLIENTS'
@@ -117,7 +118,6 @@ export const getReferralCode_API = (arg) => {
             // lets user know that the request is loading
             dispatch(loading())
 
-           
             try {
                     const { username, token } = getState().auth;
 
@@ -136,6 +136,33 @@ export const getReferralCode_API = (arg) => {
             }
     }
 }
+
+export const updateClientTargetCalories_API = (arg) => {
+        return async (dispatch, getState) => {
+                // lets user know that the request is loading
+                dispatch(loading())
+                
+                try {
+                        const { username, token } = getState().auth;
+    
+                        const response = await axios({
+                            method: 'post',
+                            url: `${URL}/api/${username}/client/${arg.clientUsername}/edit-calories/`,
+                            headers: {
+                                      "Authorization": `Token ${token}`
+                            },
+                            data: {
+                                calories: arg.targetCalories
+                            }
+                            });    
+                            
+                            await dispatch(getClients_API())
+                } catch (e) {
+                        // alerts user to an error	
+                        dispatch(error(e.message))
+                }
+        }
+    }
 
 export const addRecipeToMealPlan_API = (arg) => {
     return async (dispatch, getState) => {
@@ -202,40 +229,40 @@ export const acknowledge = () => ({
 /* OTHER FUNCTIONS THAT ARE NOT PART OF REDUX */
 // view -> client's data (GET)
 export async function getClientData_API(values) {
-	try {
-		const { token, username } = getState().auth;
+                try {
+                        const { token, username } = store.getState().auth;
 
-		const response = await axios({
-    			method: 'get',
-    			url: `${URL}/api/${username}/client/${values}/view/`,
-    			headers: {
-      				"Authorization": `Token ${token}`
-    			}, 
-		});
+                        const response = await axios({
+                                method: 'get',
+                                url: `${URL}/api/${username}/client/${values}/view/`,
+                                headers: {
+                                        "Authorization": `Token ${token}`
+                                }, 
+                        });
 
-		return (response.data);
-	} catch (e) {
-		alert(e.response.data)
-	}
+                        return response.data;
+                } catch (e) {
+                        alert(e.response.data)
+                }
 }
 
 // Gets a list of meal-plans for a client 
 export async function getClientMealPlan_API(values) {
-	try {
-		const { token, username } = getState().auth;
+                try {
+                        const { token, username } = store.getState().auth;
 
-		const response = await axios({
-    			method: 'get',
-    			url: `${URL}/api/${username}/client/${values}/meal-plans/`,
-    			headers: {
-      				"Authorization": `Token ${token}`
-    			}, 
-		});
+                        const response = await axios({
+                                method: 'get',
+                                url: `${URL}/api/${username}/client/${values}/meal-plans/`,
+                                headers: {
+                                        "Authorization": `Token ${token}`
+                                }, 
+                        });
 
-		return response.data;
-	} catch (e) {
-		alert(e.response.data)
-	}
+                        return response.data;
+                } catch (e) {
+                        alert(e.response.data)
+                }
 }
 
 

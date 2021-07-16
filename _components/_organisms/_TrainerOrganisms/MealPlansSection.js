@@ -14,7 +14,7 @@ function MealPlansSection (props) {
 	return (
 		<FlatList
 		 data={props.data}
-		 renderItem={({item}) => <ClientMealPlan id={item.id.toString()} goTo={() => props.navigation.push("MealPlanDetails", { mealPlanDetails: item, clientDetails: props.clientDetails })} mealPlanDetails={item} navigation={props.navigation} />}
+		 renderItem={({item}) => <ClientMealPlan key={item.id.toString()} id={item.id.toString()} goTo={() => props.navigation.push("MealPlanDetails", { mealPlanDetails: item, clientDetails: props.clientDetails })} mealPlanDetails={item} navigation={props.navigation} />}
 		 style={styles}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 horizontal={props.horizontal ? props.horizontal : false}

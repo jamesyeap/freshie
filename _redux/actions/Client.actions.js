@@ -96,10 +96,13 @@ export const updateDailyCalories_API = (arg) => {
                         const { username, token } = getState().auth;
 
                         const response = await axios({
-                                method: 'get',
+                                method: 'patch',
                                 url: `${URL}/api/${username}/calories/`,
                                 headers: {
                                           "Authorization": `Token ${token}`
+                                },
+                                data: {
+                                        dailyCalories: arg
                                 }
                         });
 
@@ -113,7 +116,7 @@ export const updateDailyCalories_API = (arg) => {
 }
 
 // Get user profile details 
-export const getUserProfile_API = (arg) => {
+export const getUserProfile_API = () => {
         return async (dispatch, getState) => {
                 // lets user know that the request is loading
                 dispatch(loading())
@@ -291,6 +294,32 @@ export const deleteFavouriteMeal_API = (arg) => {
                 } catch (e) {
                 // alerts user to an error	
                 dispatch(error(e.message))
+                }
+        }
+}
+
+export const addPersonalTrainer_API = (arg) => {
+        return async (dispatch, getState) => {
+                // lets user know that the request is loading
+                dispatch(loading())
+                        
+                try {
+                        const { username, token } = getState().auth
+
+                        const response = await axios({
+                                method: 'post',
+                                url: `${URL}/api/${username}/add-personal-trainer/`,
+                                headers: {
+                                        "Authorization": `Token ${token}`	
+                                },
+                                data: {
+                                        referralCode: arg
+                                }
+                        })
+
+                        await dispatch(getUserProfile_API())
+                } catch (e) {
+                        dispatch(error(e.message))
                 }
         }
 }

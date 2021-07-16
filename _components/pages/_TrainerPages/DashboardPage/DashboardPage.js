@@ -21,7 +21,7 @@ import { connect, useDispatch } from 'react-redux';
 const Container = styled.SafeAreaView`
 	flex: 1;
 	flexDirection: column;
-	justifyContent: center;
+	justifyContent: flex-start;
 	alignItems: center;
 	backgroundColor: #CCD7E0;
 `;

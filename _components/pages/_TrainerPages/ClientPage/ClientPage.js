@@ -1,15 +1,20 @@
 import React, { useState, useEffect } from 'react';
+import { useDispatch } from 'react-redux';
+import { updateClientTargetCalories_API } from '../../../../_redux/actions/Trainer.actions';
 import styled from "styled-components";
 import Collapsible from 'react-native-collapsible';
 import { Ionicons } from '@expo/vector-icons';
+import { Dimensions, StyleSheet, View } from 'react-native';
 
 import { MediumText } from '../../../_atoms/Text';
+import { TextInput } from '../../../_molecules/TextInput'
 import { Container } from '../../../_atoms/Container';
 import { InfoPanel } from '../../../_organisms/InfoPanel';
 import { AccountPanel } from '../../../_molecules/AccountPanel';
 import { NavigationHeader } from '../../../_molecules/NavigationHeader'
 import MealPlansSection from '../../../_organisms/_TrainerOrganisms/MealPlansSection';
-import { getClientMealPlan_API } from '../../../../_redux/actions/Trainer.actions';
+import { getClientMealPlan_API, getClientData_API } from '../../../../_redux/actions/Trainer.actions';
+import { MediumButton } from '../../../_atoms/Button';
 
 const InfoOne = {
 	label: "Height",
@@ -46,18 +51,6 @@ const InfoSix = {
 	value: "Slightly Active",
 }
 
-const InfoSeven = {
-	label: "Today's Calories",
-	value: 500,
-	unit: "kcal"
-}
-
-const InfoEight = {
-	label: "Target Calories",
-	value: 2500,
-	unit: "kcal"
-}
-
 const SectionToggleButtonContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	justifyContent: space-between;
@@ -85,35 +78,73 @@ const SectionToggleButton = (props) => {
 	)
 }
 
+const { height, width } = Dimensions.get('window')
 
 export default function ClientPage(props) {
-	const [showBiometrics, setShowBiometrics] = useState(true);
-	const [showCaloricInformation, setShowCaloricInformation] = useState(false);
+	const [showBiometrics, setShowBiometrics] = useState(false);
+	const [showCaloricInformation, setShowCaloricInformation] = useState(true);
 	const [showMealPlans, setShowMealPlans] = useState(false);
+	const [showEditInputs, setShowEditInputs] = useState(false);
 	const [mealPlansData, setMealPlansData] = useState(null);
+	const [clientData, setClientData] = useState(null)
 	const [loading, setLoading] = useState(true);
+	const [targetCalories, setTargetCalories] = useState(null)
+	const [propertyChanged, setPropertyChanged] = useState(false)
+
+	const dispatch = useDispatch()
 
 	/* Fetches meal plans for the client */
-	const preload = () => {
-		let data = getClientMealPlan_API(props.route.params.clientDetails.user.username);
-		data.then(x => setMealPlansData(x));
-		setLoading(false);
+	const preload = async () => {
+		const fetchClientData = async () => {
+			const data = await getClientData_API(props.route.params.clientDetails.user.username)
+			setClientData(data)
+		}
+		
+		const fetchMealsData = async () => {
+			const data = await getClientMealPlan_API(props.route.params.clientDetails.user.username)	
+			setMealPlansData(data) 
+		}
+
+		await fetchClientData()
+		await fetchMealsData()
+		setLoading(false)
 	}
 
-	useEffect(preload, []);
+	useEffect(() => {
+		preload()
+	}, [propertyChanged]);
+
+	const handleUpdateTargetCalories = async () => {
+		dispatch(updateClientTargetCalories_API(
+			{
+				clientUsername: username,
+				targetCalories: targetCalories
+			}
+		))
+
+		// force a re-render
+		setPropertyChanged(!propertyChanged)
+	}
 	
-	const { first_name, last_name, mealPlans, email, username } = props.route.params.clientDetails.user;
+	const { username } = props.route.params.clientDetails.user;
 
-	const mealPlanContainerStyle = {backgroundColor: "#FFFFFF", width: 355, height: 150, borderRadius: 10};
+	const mealPlanContainerStyle = { backgroundColor: "#FFFFFF", width: 355, height: 150, borderRadius: 10 }
 
-	return (
-		<Container>
+	if (loading) {
+		return (
+			<Container>
+				<MediumText>Loading...</MediumText>
+			</Container>
+		)
+	}
+	
+	return (<Container>
 			<NavigationHeader  goTo={() => props.navigation.goBack()} />
 			<AccountPanel
-			firstName={first_name}
-			lastName={last_name}
-			username={username}
-			email={email}
+			firstName={clientData.user.first_name}
+			lastName={clientData.user.last_name}
+			username={clientData.user.username}
+			email={clientData.user.email}
 			/>
 
 			<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
@@ -136,18 +167,57 @@ export default function ClientPage(props) {
 
 				infoOne={InfoFive}
 				infoTwo={InfoSix}
-				infoThree={InfoSeven}
-				infoFour={InfoEight}
+				infoThree={{
+					label: "Today's Calories",
+					value: clientData.calories.currentCalories,
+					unit: "kcal"
+				}}
+				infoFour={{
+					label: "Target Calories",
+					value: clientData.calories.dailyCalories,
+					unit: "kcal"
+				}}
 				/>
 			</Collapsible>
 
 
 			<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
 			<Collapsible collapsed={!showMealPlans}>
-				{!loading && <MealPlansSection data={mealPlansData} clientDetails={props.route.params.clientDetails.user} assignedMealPlansID={mealPlans} style={mealPlanContainerStyle} horizontal={true} navigation={props.navigation} />}
+				{!loading && 
+					<MealPlansSection 
+						data={mealPlansData} 
+						clientDetails={props.route.params.clientDetails.user} 
+						style={mealPlanContainerStyle} 
+						horizontal={true} 
+						navigation={props.navigation} 
+					/>
+				}
+			</Collapsible>
+
+			<SectionToggleButton onPress={() => setShowEditInputs(!showEditInputs)} IsToggled={showEditInputs} label="Update client info"/>
+			<Collapsible collapsed={!showEditInputs}>
+				<View style={styles.updateClientInfoContainer}>
+					<TextInput 
+						label="Update target calories"
+						value={props.route.params.clientDetails.user}
+						onChangeText={setTargetCalories}
+						placeholder="500 kcal"
+					/>
+
+					<MediumButton 
+						label="Update"
+						onPress={handleUpdateTargetCalories}
+					/>
+				</View>
 			</Collapsible>
 
 
-		</Container>
-	)
+		</Container>)
+	
 }
+
+const styles = StyleSheet.create({
+	updateClientInfoContainer: {
+		width: 0.8 * width
+	}
+})

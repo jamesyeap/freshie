@@ -48,9 +48,9 @@ export default function MealsPage(props) {
 	return (
 		<Container style={styles.container}>
 			{/* Header */}
-			<TrainerMealsHeader scrolling={scrolling} />
-			<CustomMealsHeader scrolling={scrolling} />
-			<FavoriteMealsHeader scrolling={scrolling} />
+			<TrainerMealsHeader scrolling={scrolling} navigation={props.navigation} />
+			<CustomMealsHeader scrolling={scrolling} navigation={props.navigation} />
+			<FavoriteMealsHeader scrolling={scrolling} navigation={props.navigation} />
 
 			<Animated.ScrollView
 			style={{ flex: 1 }}

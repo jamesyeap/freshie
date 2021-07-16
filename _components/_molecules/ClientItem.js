@@ -23,11 +23,6 @@ const ClientInfoContainer = styled.View`
 	justifyContent: center;
 `;
 
-const CaloriesText = styled(RegularText)`
-	fontSize: 14px;
-	lineHeight: 20px;
-`;
-
 const ClientNameText = styled(SemiBoldText)`
 	fontSize: 18px;
 	lineHeight: 28px;

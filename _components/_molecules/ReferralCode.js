@@ -2,8 +2,9 @@ import React, { useState } from 'react';
 import styled from 'styled-components';
 import { RegularText, MediumText } from '../_atoms/Text';
 import { connect } from 'react-redux';
+import * as Clipboard from 'expo-clipboard';
 import { Ionicons } from '@expo/vector-icons';
-// see list of icons available at "https://icons.expo.fyi"
+	// see list of icons available at "https://icons.expo.fyi"
 
 const Container = styled.View`
 	flexDirection: column;
@@ -103,6 +104,7 @@ export function ReferralCode (props) {
 	const [copied, setCopied] = useState(false);
 
 	const handleCopy = () => {
+		Clipboard.default.setString(props.referralCode)
 		setCopied(true);
 		setTimeout(() => setCopied(false), 1000);
 	}

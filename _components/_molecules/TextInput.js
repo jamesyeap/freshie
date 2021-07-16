@@ -30,7 +30,7 @@ export const InputFeedbackText = styled(RegularText)`
 export const TextInput = (props) => {
 	return (
 		<TextInputContainer style={props.containerStyle} stacked= {props.stacked} >
-			{props.label && <InputLabelText>{props.label}</InputLabelText>}
+			{props.label && <InputLabelText style={props.labelStyle}>{props.label}</InputLabelText>}
 			<TextInputBox
 			autoCapitalize="none"
 			value={props.value}
