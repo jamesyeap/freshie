@@ -1,14 +1,17 @@
-import React, { useState, useRef } from 'react'
+import React, { useState, useEffect, useRef, useMemo, useCallback } from 'react'
 import styled from 'styled-components'
 import { Ionicons } from '@expo/vector-icons';
-import { ScrollView, StyleSheet, Dimensions } from 'react-native'
-import { RegularText, MediumText, HeaderMediumText } from '../../_atoms/Text'
+import { ScrollView, StyleSheet, Dimensions, TouchableOpacity } from 'react-native'
+import { RegularText, MediumText, HeaderMediumText, Button } from '../../_atoms/Text'
 import { Container } from '../../_atoms/Container'
 import { View } from 'react-native-ui-lib'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
-import { BigButton } from '../../_atoms/Button'
+import { MediumButton, BigButton } from '../../_atoms/Button'
 import Collapsible from 'react-native-collapsible';
 import LottieView from 'lottie-react-native';
+import SearchPage from '../../_organisms/FoodPricer/SearchPage'
+import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
+import { parseIngredients } from '../../../_utilities/_helperFunctions/parseIngredients';
 
 const SectionToggleButtonContainer = styled.TouchableOpacity`
 	flexDirection: row;
@@ -23,7 +26,7 @@ const SectionToggleButtonText = styled(MediumText)`
 	lineHeight: 24px;
 `;
 
-const { height, width } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 const SectionToggleButton = (props) => {
 	const iconToShow = props.IsToggled ? "chevron-up-circle" : "chevron-down-circle";
@@ -38,11 +41,45 @@ const SectionToggleButton = (props) => {
 	)
 }
 
+/* MOCK-DATA */
+// ⊃ separates ingredients
+// ¬ separates title and weight 
+const mockIngredients = "Bread¬200g⊃Chicken¬500g⊃Fish100g"
+
+
 export default function RecipePage(props) {
     const itemDetails = props.route.params.itemDetails;
     const [expandIngredients, setExpandIngredients] = useState(true);
     const [expandInstructions, setExpandInstructions] = useState(true);
 	const LottieRef = useRef(null)
+
+    const bottomSheetModalRef = useRef(null);
+;
+    const handleExpand = () => {
+        bottomSheetModalRef.current.present()
+    }
+
+    const handleClose = () => {
+        bottomSheetModalRef.current?.dismiss();
+        setSelectedIngredient(null)
+      }
+
+	const snapPoints = useMemo(() => ['60%'], []);
+	const handleSheetChanges = useCallback((index) => {
+		console.log('handleSheetChanges', index);
+	}, []);
+
+    /* WORK-IN-PROGRESS */
+    const [selectedIngredient, setSelectedIngredient] = useState(null)
+    const handleFindIngredient = (title) => {
+        setSelectedIngredient(title)
+    }
+
+    useEffect(() => {
+        if (selectedIngredient !== null) {
+            handleExpand()
+        }
+    }, [selectedIngredient])
 
     const FoodIcon = () =>  <LottieView
                         ref={LottieRef}
@@ -57,8 +94,9 @@ export default function RecipePage(props) {
                       /> 
 
     return (
+        <BottomSheetModalProvider>
         <Container>
-            <NavigationHeader/>
+            <NavigationHeader  />
 
             <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column',  alignItems: 'center', justifyContent: 'center' }} style={{borderWidth:0, width:"100%"}}>
                 <View style={styles.titleContainer}>
@@ -75,8 +113,17 @@ export default function RecipePage(props) {
                 <View style ={{flex: 0.5, borderWidth:0, justifyContent: 'space-around', alignItems: 'center', justifyContent: 'center'}}>
                     <SectionToggleButton IsToggled={expandIngredients} onPress={() => setExpandIngredients(!expandIngredients)} label={"Ingredients You'll Need!"}/>
                     <Collapsible collapsed={!expandIngredients}>
-                        <View style={{ width: 0.8 * width, flexDirection: 'column', justifyContent: 'flex-start', alignItems: 'flex-start', marginBottom: 10 }}>
-                            <MediumText>{ itemDetails.ingredients }</MediumText>
+                        <View style={{ width: 0.8 * width, flexDirection: 'column', justifyContent: 'center', alignItems: 'center', marginBottom: 10 }}>
+                            {/* <MediumText>{ itemDetails.ingredients }</MediumText> */}
+
+                        {
+                            parseIngredients(itemDetails.ingredients).map(({ title, weight }) => (
+                                <TouchableOpacity style={styles.ingredientContainer} onPress={() => handleFindIngredient(title)}>
+                                    <MediumText style={styles.ingredientTitleText}>{title}</MediumText>
+                                    <MediumText style={styles.ingredientWeightText}>{weight}</MediumText>
+                                </TouchableOpacity>
+                            ))
+                        }
                         </View>
                     </Collapsible>
 
@@ -91,8 +138,24 @@ export default function RecipePage(props) {
 
                 </View>
             </ScrollView>
+
+            <BottomSheetModal
+				index={0}
+				ref={bottomSheetModalRef}
+				snapPoints={snapPoints}
+				onChange={handleSheetChanges}
+			>
+				<SearchPage 
+                    handleClose={handleClose}
+                    handleExpand={handleExpand}
+                    existingSearchQuery={selectedIngredient}
+				/>
+			</BottomSheetModal>
+            
+            <MediumButton label="Open Ingredient Assistant" onPress={() => handleExpand()}></MediumButton>
             <BigButton label="Done!" onPress={() => props.navigation.goBack()}></BigButton>
         </Container>
+        </BottomSheetModalProvider>
     )
 }
 
@@ -109,9 +172,25 @@ const styles = StyleSheet.create({
         borderColor: '#D1D5DB',
         backgroundColor: '#FEF3C7'
     },
-    description:{
+    description: {
         flexDirection: 'column',
         justifyContent: 'center',
         alignItems: 'flex-start'
     },
+    ingredientContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: "#A7F3D0",
+        padding: 10, 
+        margin: 5,
+        borderRadius: 5,
+        width: 0.8 * width
+    },
+    ingredientTitleText: {
+        marginLeft: 25,
+    },
+    ingredientWeightText: {
+        marginRight: 25
+    }
 })

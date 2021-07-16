@@ -1,7 +1,7 @@
 import React, { useRef } from 'react'
 import { Container } from '../../_atoms/Container'
 import { RegularText } from '../../_atoms/Text';
-import { Animated, Dimensions, View, StyleSheet } from 'react-native'
+import { Animated, Dimensions, View, ScrollView, StyleSheet } from 'react-native'
 
 import AddFoodItemSection from './AddFoodItemSection';
 import { Header as AddFoodItemHeader } from './AddFoodItemSection'
@@ -46,9 +46,9 @@ export default function AddItemPage(props) {
 			horizontal
 			>
 				
-			<View style={styles.scrollContainer}>
+			<ScrollView style={styles.scrollContainer}>
 					<AddFoodItemSection navigation={props.navigation} route={props.route} />
-			</View>
+			</ScrollView>
 
 			<View style={styles.scrollContainer}>
 					<AddRestaurantSection navigation={props.navigation} />
@@ -62,7 +62,7 @@ export default function AddItemPage(props) {
 
 const styles = StyleSheet.create({
 	scrollContainer: {
-		height: height,
+		flex: 1,
 		width: width,
 	}
 })

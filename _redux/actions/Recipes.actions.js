@@ -115,6 +115,7 @@ export const addRecipe_API = (arg) => {
             } catch (e) {
                     // alerts user to an error	
                     dispatch(error(e.message))
+                    console.log(e)
 
                     return false;
             }

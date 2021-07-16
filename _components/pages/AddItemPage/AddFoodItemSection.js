@@ -1,15 +1,17 @@
 import React, { useState, useEffect } from 'react'
 import styled from 'styled-components'
-import { ScrollView, StyleSheet, Alert, TouchableOpacity, Dimensions, Animated } from 'react-native'
-import { BrandHeaderText, SemiBoldText } from '../../_atoms/Text'
+import { ScrollView, StyleSheet, Alert, TouchableOpacity, Dimensions, Animated, FlatList } from 'react-native'
+import { BrandHeaderText, SemiBoldText, MediumText } from '../../_atoms/Text'
 import { Container } from '../../_atoms/Container'
 import { View } from 'react-native-ui-lib'
 import { Avatar } from 'react-native-elements'
 import { TextInput } from '../../_molecules/TextInput'
-import { IconButton } from '../../_atoms/Button'
+import { IconButton, SmallButton } from '../../_atoms/Button'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
 import { useDispatch } from 'react-redux'
 import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_redux/actions/Recipes.actions';
+import { serializeIngredients } from '../../../_utilities/_helperFunctions/serializeIngredients'
+import { parseIngredients } from '../../../_utilities/_helperFunctions/parseIngredients'
 
 /* This page is used for 
     - ADDING a NEW RECIPE 
@@ -21,6 +23,13 @@ import { addRecipe_API, editRecipe_API, deleteRecipe_API } from '../../../_redux
 */
 
 const { width, height } = Dimensions.get('window')
+
+export const InputLabelText = styled(MediumText)`
+	fontSize: 16px;
+	lineHeight: 24px;
+	color: #2D3748;
+    margin: 10px;
+`;
 
 export function Header({ scrolling }) {
 	const translation = scrolling.interpolate({
@@ -54,6 +63,13 @@ export function Header({ scrolling }) {
 	)
 }
 
+const IngredientItem = (props) => (
+    <View style={styles.ingredientContainer}>
+        <MediumText style={styles.ingredientTitleText}>{props.title}</MediumText>
+        <MediumText style={styles.ingredientWeightText}>{props.weight}</MediumText>
+    </View>
+)
+
 export default function AddFoodItemSection (props) {
     const [title, setTitle] = useState("")
     const [calories, setCalories] = useState("")
@@ -81,6 +97,42 @@ export default function AddFoodItemSection (props) {
     }
     
     useEffect(preload, [])
+
+    const [newIngredientTitle, setNewIngredientTitle] = useState("")
+    const [newIngredientWeight, setNewIngredientWeight] = useState("")
+
+    const handleAddNewIngredient = (title, weight) => {
+        const serializedNewIngredient = serializeIngredients([{
+            title: title,
+            weight: weight,
+        }])
+        setIngredients(ingredients + serializedNewIngredient)
+    }
+
+    const AddIngredientItem = (props) => {
+        return (
+            <View style={styles.addIngredientItemContainer}>
+                <TextInput 
+                    value={props.newIngredientTitle} 
+                    onChangeText={props.setNewIngredientTitle} 
+                    placeholder="Bread"
+                    inputStyle={styles.newIngredientTitleInput}
+                />
+                <TextInput 
+                    value={props.newIngredientWeight} 
+                    onChangeText={props.setNewIngredientWeight} 
+                    placeholder="200g"
+                    inputStyle={styles.newIngredientWeightInput}
+                />
+                <SmallButton 
+                    label="Add" 
+                    onPress={() => handleAddNewIngredient(newIngredientTitle, newIngredientWeight)} 
+                    buttonStyle={styles.newIngredientAddButton}
+                />
+            </View>
+        )
+    }
+
 
     const alertLeave = async () => Alert.alert(
         "Are you sure you want to leave without saving?",
@@ -134,29 +186,52 @@ export default function AddFoodItemSection (props) {
     if (loading) {
         return (<BrandHeaderText>Loading</BrandHeaderText>)
     } else {
-        return (<Container>
-            <ScrollView containerStyle={{flex: 1, flexDirection: 'column', }}>
+        return (
+            <ScrollView contentContainerStyle={ styles.container }>
                 <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 200, width: 200}} rounded source={image}/>
                 </TouchableOpacity>
                 <View>
                     <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
                     <TextInput label="Calories" stacked="10px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
-                    <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/>
+                    {/* <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/> */}
+
+                    <InputLabelText>Ingredients</InputLabelText>
+                    <AddIngredientItem 
+                        newIngredientTitle={newIngredientTitle}
+                        setNewIngredientTitle={setNewIngredientTitle}
+                        newIngredientWeight={newIngredientWeight}
+                        setNewIngredientWeight={setNewIngredientWeight}
+                    />
+                    { 
+                        parseIngredients(ingredients).map(({ title, weight }) => 
+                            <IngredientItem 
+                                title={title}
+                                weight={weight}
+                            />
+                            )
+                    }
                     <TextInput multiline={true} label="Instructions" placeholder={instructions} onChangeText={val => setInstructions(val)} value={instructions}/>
                 </View>
                 
-                <View style={{flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
+                <View style={{position: 'fixed', bottom: 0, left: 0, flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
                     <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
                     <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
                 </View>
             </ScrollView>
-
-        </Container>)
+        )
     }
 }
 
 const styles = StyleSheet.create({
+    container: {
+        flex: 1,
+        height:"100%",
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-start',
+        paddingTop: 80
+    },
     button: {
         flex: 0.25,
         justifyContent: 'space-evenly',
@@ -178,5 +253,36 @@ const styles = StyleSheet.create({
 	headerText: {
 		flexDirection: "column",
 		paddingLeft: 20
-	}
+	},
+    ingredientContainer: {
+        flexDirection: 'row',
+        justifyContent: 'space-between',
+        alignItems: 'center',
+        backgroundColor: "#A7F3D0",
+        padding: 10, 
+        margin: 5,
+        borderRadius: 5
+    },
+    ingredientTitleText: {
+        marginLeft: 25,
+    },
+    ingredientWeightText: {
+        marginRight: 25
+    },
+    addIngredientItemContainer: {
+        flexDirection: 'row',
+        width: width * 0.8,
+        alignItems: 'center',
+        justifyContent: 'center',
+        width: 0.9 * width
+    },
+    newIngredientTitleInput: {
+        width: width * 0.4
+    }, 
+    newIngredientWeightInput: {
+        width: width * 0.2
+    }, 
+    newIngredientAddButton: {
+        width: width * 0.2
+    }
 })
