@@ -107,6 +107,8 @@ export default function AddFoodItemSection (props) {
             weight: weight,
         }])
         setIngredients(ingredients + serializedNewIngredient)
+        setNewIngredientTitle("")
+        setNewIngredientWeight("")
     }
 
     const AddIngredientItem = (
