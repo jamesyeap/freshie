@@ -1,5 +1,5 @@
 import React, { useRef } from 'react';
-import { Text } from 'react-native';
+import { Keyboard } from 'react-native';
 import styled from 'styled-components/native';
 import { Container } from '../../_atoms/Container';
 import { BrandHeaderText } from '../../_atoms/Text';
@@ -35,6 +35,7 @@ export default function LoginPage(props) {
 
 	const handleLogin = (values) => {
 		dispatch(loginAsync_API(values));
+		Keyboard.dismiss()
 	}
 
 	return (
