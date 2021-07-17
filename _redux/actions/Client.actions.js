@@ -80,6 +80,7 @@ export const addConsumedMeal_API = (arg) => {
                         dispatch(getWeeklyConsumedMeals_API());
                 } catch (e) {
                         // alerts user to an error	
+                        console.log(e)
                         dispatch(error(e.message))
                 }
         }

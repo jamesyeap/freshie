@@ -37,11 +37,11 @@ export const CustomMealsButtonModal = (props) => {
 				<View style={styles.modalView}>
 					<TextContainer>
 						{props.itemDetails && <HeaderMediumText>{props.itemDetails.title}</HeaderMediumText>}
-						{props.itemDetails && <SubHeaderText>{props.itemDetails.ingredients}</SubHeaderText>}
 					</TextContainer>
 
 					<ActionsContainer>
 						<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
+						<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleView)} />
 						<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
 						<SmallButton label="Add to Favourites" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleFavourite)} />
 						<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />

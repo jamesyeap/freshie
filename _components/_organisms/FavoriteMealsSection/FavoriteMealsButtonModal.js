@@ -43,6 +43,7 @@ export const FavoritesButtonModal = (props) => {
 
 					<ActionsContainer>
 						<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
+						<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleView)} />
 						<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
 						<SmallButton label="Remove from Favorites" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
 					</ActionsContainer>

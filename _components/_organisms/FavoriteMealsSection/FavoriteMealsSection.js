@@ -79,6 +79,10 @@ export default function FavoriteMealsSection(props) {
 		dispatch(deleteFavouriteMeal_API(selectedFoodItem.favID));
 	}
 
+	const handleView = () => {
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem, navigation: props.navigation })
+	}
+
 	/* ************************************************************ */
 
 	const handleRefresh = () => {
@@ -93,6 +97,7 @@ export default function FavoriteMealsSection(props) {
 		modalVisible={modalVisible}
 		handleClose={() => setModalVisible(false)}
 		handleConsume={handleConsume}
+		handleView={handleView}
 		handleEdit={handleEdit}
 		handleDelete={handleDelete}	
 		itemDetails={selectedFoodItem}

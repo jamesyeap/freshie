@@ -6,7 +6,8 @@ import { RegularText, MediumText, HeaderMediumText, Button } from '../../_atoms/
 import { Container } from '../../_atoms/Container'
 import { View } from 'react-native-ui-lib'
 import { NavigationHeader } from '../../_molecules/NavigationHeader'
-import { MediumButton, BigButton } from '../../_atoms/Button'
+import { useNavigation } from '@react-navigation/native';
+import { SmallButton, BigButton } from '../../_atoms/Button'
 import Collapsible from 'react-native-collapsible';
 import LottieView from 'lottie-react-native';
 import SearchPage from '../../_organisms/FoodPricer/SearchPage'
@@ -49,9 +50,10 @@ const mockIngredients = "Bread¬200g⊃Chicken¬500g⊃Fish100g"
 
 export default function RecipePage(props) {
     const itemDetails = props.route.params.itemDetails;
-    const [expandIngredients, setExpandIngredients] = useState(true);
-    const [expandInstructions, setExpandInstructions] = useState(true);
+    const [expandIngredients, setExpandIngredients] = useState(false);
+    const [expandInstructions, setExpandInstructions] = useState(false);
 	const LottieRef = useRef(null)
+    const navigation = useNavigation()
 
     const bottomSheetModalRef = useRef(null);
 ;
@@ -96,13 +98,13 @@ export default function RecipePage(props) {
     return (
         <BottomSheetModalProvider>
         <Container>
-            <NavigationHeader  />
+            <NavigationHeader goTo={() => navigation.goBack()}/>
 
             <ScrollView containerStyle={{flex: 0.8, flexDirection: 'column',  alignItems: 'center', justifyContent: 'center' }} style={{borderWidth:0, width:"100%"}}>
                 <View style={styles.titleContainer}>
                     <FoodIcon />
                     <View style={styles.description}>
-                        <HeaderMediumText>{ itemDetails.title }</HeaderMediumText>
+                        <HeaderMediumText style={{ width: 180 }}>{ itemDetails.title }</HeaderMediumText>
                         <View row>
                             <MediumText>{ itemDetails.calories }</MediumText>
                             <RegularText> kcal</RegularText>
@@ -124,6 +126,13 @@ export default function RecipePage(props) {
                                 </TouchableOpacity>
                             ))
                         }
+
+
+                            <SmallButton 
+                                label="Open Ingredient Assistant" 
+                                onPress={() => handleExpand()} 
+                                buttonStyle={{ width: 200, alignSelf: 'flex-end' }}
+                            />
                         </View>
                     </Collapsible>
 
@@ -152,7 +161,6 @@ export default function RecipePage(props) {
 				/>
 			</BottomSheetModal>
             
-            <MediumButton label="Open Ingredient Assistant" onPress={() => handleExpand()}></MediumButton>
             <BigButton label="Done!" onPress={() => props.navigation.goBack()}></BigButton>
         </Container>
         </BottomSheetModalProvider>

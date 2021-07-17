@@ -109,18 +109,17 @@ export default function AddFoodItemSection (props) {
         setIngredients(ingredients + serializedNewIngredient)
     }
 
-    const AddIngredientItem = (props) => {
-        return (
+    const AddIngredientItem = (
             <View style={styles.addIngredientItemContainer}>
                 <TextInput 
-                    value={props.newIngredientTitle} 
-                    onChangeText={props.setNewIngredientTitle} 
+                    value={newIngredientTitle} 
+                    onChangeText={setNewIngredientTitle} 
                     placeholder="Bread"
                     inputStyle={styles.newIngredientTitleInput}
                 />
                 <TextInput 
-                    value={props.newIngredientWeight} 
-                    onChangeText={props.setNewIngredientWeight} 
+                    value={newIngredientWeight} 
+                    onChangeText={setNewIngredientWeight} 
                     placeholder="200g"
                     inputStyle={styles.newIngredientWeightInput}
                 />
@@ -130,9 +129,7 @@ export default function AddFoodItemSection (props) {
                     buttonStyle={styles.newIngredientAddButton}
                 />
             </View>
-        )
-    }
-
+    )
 
     const alertLeave = async () => Alert.alert(
         "Are you sure you want to leave without saving?",
@@ -161,7 +158,6 @@ export default function AddFoodItemSection (props) {
                 }, 
                 foodItemID: id
             }
-
             dispatch(editRecipe_API(values))
             props.navigation.goBack()
         } else {
@@ -197,12 +193,7 @@ export default function AddFoodItemSection (props) {
                     {/* <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/> */}
 
                     <InputLabelText>Ingredients</InputLabelText>
-                    <AddIngredientItem 
-                        newIngredientTitle={newIngredientTitle}
-                        setNewIngredientTitle={setNewIngredientTitle}
-                        newIngredientWeight={newIngredientWeight}
-                        setNewIngredientWeight={setNewIngredientWeight}
-                    />
+                    {AddIngredientItem}
                     { 
                         parseIngredients(ingredients).map(({ title, weight }) => 
                             <IngredientItem 

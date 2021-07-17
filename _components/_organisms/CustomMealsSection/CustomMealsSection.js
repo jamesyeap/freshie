@@ -85,6 +85,10 @@ export default function CustomMealsSection(props) {
 	const handleFavourite = () => {
 		dispatch(addFavouriteMeal_API(selectedFoodItem.id))
 	}
+
+	const handleView = () => {
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem, navigation: props.navigation })
+	}
 	/* ************************************************************ */
 	
 	const handleRefresh = () => {
@@ -99,6 +103,7 @@ export default function CustomMealsSection(props) {
 		modalVisible={modalVisible}
 		handleClose={() => setModalVisible(false)}
 		handleConsume={handleConsume}
+		handleView={handleView}
 		handleEdit={handleEdit}
 		handleDelete={handleDelete}	
 		handleFavourite={handleFavourite}
