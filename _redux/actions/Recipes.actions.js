@@ -69,7 +69,7 @@ export const getMealPlans_API = (arg) => {
                     dispatch({ type: GET_MEAL_PLANS, payload: response.data });
             } catch (e) {
                     // alerts user to an error	
-                    dispatch(error(e.message))
+                    dispatch(error(e.response.message))
             }
     }
 }
@@ -106,12 +106,13 @@ export const addRecipe_API = (arg) => {
                         headers: {
                             "Authorization": `Token ${token}`
                         },
-                        data: arg
+                        data: {
+                                ...arg, 
+                                author: username 
+                        }
                     });
 
-                    console.log(response)
-
-                    dispatch(getRecipeList_API("search"))
+                    await dispatch(getRecipeList_API("search"))
 
                     return true;
             } catch (e) {

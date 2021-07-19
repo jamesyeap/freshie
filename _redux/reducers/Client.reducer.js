@@ -15,13 +15,7 @@ const initialState = {
 	caloriesConsumed: 0,
 	dailyCalories: 2000,
 	weeklyCalories: [0,0,0,0,0,0,0],
-	consumedMeals: [{
-		id: 0,
-		title: "Egg Sandwich",
-		calories: 500,
-		instructions: "Just make lah bro.",
-		ingredients: "Egg. Bread. What more do you want sia."
-	}],
+	consumedMeals: [],
 	favouriteMeals:[],
 	loading: false,
 	error: null,

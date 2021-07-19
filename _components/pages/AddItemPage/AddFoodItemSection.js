@@ -63,12 +63,7 @@ export function Header({ scrolling }) {
 	)
 }
 
-const IngredientItem = (props) => (
-    <View style={styles.ingredientContainer}>
-        <MediumText style={styles.ingredientTitleText}>{props.title}</MediumText>
-        <MediumText style={styles.ingredientWeightText}>{props.weight}</MediumText>
-    </View>
-)
+
 
 export default function AddFoodItemSection (props) {
     const [title, setTitle] = useState("")
@@ -79,8 +74,11 @@ export default function AddFoodItemSection (props) {
     const [loading, setLoading] = useState(true);
     const [image, setImage] = useState(require('../../../assets/signuppageicon.png'))
 
+    const [localIngredients, setLocalIngredients] = useState([])
+
     const dispatch = useDispatch()
 
+    // if the user is editing an existing recipe, pre-fill the fields in the form with the information of the existing recipe
     const preload = () => {
         if (props.route.params.itemDetails) {
             /* NOTE: If a user is in this page to EDIT an EXISTING RECIPE, the "id" field of "itemDetails" is a number, and WILL NOT BE NULL. */ 
@@ -97,41 +95,12 @@ export default function AddFoodItemSection (props) {
     }
     
     useEffect(preload, [])
+    useEffect(() => {
+        setLocalIngredients(parseIngredients(ingredients))
+    }, [ingredients])
 
     const [newIngredientTitle, setNewIngredientTitle] = useState("")
     const [newIngredientWeight, setNewIngredientWeight] = useState("")
-
-    const handleAddNewIngredient = (title, weight) => {
-        const serializedNewIngredient = serializeIngredients([{
-            title: title,
-            weight: weight,
-        }])
-        setIngredients(ingredients + serializedNewIngredient)
-        setNewIngredientTitle("")
-        setNewIngredientWeight("")
-    }
-
-    const AddIngredientItem = (
-            <View style={styles.addIngredientItemContainer}>
-                <TextInput 
-                    value={newIngredientTitle} 
-                    onChangeText={setNewIngredientTitle} 
-                    placeholder="Bread"
-                    inputStyle={styles.newIngredientTitleInput}
-                />
-                <TextInput 
-                    value={newIngredientWeight} 
-                    onChangeText={setNewIngredientWeight} 
-                    placeholder="200g"
-                    inputStyle={styles.newIngredientWeightInput}
-                />
-                <SmallButton 
-                    label="Add" 
-                    onPress={() => handleAddNewIngredient(newIngredientTitle, newIngredientWeight)} 
-                    buttonStyle={styles.newIngredientAddButton}
-                />
-            </View>
-    )
 
     const alertLeave = async () => Alert.alert(
         "Are you sure you want to leave without saving?",
@@ -163,8 +132,13 @@ export default function AddFoodItemSection (props) {
             dispatch(editRecipe_API(values))
             props.navigation.goBack()
         } else {
-            console.log({ title, calories, ingredients, instructions, custom: true })
-            const status = dispatch(addRecipe_API({ title, calories, ingredients, instructions, custom: true }))
+            const status = dispatch(addRecipe_API({ 
+                title, 
+                calories: Number(calories),
+                ingredients, 
+                instructions, 
+                custom: true 
+            }))
 
             if (status) {
                 props.navigation.goBack()
@@ -181,6 +155,57 @@ export default function AddFoodItemSection (props) {
         }
     };
 
+    const handleAddNewLocalIngredient = (title, weight) => {
+        const serializedNewIngredient = serializeIngredients([{
+            title: title,
+            weight: weight,
+        }])
+        setIngredients(ingredients + serializedNewIngredient)
+        setNewIngredientTitle("")
+        setNewIngredientWeight("")
+    }
+
+    const handleDeleteLocalIngredient = (localIngredientID) => {
+        const newState = localIngredients.filter(elem => elem.id !== localIngredientID)
+        setLocalIngredients(newState)
+        setIngredients(serializeIngredients(newState))
+    }
+
+    const AddIngredientItem = (
+            <View style={styles.addIngredientItemContainer}>
+                <TextInput 
+                    value={newIngredientTitle} 
+                    onChangeText={setNewIngredientTitle} 
+                    placeholder="Bread"
+                    inputStyle={styles.newIngredientTitleInput}
+                />
+                <TextInput 
+                    value={newIngredientWeight} 
+                    onChangeText={setNewIngredientWeight} 
+                    placeholder="200g"
+                    inputStyle={styles.newIngredientWeightInput}
+                />
+                <SmallButton 
+                    label="Add" 
+                    onPress={() => handleAddNewLocalIngredient(newIngredientTitle, newIngredientWeight)} 
+                    buttonStyle={styles.newIngredientAddButton}
+                />
+            </View>
+    )
+
+    const IngredientItem = (props) => (
+        <View style={styles.ingredientContainer}>
+            <MediumText style={styles.ingredientTitleText}>{props.title}</MediumText>
+            <MediumText style={styles.ingredientWeightText}>{props.weight}</MediumText>
+            <IconButton 
+                iconName="trash" 
+                iconSize={18}
+                iconColor="#F87171"
+                onPress={() => handleDeleteLocalIngredient(props.id)}
+                />
+        </View>
+    )
+
     if (loading) {
         return (<BrandHeaderText>Loading</BrandHeaderText>)
     } else {
@@ -192,13 +217,14 @@ export default function AddFoodItemSection (props) {
                 <View>
                     <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
                     <TextInput label="Calories" stacked="10px" placeholder={String(calories)} onChangeText={setCalories} value={calories} keyboardType="numeric" />
-                    {/* <TextInput multiline={true} label="Ingredients" placeholder={ingredients} onChangeText={setIngredients} value={ingredients}/> */}
 
                     <InputLabelText>Ingredients</InputLabelText>
                     {AddIngredientItem}
                     { 
-                        parseIngredients(ingredients).map(({ title, weight }) => 
+                        localIngredients.map(({ title, weight, id }, index) => 
                             <IngredientItem 
+                                key={id}
+                                id={id}
                                 title={title}
                                 weight={weight}
                             />

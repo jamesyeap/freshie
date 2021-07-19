@@ -29,11 +29,11 @@ export function parseIngredients (serializedIngredients) {
     }
     
     let cleanResult = []
-    result = result.map(item => {
+    result = result.map((item, index) => {
     	item.title = item.title.join("")
-			item.weight = item.weight.join("")
+        item.weight = item.weight.join("")
       
-      cleanResult.push(item)
+        cleanResult.push({...item, id: index})
     })
     
     return cleanResult

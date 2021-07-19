@@ -119,8 +119,8 @@ export default function RecipePage(props) {
                             {/* <MediumText>{ itemDetails.ingredients }</MediumText> */}
 
                         {
-                            parseIngredients(itemDetails.ingredients).map(({ title, weight }) => (
-                                <TouchableOpacity style={styles.ingredientContainer} onPress={() => handleFindIngredient(title)}>
+                            parseIngredients(itemDetails.ingredients).map(({ title, weight, id }) => (
+                                <TouchableOpacity style={styles.ingredientContainer} onPress={() => handleFindIngredient(title)} id={id} key={id} >
                                     <MediumText style={styles.ingredientTitleText}>{title}</MediumText>
                                     <MediumText style={styles.ingredientWeightText}>{weight}</MediumText>
                                 </TouchableOpacity>

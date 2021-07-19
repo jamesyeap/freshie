@@ -12,10 +12,11 @@ import { Header as CustomMealsHeader } from '../../_organisms/CustomMealsSection
 import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
 import { Header as FavoriteMealsHeader } from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
 
-import { getRecipeList_API, getMealPlans_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
+import { getRecipeList_API, getMealPlans_API, createMealPlan_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 import FAB from './FAB.js'
+import { CreateMealPlanModal } from './CreateMealPlanModal';
 
 const Container = styled.SafeAreaView`
 	flex: 1;
@@ -27,11 +28,13 @@ const Container = styled.SafeAreaView`
 const { height, width } = Dimensions.get('window')
 
 export default function MealsPage(props) {
-	const dispatch = useDispatch();
 	const [preloading, setPreloading] = useState(true)
+	const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false)
+	const [newMealPlanName, setNewMealPlanName] = useState("")
 	const { loadingRecipe, errorRecipe } = useSelector(state => state.recipe);
 	const { loadingClient, errorClient } = useSelector(state => state.client);
 	const scrolling = useRef(new Animated.Value(0)).current;
+	const dispatch = useDispatch();
 	
 	// Fetches list of recipes before rendering the page
 	useEffect(() => {
@@ -40,6 +43,16 @@ export default function MealsPage(props) {
 			dispatch(getMealPlans_API())
 		).then(setPreloading(false))
 	}, []);
+
+	const handleCreateMealPlan = () => {
+		dispatch(createMealPlan_API({ title: newMealPlanName }))
+		setNewMealPlanName("");
+	}
+
+	const handleCloseCreateMealPlanModal = () => {
+		setShowCreateMealPlanModal(false);
+		setNewMealPlanName("");
+	}
 
 	if (preloading) {
 		return <View><RegularText>Loading</RegularText></View>
@@ -108,7 +121,20 @@ export default function MealsPage(props) {
 				{errorRecipe || errorClient}
 			</Snackbar>
 
-			<FAB navigation={props.navigation} />
+			<FAB 
+				navigation={props.navigation} 
+				handleShowCreateMealPlanModal={() => setShowCreateMealPlanModal(true)}
+				gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
+			/>
+
+
+			<CreateMealPlanModal
+					modalVisible={showCreateMealPlanModal}
+					handleClose={handleCloseCreateMealPlanModal}
+					onPress={handleCreateMealPlan}
+					onChangeText={setNewMealPlanName}
+					value={newMealPlanName}
+			/>
 		</Container>
 	)
 }

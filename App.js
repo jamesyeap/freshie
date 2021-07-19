@@ -4,10 +4,10 @@ import { LoginPage, HomePage, PrototypePage, AccountPage, MealsPage, DashboardPa
 import { useFonts, Inter_400Regular, Inter_500Medium, Inter_600SemiBold, Inter_700Bold } from '@expo-google-fonts/inter';
 import AppLoading from 'expo-app-loading';
 import { Provider } from 'react-redux';
-import { Provider as PaperProvider } from 'react-native-paper';
 import { store } from './_redux/store/store'; 
-import Portal from '@burstware/react-native-portal'
 import RootStackScreen from './_navigation/RootStackScreen';
+
+import AddNewRestaurantSection from './AddNewRestaurantSection';
 
 export default function App() {
   // On start-up, app needs to load the fonts files first.
@@ -21,25 +21,15 @@ export default function App() {
     return <AppLoading />;
   }
 
+  // return (
+  //       <Provider store={store}>
+  //         <NavigationContainer>
+  //           <RootStackScreen />
+  //         </NavigationContainer>
+  //       </Provider>
+  // )
+
   return (
-        <Provider store={store}>
-          <NavigationContainer>
-            <RootStackScreen />
-          </NavigationContainer>
-        </Provider>
+    <AddNewRestaurantSection />
   )
 }
-
-    // <LoginPage />
-    // <HomePage />
-    // <PrototypePage />
-    // <AccountPage />
-    // <MealsPage />
-    // <DashboardPage />
-    // <EatingHistoryPage />
-    // <RecipeEditPage/>
-    // <SignupPage />
-    // <RegisterPage />
-    // <ClientPage />
-    // <EditMealPlanPage />
-

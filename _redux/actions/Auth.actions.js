@@ -49,7 +49,6 @@ export const logoutAsync_API = () => {
             dispatch({ type: CLEAR_USER })
         } catch (e) {
             // alerts user to an error
-            console.log(e.message)
             dispatch(error(e.message))
         }
     }
@@ -71,7 +70,6 @@ export const signupAsync_API = (arg) => {
             dispatch({ type: SAVE_USER, payload: response.data })
         } catch (e) {
             // alerts user to an error
-            console.log(e.response)
             dispatch(error(e.response.data))
         }
     }

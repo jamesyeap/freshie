@@ -213,8 +213,8 @@ export const getWeeklyConsumedMeals_API = (arg) => {
                         dispatch({ type: UPDATE_WEEKLY_CALORIES, payload: res })
                 } catch (e) {
                 // alerts user to an error	
-                dispatch(error(e.message))
-
+                dispatch(error(e.response.message))
+                alert(e.message)
                 }
         }
 }
@@ -242,7 +242,7 @@ export const getFavouriteMeals_API = () => {
                         }
                 } catch (e) {
                 // alerts user to an error	
-                dispatch(error(e.message))
+                dispatch(error(e.response.message))
 
                 }
         }
@@ -269,7 +269,7 @@ export const addFavouriteMeal_API = (arg) => {
                 } catch (e) {
                 // alerts user to an error	
                 alert(e)
-                dispatch(error(e.message))
+                dispatch(error(e.response.message))
 
                 }
         }
@@ -294,7 +294,7 @@ export const deleteFavouriteMeal_API = (arg) => {
                         await dispatch(getFavouriteMeals_API());
                 } catch (e) {
                 // alerts user to an error	
-                dispatch(error(e.message))
+                dispatch(error(e.response.message))
                 }
         }
 }
@@ -320,7 +320,7 @@ export const addPersonalTrainer_API = (arg) => {
 
                         await dispatch(getUserProfile_API())
                 } catch (e) {
-                        dispatch(error(e.message))
+                        dispatch(error(e.response.message))
                 }
         }
 }

@@ -77,19 +77,42 @@ import axios from "axios";
 
 const MAP_URL = "https://nominatim.openstreetmap.org/search?"
 
-export default async function searchRestaurant(restaurantName, limit=3) {
+/* Set default limit to 20 restaurants */
+export default async function searchRestaurant(restaurantName, limit=20) {
     let cleanedRestaurantName = restaurantName.replace(/\s/g, '+') // replace space with "+"
-
-    let searchURL = `${MAP_URL}q=${cleanedRestaurantName}&format=json&addressdetails=1&limit=${limit}`
+    
+    let searchURL = `${MAP_URL}q=${cleanedRestaurantName}&format=json&addressdetails=1&limit=${limit}&countrycodes=sg`
 
     try {
         const response = await axios({
             url: searchURL
         })
 
-        console.log(response.data)
-        return response.data
+        let data = response.data
+        let results = []
 
+        // Filters the results to show only "restaurant" or "fast_food"
+        for (let i = 0; i < data.length; i++) {
+            if (data[i].type === "restaurant" || data[i].type === "fast_food") {
+                let restaurant = {}
+                let restaurant_address = 
+                    data[i].address.suburb + " " +
+                    data[i].address.road + ", " +
+                    data[i].address.county + " " +
+                    data[i].address.country + ", S(" +
+                    data[i].address.postcode + ")"
+                 
+                restaurant['id'] = i
+                restaurant['name'] = data[i].address.amenity
+                restaurant['address'] = restaurant_address
+                restaurant['latitude'] = data[i].lat
+                restaurant['longitude'] = data[i].lon
+                
+                results.push(restaurant)
+            }
+        }
+
+        return results;
     } catch (err) {
         alert("error occurred while searching for restaurants")
     }

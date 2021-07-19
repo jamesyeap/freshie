@@ -49,18 +49,6 @@ export const FAB = (props) => {
           icon={open ? 'minus' : 'menu'}
           actions={[
             {
-              icon: 'plus',
-              label: 'Add Custom Meal',
-              onPress: () => props.gotoAddCustomMeal(),
-              small: false,
-            },
-            {
-              icon: 'book',
-              label: 'Add Meal Plan',
-              onPress: () => props.gotoAddMealPlan(),
-              small: false,
-            },
-            {
               icon: 'silverware-fork-knife',
               label: 'Restaurants',
               onPress: () => props.gotoRestaurants(),

@@ -6,7 +6,7 @@ import { SpeedDial } from 'react-native-elements';
 
 const { height, width } = Dimensions.get('window')
 
-export default function FAB({ navigation }) {
+export default function FAB({ navigation, handleShowCreateMealPlanModal, gotoAddCustomMeal }) {
 	const [open, setOpen] = useState(false);
   
 	const fabContainerStyle = {
@@ -22,9 +22,15 @@ export default function FAB({ navigation }) {
 			icon={open ? 'minus' : 'menu'}
 			actions={[
 			{
+              icon: 'plus',
+              label: 'Add Custom Meal',
+              onPress: () => gotoAddCustomMeal(),
+              small: false,
+            },
+			{
 				icon: 'book',
 				label: 'Add Meal Plan',
-				onPress: () => alert("2"),
+				onPress: () => handleShowCreateMealPlanModal(),
 				small: false,
 			},
 			{
@@ -43,9 +49,6 @@ export default function FAB({ navigation }) {
 			}
 			}}
 		/>
-		
-		
-		
 	)
 } 
 

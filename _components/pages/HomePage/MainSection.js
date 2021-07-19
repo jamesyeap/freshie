@@ -87,8 +87,6 @@ export default function MainSection(props) {
 				<FAB 
 					variation="client"
 					gotoMeals={() => props.navigation.push("Meals")}
-					gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
-					gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
 					gotoRestaurants={() => props.navigation.push("Restaurants")}
 				/>
 

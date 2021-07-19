@@ -1,5 +1,4 @@
 /* State management for "PERSONAL TRAINER" */
-
 import { 
 	FETCH_CLIENTS,
 	FETCH_REFERRAL_CODE,
@@ -7,6 +6,7 @@ import {
 	ERROR,
 	ACKNOWLEDGE
 } from "../actions/Trainer.actions";
+
 const initialState = {
 	clients: null,
 	referralCode: null,

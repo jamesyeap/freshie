@@ -74,7 +74,6 @@ export default function TrainerMealsSection (props) {
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleConsume = () => {
 		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
-		console.log(obj)
 		dispatch(addConsumedMeal_API(obj));
 		props.navigation.navigate("Home");
 	}
@@ -96,7 +95,6 @@ export default function TrainerMealsSection (props) {
 		const removeFoodItemID = selectedFoodItem.id;
 
 		currRecipes = currRecipes.filter(x => x !== removeFoodItemID);
-		console.log(currRecipes);
 		
 		dispatch(addRecipeToMealPlan_API({ mealPlanID: selectedMealPlan.id, 
 					  mealPlanTitle: selectedMealPlan.title,
