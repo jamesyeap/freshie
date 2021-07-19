@@ -19,8 +19,6 @@ const MediumComponentContainer = styled.TouchableOpacity`
 	backgroundColor: ${props => props.isOpen ? "#C2F1FB" : "#FFFFFF"};
 	borderColor: #E6F2FC;
 	alignItems: center
-	alignSelf: center
-	justifyContent: center
 `;
 // alignItems: center;
 	// justifyContent: center;
@@ -28,6 +26,9 @@ const MediumComponentContainer = styled.TouchableOpacity`
 	// marginBottom: ${props => props.isOpen ? 0 : "2px"};
 const RestaurantTextContainer = styled.View`
 	flexDirection: column;
+	alignItems: center
+	borderWidth: 0px
+	flex: 0.9
 `;
 
 const PreviewTextContainer = styled.View`
@@ -62,9 +63,32 @@ const FoodItemListContainer = styled.View`
 
 const Wrapper = styled.View`
 	alignItems: center;
-	justifyContent: center;
+	justifyContent: flex-start;
 	width: 390px
 `;
+
+const SmallButtonContainer = styled.TouchableOpacity`
+	flexDirection: row;
+	justifyContent: center;
+	alignItems: center;
+	backgroundColor: ${props => props.isSelected ? "#1e5d5c" : "#319795"};
+	height: 32px;
+	borderRadius: 6px;
+	padding: 5px;
+	margin: 10px;
+`;
+
+export const SmallButtonText = styled(SemiBoldText)`
+	fontSize: 12px;
+	lineHeight: 20px;
+	color: #FFFFFF;
+`;
+
+export const SmallButton = ({label, state, onPress, isSelected, buttonStyle,...props}) => {
+	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} isSelected={isSelected} style={buttonStyle} >
+			<SmallButtonText>{label}</SmallButtonText>
+		</SmallButtonContainer>);
+}
 
 export const Restaurant = ({ id, name, menuItems, index, animate, indexToggle, location, setVisible, ...props }) => {
 	const [expand, setExpand] = useState(false)
@@ -87,15 +111,13 @@ export const Restaurant = ({ id, name, menuItems, index, animate, indexToggle, l
 					</PreviewTextContainer>
 				</RestaurantTextContainer>	
 
-				<Divider style={{ width: 1, height: 70}} />
-
-				<InfoContainer>
-					
-					
-				</InfoContainer>
+				<Divider style={{ width: 2, height: 70}} />
+				
+				<SmallButton label={"Add item"}></SmallButton>
+				
 				<IconButton iconSize={24} 
 							iconColor="black" 
-							iconName= "ellipsis-vertical" 
+							iconName= "list" 
 							onPress={() => { 
 								indexToggle()
 								setExpand(!expand)

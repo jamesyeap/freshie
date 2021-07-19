@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
-import { StyleSheet, Text, View, Dimensions, ScrollView, FlatList, SafeAreaView, Animated as AnimatedRN} from 'react-native'
+import { StyleSheet, Text, View, Dimensions, ScrollView, FlatList, SafeAreaView, Animated as AnimatedRN, Image } from 'react-native'
 import { Container } from '../../_atoms/Container'
 import MapView, { Marker, PROVIDER_GOOGLE, Overlay, Animated, AnimatedRegion} from 'react-native-maps'
 import * as Location from 'expo-location';
@@ -9,6 +9,8 @@ import { SearchBar } from 'react-native-elements';
 import { IconButton } from '../../_atoms/Button';
 import Constants from 'expo-constants';
 import { ComponentsColors } from 'react-native-ui-lib';
+import { useDispatch, useSelector } from 'react-redux';
+import { getRestaurants_API } from '../../../_redux/actions/Restaurants.actions';
 
 const fakeMenuItems = [
     {
@@ -64,21 +66,25 @@ export default function RestaurantsPage() {
     const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
     const [location , setLocation] = useState(new AnimatedRegion(null))
     const [index, setIndex] = useState(0)
-    const [loading, setLoading] = useState(true)
-
+    const [loading, setLoading] = useState(true) 
+    const { restaurants } = useSelector(state => state.restaurants)
+    const dispatch = useDispatch()
     let currentLocation = new AnimatedRegion(location)
 
     const Restaurants = () => {
         return (
-            fakeRestaurants.map(rest => {
+            restaurants.map(rest => {
                                     
                                     return (<Marker key={rest.id} coordinate={{
-                                            longitude: rest.longitude, 
-                                            latitude: rest.latitude, 
+                                            longitude: Number(rest.longitude), 
+                                            latitude: Number(rest.latitude), 
                                             latitudeDelta: 0.02,
                                             longitudeDelta: 0.01}}
                                             title= {rest.name}
-                                            ></Marker>)
+                                            >
+                                                <Image  source={require('../../../assets/mapMarker.png')} 
+                                                        style={{height: 33, width:20 }}></Image>
+                                            </Marker>)
                                     }
             )
         )
@@ -101,8 +107,10 @@ export default function RestaurantsPage() {
             });
             setLocation(currentUserLocation)
             setUserLocation(currentUserLocation)
+            dispatch(getRestaurants_API())
         }
         preload().then(setLoading(false))
+
       }, []);
 
     const bottomSheetRef = useRef(null)
@@ -165,7 +173,7 @@ export default function RestaurantsPage() {
 
     return (
         <View>
-            <Animated loadingEnabled={loading} ref={mapView} style={styles.map} region={currentLocation} provider= {PROVIDER_GOOGLE} showMyLocationButton={true} showsUserLocation={true} mapPadding={{bottom: 200}}>
+            <Animated loadingEnabled={loading} ref={mapView} style={styles.map} region={currentLocation} showMyLocationButton={true} showsUserLocation={true} mapPadding={{bottom: 200}}>
             {Restaurants()}
             {searchBar()}
             <BottomSheet
@@ -174,7 +182,7 @@ export default function RestaurantsPage() {
                 snapPoints={snapPoints}
                 onChange={handleSheetChanges}
             >
-                <FlatList data={fakeRestaurants}
+                <FlatList data={restaurants}
                           keyExtractor={(item) => item.id.toString()}
                           renderItem={({item}) => {
                             return <Restaurant  key={item.id.toString()} 
@@ -185,7 +193,7 @@ export default function RestaurantsPage() {
                                                 index={index} 
                                                 indexToggle={indexToggle} 
                                                 key= {item.id.toString()} 
-                                                menuItems= {item.menuItems}></Restaurant>}
+                                                menuItems= {item.menuItem}></Restaurant>}
                           }
                           directionalLockEnabled={true} 
                           decelerationRate={'fast'} 
@@ -193,7 +201,7 @@ export default function RestaurantsPage() {
                           snapToAlignment={"center"} 
                           automaticallyAdjustContentInsets={false}
                           disableIntervalMomentum horizontal={true} 
-                          contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: 550}}>
+                          contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: 250}}>
                     {/* {fakeRestaurants.map(rest => <Restaurant id= {rest.id} name={rest.name} index={index} indexToggle={indexToggle} key= {rest.id.toString()} menuItems= {rest.menuItems}></Restaurant>)} */}
                 </FlatList>
             </BottomSheet>
