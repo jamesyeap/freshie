@@ -10,7 +10,6 @@
   },
   "dependencies": {
     "@burstware/react-native-portal": "^1.0.2",
-    "@chakra-ui/react": "^1.6.3",
     "@emotion/react": "^11",
     "@emotion/styled": "^11",
     "@expo-google-fonts/inter": "^0.1.0",
