@@ -1,16 +1,20 @@
 import React, { useState, useEffect, useCallback, useMemo, useRef } from 'react'
 import { StyleSheet, Text, View, Dimensions, ScrollView, FlatList, SafeAreaView, Animated as AnimatedRN, Image } from 'react-native'
 import { Container } from '../../_atoms/Container'
-import MapView, { Marker, PROVIDER_GOOGLE, Overlay, Animated, AnimatedRegion} from 'react-native-maps'
+import MapView, { Marker, PROVIDER_GOOGLE, Animated, AnimatedRegion} from 'react-native-maps'
 import * as Location from 'expo-location';
 import BottomSheet, { BottomSheetScrollView } from '@gorhom/bottom-sheet';
 import { Restaurant } from '../../_molecules/Restaurant';
-import { SearchBar } from 'react-native-elements';
-import { IconButton } from '../../_atoms/Button';
+import { SearchBar, Overlay } from 'react-native-elements';
+import { EditButton, IconButton } from '../../_atoms/Button';
 import Constants from 'expo-constants';
 import { ComponentsColors } from 'react-native-ui-lib';
 import { useDispatch, useSelector } from 'react-redux';
 import { getRestaurants_API } from '../../../_redux/actions/Restaurants.actions';
+import { HeaderMediumText } from '../../_atoms/Text';
+import { Header } from '../../_molecules/Header';
+import { TextInput } from '../../_molecules/TextInput';
+import { EditButtonGroup } from '../../_molecules/EditButtons';
 
 const fakeMenuItems = [
     {
@@ -65,8 +69,10 @@ export default function RestaurantsPage() {
     ]
     const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
     const [location , setLocation] = useState(new AnimatedRegion(null))
-    const [index, setIndex] = useState(0)
+    const [index, setIndex] = useState(1)
+    const [restName, setRestName] = useState("")
     const [loading, setLoading] = useState(true) 
+    const [visible, setVisible] = useState(false);
     const { restaurants } = useSelector(state => state.restaurants)
     const dispatch = useDispatch()
     let currentLocation = new AnimatedRegion(location)
@@ -117,23 +123,22 @@ export default function RestaurantsPage() {
     const mapView = useRef(null)
     
     const indexToggle = () => {
-        if (index == 0) {
+        if (index == 1) {
             bottomSheetRef.current.expand()
-            setIndex(1)
+            setIndex(2)
         } else {
-            bottomSheetRef.current.collapse()
-            setIndex(0)
+            bottomSheetRef.current.snapTo(1)
+            setIndex(1)
         
     }}
 
     // variables
-    const snapPoints = useMemo(() => ['20%', '50%'], []);
+    const snapPoints = useMemo(() => [-1, '20%', '50%'], []);
     // callbacks
     const handleSheetChanges = useCallback((index) => {
     }, []);  
-    const searchBar = () => {
-        return (
-            <View style={{position: 'absolute', borderWidth: 0, top: 0 , width: "100%"}}>
+    const searchBar = (
+            <View style={{position: 'absolute', top: 0, width: "100%"}}>
                 <IconButton
                 iconName={"arrow-back"}
                 iconSize={30}
@@ -154,8 +159,8 @@ export default function RestaurantsPage() {
                             iconSize={30}
                             onPress={() => goToUser()}></IconButton>
             </View>
-        )
-    }
+    )
+    
     const animateTo = async (region) => {
         currentLocation.timing({...region, duration: 1000, useNativeDriver: false}).start()
     }
@@ -170,12 +175,66 @@ export default function RestaurantsPage() {
         }
         animateTo(now)
     }
+    
+    const toggleOverlay = () => {
+        setVisible(!visible);
+    };
+
+    const addItemPress = (id) => {
+        const currName = restaurants.filter(rest => rest.id === id).name
+        setRestName(currName)
+        toggleOverlay()
+    }
+
+    const onViewRef = React.useRef(( {viewableItems})=> {
+        const viewedItem = Object.getOwnPropertyDescriptors(viewableItems[0])
+        setRestName(viewedItem.item.value.name)
+    })
+    const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
 
     return (
         <View>
-            <Animated loadingEnabled={loading} ref={mapView} style={styles.map} region={currentLocation} showMyLocationButton={true} showsUserLocation={true} mapPadding={{bottom: 200}}>
+            <Animated ref={mapView} style={styles.map} region={currentLocation} showMyLocationButton={true} showsUserLocation={true} mapPadding={{bottom: 200}}>
             {Restaurants()}
-            {searchBar()}
+            </Animated>
+            <Overlay overlayStyle={{borderRadius: 18, minHeight: 380, width: 360}} visible={visible} onBackdropPress={toggleOverlay}>
+                <HeaderMediumText style={{margin:10}}>Add a menu item to {restName}!</HeaderMediumText>
+                <TextInput
+                    label="Name"
+                    placeholder="enter the item name!"
+                    // onChangeText={handleChange('username')}
+                    // onBlur={handleBlur('username')}
+                    // value={values.username}
+                    // feedbackMessage={errors.username}
+                    // touched={touched.username}
+                    autoCapitalize="none"
+                />
+                <TextInput
+                    label="Description"
+                    placeholder="enter the description!"
+                    // onChangeText={handleChange('username')}
+                    // onBlur={handleBlur('username')}
+                    // value={values.username}
+                    // feedbackMessage={errors.username}
+                    // touched={touched.username}
+                    autoCapitalize="none"
+                />
+                <TextInput
+                    label="Calories"
+                    placeholder="enter the amount of calories!"
+                    // onChangeText={handleChange('username')}
+                    // onBlur={handleBlur('username')}
+                    // value={values.username}
+                    // feedbackMessage={errors.username}
+                    // touched={touched.username}
+                    autoCapitalize="none"
+                />
+                <View style={{borderWidth: 0, alignSelf: 'center', flexDirection: 'row', justifyContent:'space-around', alignItems: 'center', width:320, margin: 10}}>
+                    <IconButton buttonStyle={styles.button} iconSize={23} buttonColor="#E53E3E" iconName= "trash" ></IconButton>
+                    <IconButton buttonStyle={styles.button} iconSize={21} buttonColor="#319795" iconName= "save" ></IconButton>
+                </View>
+            </Overlay>
+            {searchBar}
             <BottomSheet
                 ref={bottomSheetRef}
                 index={index}
@@ -183,12 +242,15 @@ export default function RestaurantsPage() {
                 onChange={handleSheetChanges}
             >
                 <FlatList data={restaurants}
+                          viewabilityConfig = {viewConfigRef.current}
+                          onViewableItemsChanged = {onViewRef.current}
                           keyExtractor={(item) => item.id.toString()}
                           renderItem={({item}) => {
                             return <Restaurant  key={item.id.toString()} 
                                                 location= {{longitude: item.longitude, latitude: item.latitude, latitudeDelta: 0.02, longitudeDelta: 0.01}} 
                                                 id= {item.id} 
                                                 animate={animateTo}
+                                                addItem={toggleOverlay}
                                                 name={item.name} 
                                                 index={index} 
                                                 indexToggle={indexToggle} 
@@ -206,8 +268,8 @@ export default function RestaurantsPage() {
                 </FlatList>
             </BottomSheet>
             
-            </Animated>
-        </View>
+    </View>
+        
     )
 }
                     
@@ -220,6 +282,12 @@ const styles = StyleSheet.create({
     map: {
       width: Dimensions.get('window').width,
       height: Dimensions.get('window').height,
+    },
+    button: {
+        flex: 0.4,
+        justifyContent: 'space-evenly',
+        flexDirection: 'row',
+        height: 35,
     }
 }
 )

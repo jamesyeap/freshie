@@ -90,7 +90,7 @@ export const SmallButton = ({label, state, onPress, isSelected, buttonStyle,...p
 		</SmallButtonContainer>);
 }
 
-export const Restaurant = ({ id, name, menuItems, index, animate, indexToggle, location, setVisible, ...props }) => {
+export const Restaurant = ({ id, name, menuItems, index, animate, addItem, indexToggle, location, setVisible, ...props }) => {
 	const [expand, setExpand] = useState(false)
 	
 	return (
@@ -113,7 +113,7 @@ export const Restaurant = ({ id, name, menuItems, index, animate, indexToggle, l
 
 				<Divider style={{ width: 2, height: 70}} />
 				
-				<SmallButton label={"Add item"}></SmallButton>
+				<SmallButton label={"Add item"} onPress={() => addItem()}></SmallButton>
 				
 				<IconButton iconSize={24} 
 							iconColor="black" 
