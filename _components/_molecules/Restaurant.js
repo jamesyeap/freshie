@@ -1,14 +1,10 @@
-import React, { useEffect, useState } from 'react';
+import React, { useState } from 'react';
+import { View, StyleSheet, Dimensions, Text, TouchableOpacity } from 'react-native';
 import styled from 'styled-components';
-import { MediumComponentContainer as ParentContainer } from '../_atoms/Container';
-import { RegularText, MediumText, SemiBoldText } from '../_atoms/Text';
-import { Info } from './Info';
-import { Divider } from 'react-native-paper';
-import Collapsible from 'react-native-collapsible';
+import { RegularText, SemiBoldText } from '../_atoms/Text';
 import { MenuItem } from './MenuItem';
 import { IconButton } from '../_atoms/Button';
-import { ButtonGroup } from './ButtonGroup';
-
+import LottieView from 'lottie-react-native';
 
 const MediumComponentContainer = styled.TouchableOpacity`
 	flexDirection: row;
@@ -18,21 +14,14 @@ const MediumComponentContainer = styled.TouchableOpacity`
 	borderWidth: 1px;
 	backgroundColor: ${props => props.isOpen ? "#C2F1FB" : "#FFFFFF"};
 	borderColor: #E6F2FC;
-	alignItems: center
-`;
-// alignItems: center;
-	// justifyContent: center;
-	// marginTop: 12.5px;
-	// marginBottom: ${props => props.isOpen ? 0 : "2px"};
-const RestaurantTextContainer = styled.View`
-	flexDirection: column;
-	alignItems: center
-	borderWidth: 0px
-	flex: 0.9
+	alignItems: center;
 `;
 
-const PreviewTextContainer = styled.View`
+const RestaurantTextContainer = styled.View`
 	flexDirection: column;
+	alignItems: flex-start;
+	marginLeft: 20;
+	flex: 0.8;
 `;
 
 const RestaurantNameText = styled(SemiBoldText)`
@@ -40,22 +29,10 @@ const RestaurantNameText = styled(SemiBoldText)`
 	lineHeight: 32px;
 `;
 
-const PreviewText = styled(RegularText)`
+const AddressText = styled(RegularText)`
 	fontSize: 14px;
 	lineHeight: 20px;
-`;
-
-const InfoContainer = styled.View`
-	flexDirection: column;
-	justifyContent: center;
-	alignItems: center;
-	height: 100%;
-`;
-
-const CalorieText = styled(RegularText)`
-	fontSize: 14px;
-	lineHeight: 20px;
-`;
+`; 
 
 const FoodItemListContainer = styled.View`
 	flexDirection: column;
@@ -84,54 +61,116 @@ export const SmallButtonText = styled(SemiBoldText)`
 	color: #FFFFFF;
 `;
 
+const { width, height } = Dimensions.get('window')
+
 export const SmallButton = ({label, state, onPress, isSelected, buttonStyle,...props}) => {
 	return (<SmallButtonContainer margin={props.margin} state={state} onPress={onPress} isSelected={isSelected} style={buttonStyle} >
 			<SmallButtonText>{label}</SmallButtonText>
 		</SmallButtonContainer>);
 }
 
-export const Restaurant = ({ id, name, menuItems, index, animate, addItem, indexToggle, location, setVisible, ...props }) => {
+const EmptyScreen = (props) => {
+	return (
+		<View style={styles.animationContainer}>
+			<LottieView 
+				source={require('../../assets/11192-empty.json')} 
+				autoPlay 
+				loop
+				style={{ height: 0.4 * width, width: 0.4 * width }}
+			/>
+
+			<Text style={styles.animationText}>Seems there's nothing here</Text>
+			<TouchableOpacity style={styles.addButtonContainer} onPress={() => props.addItem()}>
+				<Text style={styles.addButtonText}>Add a Menu Item!</Text>
+			</TouchableOpacity>
+		</View>
+)}
+
+export const Restaurant = ({ id, name, address, menuItems, index, animate, addItem, indexToggle, location, setVisible, ...props }) => {
 	const [expand, setExpand] = useState(false)
 	
 	return (
 		<Wrapper>
-			<MediumComponentContainer style= {{marginBottom: 20}}
-					onPress={() => {
-						animate(location)
-					}
-					}>
+			<MediumComponentContainer 
+				style={{ marginBottom: 20, backgroundColor: expand ? "white" : "#FFFBEB" }}
+				onPress={() => {
+					animate(location)
+				}}
+			>
 				<RestaurantTextContainer>
 					<RestaurantNameText>{name}</RestaurantNameText>
-					<PreviewTextContainer>
-						{ 
-							(menuItems.length <= 3)
-								? menuItems.map(e => <PreviewText key= {e.id.toString()} >{e.name} </PreviewText>) 
-								: menuItems.slice(0, 2).map(e => <PreviewText key= {e.id.toString()} >{e.name}</PreviewText>)
-						}
-					</PreviewTextContainer>
+					<AddressText>{address}</AddressText>
 				</RestaurantTextContainer>	
 
-				<Divider style={{ width: 2, height: 70}} />
 				
-				<SmallButton label={"Add item"} onPress={() => addItem()}></SmallButton>
-				
-				<IconButton iconSize={24} 
-							iconColor="black" 
-							iconName= "list" 
-							onPress={() => { 
-								indexToggle()
-								setExpand(!expand)
-				}}/>
+				<View style={styles.buttonContainer}>
+						<IconButton 
+							iconSize={30}
+							iconColor="green"
+							iconName="create"
+							onPress={() => addItem()}
+						/>
+					
+					<IconButton iconSize={30} 
+								iconColor="black" 
+								iconName={expand ? "caret-up-circle-outline" : "caret-down-circle-outline"}
+								onPress={() => { 
+									indexToggle()
+									setExpand(!expand)
+					}}/>
+				</View>
 			</MediumComponentContainer>
 
-			{/* <Collapsible collapsed={!expand}> */}
 				<FoodItemListContainer>
 					{
-						menuItems.map(e => <MenuItem key={e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} />)
+						menuItems.length > 0 
+							? menuItems.map(e => <MenuItem key={e.id.toString()} margin={0} navigation={props.navigation} itemDetails={e} handlePressMenuItem={props.handlePressMenuItem} />)
+							: <EmptyScreen addItem={addItem} />
 					}
 				</FoodItemListContainer>
-			{/* </Collapsible>  */}
 		</Wrapper>
 	)
 }
+
+const styles = StyleSheet.create({
+	buttonContainer: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
+		flex: 0.2,
+		marginRight: 20
+	},
+	animationContainer: {
+		height: 0.65 * width,
+		flexDirection: 'column',
+		justifyContent: 'center',
+		alignItems: 'center'
+	},
+	animationText: {
+		fontFamily: 'Inter_500Medium',	
+		fontSize: 18,
+		width: width * 0.7,
+		alignItems: 'center',
+		justifyContent: 'center',
+		textAlign: 'center',
+		marginTop: 10
+	},
+	addButtonText: {
+		fontFamily: 'Inter_500Medium',	
+		fontSize: 18,
+		width: width * 0.7,
+		alignItems: 'center',
+		justifyContent: 'center',
+		textAlign: 'center'
+	},
+	addButtonContainer: {
+		marginTop: 20,
+		alignItems:'center',
+		justifyContent: 'center',
+		backgroundColor: '#A7F3D0',
+		borderRadius: 10,
+		padding: 10,
+		width: 0.5 * width
+	}
+})
 

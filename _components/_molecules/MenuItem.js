@@ -31,7 +31,7 @@ export const MenuItem = (props) => {
 	const { id, name, description, calories} = props.itemDetails;
 
 	return (
-		<MenuItemContainer margin={props.margin} onPress={() => props.setSelectedFoodItem(props.itemDetails)} >
+		<MenuItemContainer margin={props.margin} onPress={() => props.handlePressMenuItem(props.itemDetails)} >
 			<Image 
 			source={require('../../assets/taco.png')}
 			style={{ height: 50, width: 50, marginLeft: 21, marginRight: 33 }}

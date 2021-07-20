@@ -1,45 +1,34 @@
 import React, { useCallback, useMemo, useRef, useState } from 'react'
 import { SafeAreaView, View, FlatList, Text, TouchableOpacity, Button, StyleSheet, Dimensions } from 'react-native'
 import BottomSheet from '@gorhom/bottom-sheet'
-import { TextInput } from './_components/_molecules/TextInput'
-import { IconButton } from './_components/_atoms/Button'
-import { RegularText, SemiBoldText, HeaderMediumText } from './_components/_atoms/Text'
-import searchRestaurant from './_utilities/_helperFunctions/searchRestaurant'
+import { TextInput } from '../../_molecules/TextInput'
+import { IconButton } from '../../_atoms/Button'
+import { RegularText, SemiBoldText, HeaderMediumText } from '../../_atoms/Text'
+import searchRestaurant from '../../../_utilities/_helperFunctions/searchNewRestaurant'
 import LottieView from 'lottie-react-native';
+import { useDispatch } from 'react-redux'
+import { addRestaurant_API } from '../../../_redux/actions/Restaurants.actions'
 
 const { width, height } = Dimensions.get('window')
 
-export default function AddNewRestaurantSection(props) {
+export default function AddNewRestaurantSection({ 
+	touched, 
+	fetchingData, 
+	restaurantsFound 
+}) {
 	const bottomSheetRef = useRef(null)
-	const snapPoints = useMemo(() => [-1, '25%', '50%'], [])
+	const snapPoints = useMemo(() => [-1, '25%', '40%'], [])
 	const handleSheetChanges = useCallback((index) => {
 		console.log('handleSheetChanges', index);
 	}, []);
-	const [restaurantsFound, setRestaurantsFound] = useState(null)
-	const [query, setQuery] = useState("")
-	const [touched, setTouched] = useState(false)
-	const [loading, setLoading] = useState(false)
 
-	const handleSearchRestaurant = async () => {
-		setTouched(true)
-		setLoading(true)
-		const results = await searchRestaurant(query)
-		setRestaurantsFound(results)
-		setLoading(false)
-	}
-
-	const handleClose = () => {
-		setQuery("")
-		setRestaurantsFound(null)
-		setTouched(false)
-		bottomSheetRef.current.collapse()
-	}
+	const dispatch = useDispatch()
 
 	const LoadingScreen = () => {
 		return (
 			<View style={styles.animationContainer}>
 				<LottieView 
-					source={require('./assets/52102-searching.json')} 
+					source={require('../../../assets/52102-searching.json')} 
 					autoPlay 
 					loop
 					autoSize 
@@ -52,7 +41,7 @@ export default function AddNewRestaurantSection(props) {
 		return (
 			<View style={styles.animationContainer}>
 				<LottieView 
-					source={require('./assets/55478-hello-bubble.json')} 
+					source={require('../../../assets/55478-hello-bubble.json')} 
 					autoPlay 
 					loop
 					autoSize
@@ -65,7 +54,7 @@ export default function AddNewRestaurantSection(props) {
 		return (
 			<View style={styles.animationContainer}>
 				<LottieView 
-					source={require('./assets/7903-error-404.json')} 
+					source={require('../../../assets/7903-error-404.json')} 
 					autoPlay 
 					loop
 					style={{ height: 0.3 * width, width: 0.3 * width }}
@@ -75,10 +64,32 @@ export default function AddNewRestaurantSection(props) {
 			</View>
 	)}
 
+	const handleAddNewRestaurant = (name, address, longitude, latitude, category) => {
+		const newRestaurant = {
+			name, 
+			category,
+			address,
+			longitude,
+			latitude
+		}
+
+		dispatch(addRestaurant_API(newRestaurant))
+	}
+
 	const SearchResult = (props) => {
-		
 		return (
-			<TouchableOpacity style={styles.searchResultContainer} onPress={() => alert(`longitude: ${props.longitude} latitude: ${props.latitude}`)}>
+			<TouchableOpacity 
+				style={styles.searchResultContainer} 
+				onPress={() => 
+					handleAddNewRestaurant(
+						props.name,
+						props.address,
+						props.longitude, 
+						props.latitude,
+						props.category
+					)
+				}
+			>
 				<SemiBoldText>{props.name}</SemiBoldText>
 				<RegularText>{props.address}</RegularText>
 			</TouchableOpacity>
@@ -86,43 +97,18 @@ export default function AddNewRestaurantSection(props) {
 	}
 
 	return (
-		<SafeAreaView style={styles.container}>
-			<Text>Test</Text>
-			<Button title="OpenFull" onPress={() => bottomSheetRef.current.expand()}></Button>
-			<Button title="OpenHalf" onPress={() => bottomSheetRef.current.snapTo(1)}></Button>
-			<Button title="Close" onPress={() => bottomSheetRef.current.collapse()}></Button>
-
+		<>
+			<Text>Hello</Text>
 			<BottomSheet
 				ref={bottomSheetRef}
-				index={-1}
+				index={2}
 				snapPoints={snapPoints}
 				onChange={handleSheetChanges}
 			>
 				<View style={styles.contentContainer}>
-					<View style={styles.headerContainer}>
-						<Text style={styles.headerText}>What's around?</Text>
-						<TouchableOpacity style={{ marginLeft: 10 }} onPress={handleClose}>
-							<Text style={styles.closeButtonText}>Close</Text>
-						</TouchableOpacity>
-					</View>
-					
-					<View style={styles.searchContainer}>
-						<TextInput 
-							value={query}
-							onChangeText={setQuery}
-							inputStyle={styles.inputStyle}
-						/>
-						<IconButton
-							iconName='search'
-							iconSize={20}
-							iconColor='#F59E0B'
-							onPress={handleSearchRestaurant}
-						/>
-					</View>
-
 					{!touched
 						? StartingScreen()
-						: loading 
+						: fetchingData 
 							? LoadingScreen()
 							: (
 								<FlatList
@@ -135,17 +121,16 @@ export default function AddNewRestaurantSection(props) {
 											address={item.address} 
 											longitude={item.longitude}
 											latitude={item.latitude}
+											category={item.category}
 										/>}
 									contentContainerStyle={styles.flatListContentContainer}
 									ListEmptyComponent={<EmptyScreen />}
 								/>
 							)
-
-
 					}
 				</View>
 		</BottomSheet>
-		</SafeAreaView>
+		</>
 	)
 }
 
@@ -213,3 +198,71 @@ const styles = StyleSheet.create({
 		fontSize: 18
 	}
 })
+
+
+/*
+
+return (
+		<SafeAreaView style={styles.container}>
+			<Text>Test</Text>
+			<Button title="OpenFull" onPress={() => bottomSheetRef.current.expand()}></Button>
+			<Button title="OpenHalf" onPress={() => bottomSheetRef.current.snapTo(1)}></Button>
+			<Button title="Close" onPress={() => bottomSheetRef.current.collapse()}></Button>
+
+			<BottomSheet
+				ref={bottomSheetRef}
+				index={-1}
+				snapPoints={snapPoints}
+				onChange={handleSheetChanges}
+			>
+				<View style={styles.contentContainer}>
+					<View style={styles.headerContainer}>
+						<Text style={styles.headerText}>What's around?</Text>
+						<TouchableOpacity style={{ marginLeft: 10 }} onPress={handleClose}>
+							<Text style={styles.closeButtonText}>Close</Text>
+						</TouchableOpacity>
+					</View>
+					
+					<View style={styles.searchContainer}>
+						<TextInput 
+							value={query}
+							onChangeText={setQuery}
+							inputStyle={styles.inputStyle}
+						/>
+						<IconButton
+							iconName='search'
+							iconSize={20}
+							iconColor='#F59E0B'
+							onPress={handleSearchRestaurant}
+						/>
+					</View>
+
+					{!touched
+						? StartingScreen()
+						: loading 
+							? LoadingScreen()
+							: (
+								<FlatList
+									data={restaurantsFound}
+									renderItem={({ item }) => 
+										<SearchResult 
+											key={item.id.toString()}
+											id={item.id}
+											name={item.name} 
+											address={item.address} 
+											longitude={item.longitude}
+											latitude={item.latitude}
+										/>}
+									contentContainerStyle={styles.flatListContentContainer}
+									ListEmptyComponent={<EmptyScreen />}
+								/>
+							)
+
+
+					}
+				</View>
+		</BottomSheet>
+		</SafeAreaView>
+	)
+
+*/

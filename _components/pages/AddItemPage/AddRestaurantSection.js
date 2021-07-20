@@ -6,7 +6,6 @@ import { TextInput } from '../../_molecules/TextInput'
 import { Overlay, AnimatedRegion, Animated as AnimatedMap } from 'react-native-maps'
 import BottomSheet from '@gorhom/bottom-sheet';
 import * as Location from 'expo-location';
-import searchRestaurant from '../../../_utilities/_helperFunctions/searchRestaurant'
 
 const { height, width } = Dimensions.get('window')
 

@@ -48,15 +48,15 @@ export const addRestaurant_API = (arg) => {
                 data: arg
             })
 
-            dispatch(getRestaurants_API())
-
+            await dispatch(getRestaurants_API())
         } catch (e) {
             dispatch(error(e.message))
+            alert(e.message)
         }
     }
 }
 
-export const addMenutItem_API = (arg) => {
+export const addMenuItem_API = (arg) => {
     return async (dispatch, getState) => {
 
         dispatch(loading())
@@ -65,14 +65,40 @@ export const addMenutItem_API = (arg) => {
             const { username, token } = getState().auth
             const response = await axios({
                 method: 'post',
-                url: `${URL}/api/${username}/`,
+                url: `${URL}/api/${username}/menu-items/`,
                 headers: {
                     "Authorization": `Token ${token}`
                 },
                 data: arg
             })
             
-            dispatch(getRestaurants_API())
+            await dispatch(getRestaurants_API())
+        } catch (e) {
+            dispatch(error(e.message))
+        }
+    }
+}
+
+// arg = {
+//    id
+// }
+export const deleteMenuItem_API = (arg) => {
+    return async (dispatch, getState) => {
+        dispatch(loading())
+
+        try {
+            const { username, token } = getState().auth
+
+            const response = await axios({
+                method: 'delete',
+                url: `${URL}/api/${username}/menu-items/`,
+                headers: {
+                    "Authorization": `Token ${token}`
+                },
+                data: arg
+            })
+
+            await dispatch(getRestaurants_API())
         } catch (e) {
             dispatch(error(e.message))
         }

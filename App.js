@@ -7,7 +7,7 @@ import { Provider } from 'react-redux';
 import { store } from './_redux/store/store'; 
 import RootStackScreen from './_navigation/RootStackScreen';
 
-import AddNewRestaurantSection from './AddNewRestaurantSection';
+
 
 export default function App() {
   // On start-up, app needs to load the fonts files first.
@@ -21,15 +21,17 @@ export default function App() {
     return <AppLoading />;
   }
 
+  return (
+        <Provider store={store}>
+          <NavigationContainer>
+            <RootStackScreen />
+          </NavigationContainer>
+        </Provider>
+  )
+
   // return (
   //       <Provider store={store}>
-  //         <NavigationContainer>
-  //           <RootStackScreen />
-  //         </NavigationContainer>
+  //         <RestaurantsPage />
   //       </Provider>
   // )
-
-  return (
-    <AddNewRestaurantSection />
-  )
 }

@@ -31,34 +31,16 @@ export const InputLabelText = styled(MediumText)`
     margin: 10px;
 `;
 
-export function Header({ scrolling }) {
-	const translation = scrolling.interpolate({
-		inputRange: [-width, 0, width],
-		outputRange: [-130, 0, -130],
-		extrapolate: 'clamp',
-	  })
-
-	 const opacity = scrolling.interpolate({
-		inputRange: [-width, 0, width],
-		outputRange: [0, 1, 0],
-		extrapolate: 'clamp',
-	 })
-
+export function Header() {
 	return (
 		<>
-		<Animated.View
-			style={{
-				...styles.header,
-				transform: [
-					{ translateY: translation }
-				]
-			}}
-			opacity={opacity}
+		<View
+			style={styles.header}
 		>	
 			<View style={styles.headerText}>
-				<SemiBoldText style={{ fontSize: 20 }}>Something new?</SemiBoldText>
+				<SemiBoldText style={{ fontSize: 20 }}>Add A Food Item!</SemiBoldText>
 			</View>
-		</Animated.View>
+		</View>
 	</>
 	)
 }
@@ -155,9 +137,9 @@ export default function AddFoodItemSection (props) {
         }
     };
 
-    const handleAddNewLocalIngredient = (title, weight) => {
+    const handleAddNewLocalIngredient = (ingredientTitle, weight) => {
         const serializedNewIngredient = serializeIngredients([{
-            title: title,
+            title: ingredientTitle,
             weight: weight,
         }])
         setIngredients(ingredients + serializedNewIngredient)
@@ -185,10 +167,11 @@ export default function AddFoodItemSection (props) {
                     placeholder="200g"
                     inputStyle={styles.newIngredientWeightInput}
                 />
-                <SmallButton 
-                    label="Add" 
+                <IconButton
+                    iconName="add-circle"
+                    iconSize={45}
+                    iconColor="#319795"
                     onPress={() => handleAddNewLocalIngredient(newIngredientTitle, newIngredientWeight)} 
-                    buttonStyle={styles.newIngredientAddButton}
                 />
             </View>
     )
@@ -211,8 +194,9 @@ export default function AddFoodItemSection (props) {
     } else {
         return (
             <ScrollView contentContainerStyle={ styles.container }>
+                <Header />
                 <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
-                    <Avatar containerStyle={{height: 200, width: 200}} rounded source={image}/>
+                    <Avatar containerStyle={{height: 120, width: 120}} rounded source={image}/>
                 </TouchableOpacity>
                 <View>
                     <TextInput label="Name" stacked="20px" placeholder={title} onChangeText={val => setTitle(val)} value={title}/>
@@ -249,24 +233,20 @@ const styles = StyleSheet.create({
         flexDirection: 'column',
         alignItems: 'center',
         justifyContent: 'flex-start',
-        paddingTop: 80
     },
     button: {
-        flex: 0.25,
+        flex: 0.45,
         justifyContent: 'space-evenly',
         flexDirection: 'row',
-        height: 30,
+        height: 35,
     },
     header: {
-		position: 'absolute',
 		flexDirection: 'column',
-		justifyContent: 'flex-end',
-		top: 0,
-		left: 0,
-		right: 0,
-		height: 100,
+		justifyContent: 'center',
+        alignItems: 'flex-start',
+		height: 70,
+        width: width,
 		backgroundColor: "#FDE68A",
-		padding: 15,
 		zIndex: 1000,
 	}, 
 	headerText: {
@@ -302,6 +282,7 @@ const styles = StyleSheet.create({
         width: width * 0.2
     }, 
     newIngredientAddButton: {
-        width: width * 0.2
+        width: width * 0.2,
+        height: 30
     }
 })
