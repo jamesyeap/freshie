@@ -14,7 +14,8 @@ const { width, height } = Dimensions.get('window')
 export default function AddNewRestaurantSection({ 
 	touched, 
 	fetchingData, 
-	restaurantsFound 
+	restaurantsFound,
+	animateTo
 }) {
 	const bottomSheetRef = useRef(null)
 	const snapPoints = useMemo(() => [-1, '25%', '40%'], [])
@@ -77,18 +78,31 @@ export default function AddNewRestaurantSection({
 	}
 
 	const SearchResult = (props) => {
+		/*
+			onPress={() => 
+						handleAddNewRestaurant(
+							props.name,
+							props.address,
+							props.longitude, 
+							props.latitude,
+							props.category
+						)
+					}
+		*/
+
+		const handleAnimateTo = () => {
+			props.animate({
+				longitude: props.longitude,
+				latitude: props.latitude,
+				longitudeDelta: 0.02,
+				latitudeDelta: 0.01
+			})
+		}
+		
 		return (
 			<TouchableOpacity 
 				style={styles.searchResultContainer} 
-				onPress={() => 
-					handleAddNewRestaurant(
-						props.name,
-						props.address,
-						props.longitude, 
-						props.latitude,
-						props.category
-					)
-				}
+				onPress={handleAnimateTo}
 			>
 				<SemiBoldText>{props.name}</SemiBoldText>
 				<RegularText>{props.address}</RegularText>
@@ -122,6 +136,7 @@ export default function AddNewRestaurantSection({
 											longitude={item.longitude}
 											latitude={item.latitude}
 											category={item.category}
+											animate={animateTo}
 										/>}
 									contentContainerStyle={styles.flatListContentContainer}
 									ListEmptyComponent={<EmptyScreen />}
