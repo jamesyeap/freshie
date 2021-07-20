@@ -3,6 +3,7 @@ import { authReducer } from './Auth.reducer.js';
 import { clientReducer } from './Client.reducer.js';
 import { recipesReducer } from './Recipes.reducer.js'
 import { trainerReducer } from './Trainer.reducer.js';
+import { restaurantReducer } from './Restaurants.reducer.js';
 import priceReducer from './Price.reducer'
 
 export default combineReducers({
@@ -10,5 +11,6 @@ export default combineReducers({
 	client: clientReducer,
 	trainer: trainerReducer,
 	recipe: recipesReducer,
-	prices: priceReducer
+	prices: priceReducer,
+	restaurants: restaurantReducer
 });

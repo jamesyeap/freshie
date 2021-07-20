@@ -238,19 +238,19 @@ export const deleteMealPlan_API = (arg) => {
             dispatch(loading())
 
             try {
-                    const { username, token } = getState().auth;
-                    const response = await axios({
-                        method: 'delete',
-                        url: `${URL}/api/${username}/mealplan/${arg}/`,
-                        headers: {
-                              "Authorization": `Token ${token}`
-                        },
-                    });
-                    
-                    dispatch(getMealPlans_API());
+                const { username, token } = getState().auth;
+                const response = await axios({
+                    method: 'delete',
+                    url: `${URL}/api/${username}/mealplan/${arg}/`,
+                    headers: {
+                            "Authorization": `Token ${token}`
+                    },
+                });
+                
+                dispatch(getMealPlans_API());
             } catch (e) {
                     // alerts user to an error	
-                    dispatch(error(e.message))
+                dispatch(error(e.message))
             }
     }
 }

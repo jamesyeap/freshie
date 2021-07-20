@@ -12,6 +12,7 @@ import { Snackbar } from 'react-native-paper';
 import { acknowledge as clientAcknowledge } from '../../../_redux/actions/Client.actions'
 import { acknowledge as recipeAcknowledge } from '../../../_redux/actions/Recipes.actions'
 import DotProgress from './DotProgress';
+import { getRestaurants_API } from '../../../_redux/actions/Restaurants.actions';
 
 // get the height of the user's screen
 const { height } = Dimensions.get('window')
@@ -32,7 +33,8 @@ export default function HomePage(props) {
 			dispatch(getConsumedMeals_API({ dateArgument: getDateArgument(), searchOnly: false })),
 			dispatch(updateDailyCalories_API()),
 			dispatch(getFavouriteMeals_API()),
-			dispatch(getUserProfile_API())
+			dispatch(getUserProfile_API()),
+			dispatch(getRestaurants_API())
 		).then(setLoading(false));
 	}
 	useEffect(loadData, []);
