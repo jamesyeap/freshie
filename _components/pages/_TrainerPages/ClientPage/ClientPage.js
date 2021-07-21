@@ -102,12 +102,13 @@ export default function ClientPage(props) {
 		}
 		
 		const fetchMealsData = async () => {
-			const data = await getClientMealPlan_API(props.route.params.clientDetails.user.username)	
+			const data = await getClientMealPlan_API(props.route.params.clientDetails.user.username)
 			setMealPlansData(data) 
 		}
 
 		await fetchClientData()
 		await fetchMealsData()
+		console.log(clientData)
 		setLoading(false)
 	}
 
@@ -141,7 +142,7 @@ export default function ClientPage(props) {
 				<MediumText>Loading...</MediumText>
 			</Container>
 		)
-	}
+	} else {
 	
 	return (<Container>
 			<NavigationHeader  goTo={() => props.navigation.goBack()} />
@@ -230,7 +231,7 @@ export default function ClientPage(props) {
 
 
 		</Container>)
-	
+	}
 }
 
 const styles = StyleSheet.create({

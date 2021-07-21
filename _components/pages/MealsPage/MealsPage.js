@@ -131,7 +131,6 @@ export default function MealsPage(props) {
 				gotoAddCustomMeal={() => props.navigation.push("EditRecipe", { type: "Add" })}
 			/>
 
-
 			<CreateMealPlanModal
 					modalVisible={showCreateMealPlanModal}
 					handleClose={handleCloseCreateMealPlanModal}

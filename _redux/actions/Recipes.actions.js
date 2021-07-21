@@ -112,7 +112,7 @@ export const addRecipe_API = (arg) => {
                         }
                     });
 
-                    await dispatch(getRecipeList_API("search"))
+                    await dispatch(getRecipeList_API("custom"))
 
                     return true;
             } catch (e) {

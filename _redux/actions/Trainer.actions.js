@@ -231,6 +231,7 @@ export const acknowledge = () => ({
 export async function getClientData_API(values) {
                 try {
                         const { token, username } = store.getState().auth;
+                        console.log(token)
 
                         const response = await axios({
                                 method: 'get',
@@ -240,8 +241,10 @@ export async function getClientData_API(values) {
                                 }, 
                         });
 
+                        console.log(response.data)
                         return response.data;
                 } catch (e) {
+                        console.log(e.response.data)
                         alert(e.response.data)
                 }
 }
@@ -250,6 +253,7 @@ export async function getClientData_API(values) {
 export async function getClientMealPlan_API(values) {
                 try {
                         const { token, username } = store.getState().auth;
+                        console.log(token)
 
                         const response = await axios({
                                 method: 'get',
@@ -259,8 +263,10 @@ export async function getClientMealPlan_API(values) {
                                 }, 
                         });
 
+                        console.log(response.data)
                         return response.data;
                 } catch (e) {
+                        console.log(e.response.data)
                         alert(e.response.data)
                 }
 }
