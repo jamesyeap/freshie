@@ -19,7 +19,7 @@ export default function RestaurantsPage(props) {
     const initialUserLocation = useRef(null)
     const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
     const [location , setLocation] = useState(new AnimatedRegion(null))
-    const [index, setIndex] = useState(1)
+    const [index, setIndex] = useState(0)
 
     const [existingRestaurants, setExistingRestaurants] = useState([])
     const [restName, setRestName] = useState("")
@@ -152,12 +152,12 @@ export default function RestaurantsPage(props) {
     const mapView = useRef(null)
     
     const indexToggle = () => {
-        if (index == 1) {
+        if (index == 0) {
             bottomSheetRef.current.expand()
-            setIndex(2)
-        } else {
-            bottomSheetRef.current.snapTo(1)
             setIndex(1)
+        } else {
+            bottomSheetRef.current.snapTo(0)
+            setIndex(0)
     }}
 
     const snapPoints = useMemo(() => ['18%', '75%'], []);
