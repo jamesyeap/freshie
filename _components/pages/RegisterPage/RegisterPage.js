@@ -280,10 +280,8 @@ export function RegisterPage(props) {
     const personalTrainerQuestions = () => {
       return (
         <ScrollView contentContainerStyle={styles.scrollView}>
-          <TextInput stacked={0} label="p Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked={0} label="p Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked={0} label="p Question 1" placeholder={"Answer here"}/>
-          <TextInput stacked={0} label="p Question 1" placeholder={"Answer here"}/>
+          <TextInput stacked={0} label="Tell us a little about yourself!" placeholder="Answer here"/>
+          <TextInput stacked={0} label="Your area of specialization (if any)?" placeholder="Answer here"/>
         </ScrollView> 
       ) 
     }

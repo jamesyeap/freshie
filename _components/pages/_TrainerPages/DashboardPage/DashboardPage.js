@@ -4,6 +4,7 @@ import { NavigationHeader } from '../../../_molecules/NavigationHeader';
 import { RegularText, HeaderMediumText } from '../../../_atoms/Text';
 import { TabView, SceneMap } from 'react-native-tab-view';
 import { FAB } from '../../../_molecules/FAB';
+import { Provider } from 'react-native-paper';
 import { CreateMealPlanModal } from './CreateMealPlanModal';
 
 import { ClientsDashboardSection } from '../../../_organisms/_TrainerOrganisms/ClientsDashboardSection/ClientsDashboardSection';
@@ -132,30 +133,33 @@ export function DashboardPage(props) {
 	} else {
 		return (
 			<Container>
-				<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
-				<TabViewContainer>
-				<TabView
-				navigationState={{ index, routes }}
-				renderScene={renderScene}
-				renderTabBar={props => <TabBar index={index} setIndex={setIndex} {...props} />}
-				onIndexChange={setIndex}
-				sceneContainerStyle={{ alignItems: "center" }}
-				/>
-				</TabViewContainer>
+				<Provider>
+					<NavigationHeader iconName="person-circle-outline" goTo={() => props.navigation.push("Account")} />
+					<TabViewContainer>
+						<TabView
+						navigationState={{ index, routes }}
+						renderScene={renderScene}
+						renderTabBar={props => <TabBar index={index} setIndex={setIndex} {...props} />}
+						onIndexChange={setIndex}
+						sceneContainerStyle={{ alignItems: "center" }}
+						/>
+					</TabViewContainer>
 
-				<FAB 
-				variation="trainer"
-				gotoAddMeal={() => props.navigation.push("EditRecipe", { type: "new" })}
-				gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
-				/>
+					<FAB 
+					variation="trainer"
+					gotoAddMeal={() => props.navigation.push("EditRecipe", { type: "new" })}
+					gotoAddMealPlan={() => setShowCreateMealPlanModal(true)}
+					gotoRestaurants={() => props.navigation.navigate("Restaurants")}
+					/>
 
-				<CreateMealPlanModal
-				modalVisible={showCreateMealPlanModal}
-				handleClose={handleCloseCreateMealPlanModal}
-				onChangeText={(value) => setNewMealPlanName(value)}
-				onPress={handleCreateMealPlan}
-				value={newMealPlanName}
-				/>
+					<CreateMealPlanModal
+					modalVisible={showCreateMealPlanModal}
+					handleClose={handleCloseCreateMealPlanModal}
+					onChangeText={(value) => setNewMealPlanName(value)}
+					onPress={handleCreateMealPlan}
+					value={newMealPlanName}
+					/>
+				</Provider>
 			</Container>
 		)
 	}

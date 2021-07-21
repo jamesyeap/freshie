@@ -139,7 +139,7 @@ const styles = StyleSheet.create({
 		position: 'absolute',
 		flexDirection: 'column',
 		justifyContent: 'flex-end',
-		top: 30,
+		top: 40,
 		left: 0,
 		right: 0,
 		height: 100,

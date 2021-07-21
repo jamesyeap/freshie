@@ -32,6 +32,12 @@ export const FAB = (props) => {
               onPress: () => props.gotoAddMealPlan(),
               small: false,
             },
+            {
+              icon: 'silverware-fork-knife',
+              label: 'Restaurants',
+              onPress: () => props.gotoRestaurants(),
+              small: false,
+            },
           ]}
           onStateChange={onStateChange}
           onPress={() => {

@@ -20,7 +20,7 @@ const MediumComponentContainer = styled.TouchableOpacity`
 const RestaurantTextContainer = styled.View`
 	flexDirection: column;
 	alignItems: flex-start;
-	marginLeft: 20;
+	marginLeft: 20px;
 	flex: 0.8;
 `;
 

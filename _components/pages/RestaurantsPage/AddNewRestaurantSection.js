@@ -1,21 +1,17 @@
-import React, { useCallback, useMemo, useRef, useState } from 'react'
-import { SafeAreaView, View, FlatList, Text, TouchableOpacity, Button, StyleSheet, Dimensions } from 'react-native'
+import React, { useCallback, useMemo, useRef } from 'react'
+import {  View, FlatList, Text, TouchableOpacity, StyleSheet, Dimensions } from 'react-native'
 import BottomSheet from '@gorhom/bottom-sheet'
-import { TextInput } from '../../_molecules/TextInput'
-import { IconButton } from '../../_atoms/Button'
-import { RegularText, SemiBoldText, HeaderMediumText } from '../../_atoms/Text'
-import searchRestaurant from '../../../_utilities/_helperFunctions/searchNewRestaurant'
+import { RegularText, SemiBoldText } from '../../_atoms/Text'
 import LottieView from 'lottie-react-native';
-import { useDispatch } from 'react-redux'
-import { addRestaurant_API } from '../../../_redux/actions/Restaurants.actions'
 
-const { width, height } = Dimensions.get('window')
+const { width } = Dimensions.get('window')
 
 export default function AddNewRestaurantSection({ 
 	touched, 
 	fetchingData, 
 	restaurantsFound,
-	animateTo
+	animateTo,
+	handlePressNewRestaurantItem
 }) {
 	const bottomSheetRef = useRef(null)
 	const snapPoints = useMemo(() => [-1, '25%', '40%'], [])
@@ -23,7 +19,6 @@ export default function AddNewRestaurantSection({
 		console.log('handleSheetChanges', index);
 	}, []);
 
-	const dispatch = useDispatch()
 
 	const LoadingScreen = () => {
 		return (
@@ -65,31 +60,7 @@ export default function AddNewRestaurantSection({
 			</View>
 	)}
 
-	const handleAddNewRestaurant = (name, address, longitude, latitude, category) => {
-		const newRestaurant = {
-			name, 
-			category,
-			address,
-			longitude,
-			latitude
-		}
-
-		dispatch(addRestaurant_API(newRestaurant))
-	}
-
 	const SearchResult = (props) => {
-		/*
-			onPress={() => 
-						handleAddNewRestaurant(
-							props.name,
-							props.address,
-							props.longitude, 
-							props.latitude,
-							props.category
-						)
-					}
-		*/
-
 		const handleAnimateTo = () => {
 			props.animate({
 				longitude: props.longitude,
@@ -98,11 +69,16 @@ export default function AddNewRestaurantSection({
 				latitudeDelta: 0.01
 			})
 		}
+
+		const handlePress = () => {
+			handleAnimateTo()
+			handlePressNewRestaurantItem(props.newRestaurantObj)
+		}
 		
 		return (
 			<TouchableOpacity 
 				style={styles.searchResultContainer} 
-				onPress={handleAnimateTo}
+				onPress={handlePress}
 			>
 				<SemiBoldText>{props.name}</SemiBoldText>
 				<RegularText>{props.address}</RegularText>
@@ -137,6 +113,7 @@ export default function AddNewRestaurantSection({
 											latitude={item.latitude}
 											category={item.category}
 											animate={animateTo}
+											newRestaurantObj={item}
 										/>}
 									contentContainerStyle={styles.flatListContentContainer}
 									ListEmptyComponent={<EmptyScreen />}

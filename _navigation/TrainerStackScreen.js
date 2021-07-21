@@ -1,13 +1,10 @@
 import React from 'react';
 import { createStackNavigator } from '@react-navigation/stack'
-import { ClientPage, DashboardPage, EditMealPlanPage, AddItemPage, TrainerAccountPage, RecipePage, MealPlanPage, SearchPage } from '../_components/pages/index';
-import { Provider } from 'react-native-paper';
+import { ClientPage, DashboardPage, EditMealPlanPage, AddItemPage, TrainerAccountPage, RecipePage, MealPlanPage, SearchPage, RestaurantsPage } from '../_components/pages/index';
 
 const TrainerStack = createStackNavigator();
 
 export const TrainerStackScreen = () => (
-
-	<Provider>
 		<TrainerStack.Navigator headerMode="none" >
 			<TrainerStack.Screen name="Dashboard" component={DashboardPage} />
 			<TrainerStack.Screen name="Client" component={ClientPage} />
@@ -17,6 +14,6 @@ export const TrainerStackScreen = () => (
 			<TrainerStack.Screen name="EditRecipe" component={AddItemPage} />
 			<TrainerStack.Screen name="Account" component={TrainerAccountPage} />
 			<TrainerStack.Screen name="MealPlanDetails" component={MealPlanPage} />
+			<TrainerStack.Screen name="Restaurants" component={RestaurantsPage} />
 		</TrainerStack.Navigator>
-	</Provider>
 )

@@ -13,6 +13,7 @@ import { TextInput } from '../../_molecules/TextInput';
 import AddNewRestaurantSection from './AddNewRestaurantSection';
 import searchRestaurant from '../../../_utilities/_helperFunctions/searchNewRestaurant'
 import { MenuItemButtonModal } from './MenuItemButtonModal';
+import { NewRestaurantButtonModal } from './NewRestaurantButtonModal';
 
 export default function RestaurantsPage(props) {
     const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
@@ -25,7 +26,7 @@ export default function RestaurantsPage(props) {
     const [visible, setVisible] = useState(false);
 
     const [addNewRestaurantMode, setAddNewRestaurantMode] = useState(false)
-	const [touched, setTouched] = useState(false)
+    const [touched, setTouched] = useState(false)
     const [fetchingData, setFetchingData] = useState(false)
     const [searchQuery, setSearchQuery] = useState("")
 
@@ -37,6 +38,9 @@ export default function RestaurantsPage(props) {
 
     const [showMenuItemButtonModal, setShowMenuItemButtonModal] = useState(false)
     const [selectedMenuItem, setSelectedMenuItem] = useState(null)
+
+    const [showNewRestaurantButtonModal, setShowNewRestaurantModal] = useState(false)
+    const [selectedNewRestaurant, setSelectedNewRestaurant] = useState(null)
 
     const { restaurants, loading: loadingExistingRestaurants, error } = useSelector(state => state.restaurants)
 
@@ -159,10 +163,15 @@ export default function RestaurantsPage(props) {
             setTouched(false)
             setRestaurantsFound(null)
             setTouched(false)
+
+            setSelectedNewRestaurant(null)
+            setShowNewRestaurantModal(false)
             
             setAddNewRestaurantMode(false)
         } else {
-            // todo
+            setSelectedMenuItem(null)
+            setShowMenuItemButtonModal(false)
+
             setSearchQuery("")
             setAddNewRestaurantMode(true)
         }
@@ -210,6 +219,23 @@ export default function RestaurantsPage(props) {
     const handleCloseMenuItemModal = () => {
         setSelectedMenuItem(null)
         setShowMenuItemButtonModal(false)
+    }
+
+    const handlePressNewRestaurantItem = (newRestaurantObj) => {
+        setSelectedNewRestaurant(newRestaurantObj)
+        setShowNewRestaurantModal(true)
+    }
+
+    const handleAddNewRestaurantItem = () => {    
+        dispatch(addRestaurant_API(selectedNewRestaurant))
+        setSelectedNewRestaurant(null)
+        setShowNewRestaurantModal(false)
+        setAddNewRestaurantMode(false)
+    }
+
+    const handleCloseNewRestaurantModal = () => {
+        setSelectedNewRestaurant(null)
+        setShowNewRestaurantModal(false)
     }
 
     const animateTo = async (region) => {
@@ -272,7 +298,7 @@ export default function RestaurantsPage(props) {
                   snapToAlignment={"center"} 
                   automaticallyAdjustContentInsets={false}
                   disableIntervalMomentum horizontal={true} 
-                  contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: 250}}>
+                  contentContainerStyle={{ flexDirection: 'row-reverse', alignSelf: 'flex-start', minWidth: "100%", minHeight: 250}}>
         </FlatList>
     </BottomSheet>
     )
@@ -913,6 +939,7 @@ export default function RestaurantsPage(props) {
                     touched={touched}
                     fetchingData={fetchingData}
                     animateTo={animateTo}
+                    handlePressNewRestaurantItem={handlePressNewRestaurantItem}
                 />)
                 : (MainBottomSheet)
             }
@@ -922,6 +949,13 @@ export default function RestaurantsPage(props) {
                 modalVisible={showMenuItemButtonModal}
                 handleClose={handleCloseMenuItemModal}
                 handleDelete={handleDeleteMenuItem}
+            />
+
+            <NewRestaurantButtonModal
+                selectedNewRestaurant={selectedNewRestaurant}
+                modalVisible={showNewRestaurantButtonModal}
+                handleClose={handleCloseNewRestaurantModal}
+                handleAdd={handleAddNewRestaurantItem}
             />
     </View>
         

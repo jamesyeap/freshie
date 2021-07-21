@@ -19,8 +19,6 @@ const { height } = Dimensions.get('window')
 
 export default function HomePage(props) {
 	const [loading, setLoading] = useState(true);
-	// const [showCreateMealPlanModal, setShowCreateMealPlanModal] = useState(false);
-	// const [newMealPlanName, setNewMealPlanName] = useState("");
 
 	const dispatch = useDispatch();
 	const { loading : clientLoading, error : clientError, weeklyCalories, dailyCalories } = useSelector(state => state.client);
@@ -50,7 +48,7 @@ export default function HomePage(props) {
 	}
 
 	/* Animation-related variables */
-	const scrolling = useRef(new Animated.Value(0)).current
+	const scrolling = useRef(new Animated.Value(height)).current
 
 	if (loading) {
 		return (

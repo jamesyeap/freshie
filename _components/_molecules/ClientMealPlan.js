@@ -13,6 +13,7 @@ const MediumComponentContainer = styled.TouchableOpacity`
 	justifyContent: center;
 	margin: 12px;
 	borderRadius: 10px;
+	width: 330px;
 `;
 
 const MealTextContainer = styled.View`

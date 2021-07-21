@@ -1,8 +1,8 @@
 import React from 'react';
 import styled from 'styled-components';
-import { Modal, StyleSheet, View } from 'react-native';
+import { Alert, Modal, StyleSheet, Text, Pressable, View } from 'react-native';
 import { SmallButton, TextButton } from '../../_atoms/Button';
-import { HeaderMediumText, SubHeaderText } from '../../_atoms/Text';
+import { RegularText, HeaderMediumText, SubHeaderText } from '../../_atoms/Text';
 
 const TextContainer = styled.View`
 	flexDirection: column;
@@ -17,36 +17,28 @@ const ActionsContainer = styled.View`
 	marginBottom: 20px;
 `;
 
-export const FavoritesButtonModal = (props) => {
+export const NewRestaurantButtonModal = (props) => {
 	const handleButtonPress = (func) => {
 		// closes the modal after a button has been pressed!
 		func();
 		props.handleClose();
 	}
 
-
 	return (
 		<Modal
-		animationType="slide"
-		transparent={true}
-		visible={props.modalVisible}
-		onRequestClose={() => {
-			props.handleClose();
-		}}
+			animationType="slide"
+			transparent={true}
+			visible={props.modalVisible}
+			onRequestClose={() => {
+				props.handleClose();
+			}}
 		>
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
-					<TextContainer>
-						{props.itemDetails && <HeaderMediumText>{props.itemDetails.title}</HeaderMediumText>}
-					</TextContainer>
-
 					<ActionsContainer>
-						<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleConsume)} />
-						<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10 }} onPress={() => handleButtonPress(props.handleView)} />
-						<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
-						<SmallButton label="Remove from Favorites" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
+						<SmallButton label="Add" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "green"  }} onPress={props.handleAdd} />
 					</ActionsContainer>
-					<TextButton label="Close" onPress={props.handleClose} />
+					<TextButton label="Close" onPress={ props.handleClose } />
 				</View>
 			</View>
 		</Modal>

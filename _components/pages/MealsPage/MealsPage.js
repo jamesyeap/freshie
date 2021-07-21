@@ -12,6 +12,8 @@ import { Header as CustomMealsHeader } from '../../_organisms/CustomMealsSection
 import FavoriteMealsSection from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
 import { Header as FavoriteMealsHeader } from '../../_organisms/FavoriteMealsSection/FavoriteMealsSection';
 
+import DotProgress from './DotProgress';
+
 import { getRecipeList_API, getMealPlans_API, createMealPlan_API, acknowledge } from '../../../_redux/actions/Recipes.actions';
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
@@ -64,6 +66,8 @@ export default function MealsPage(props) {
 			<TrainerMealsHeader scrolling={scrolling} navigation={props.navigation} />
 			<CustomMealsHeader scrolling={scrolling} navigation={props.navigation} />
 			<FavoriteMealsHeader scrolling={scrolling} navigation={props.navigation} />
+
+			<DotProgress scrolling={scrolling} />
 
 			<Animated.ScrollView
 			style={{ flex: 1 }}

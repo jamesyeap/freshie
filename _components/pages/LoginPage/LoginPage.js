@@ -77,12 +77,7 @@ export default function LoginPage(props) {
 			secureTextEntry
 			/>
 
-			<OptionsContainer>
-				<Checkbox testID="remember-me" label="Remember me"/>
-				<TextButton testID="forgot-password" label="Forgot Password?" />
-			</OptionsContainer>
-
-			<BigButton label="Sign In" state="active" onPress={handleSubmit}/>
+			<BigButton label="Sign In" state="active" onPress={handleSubmit} buttonStyle={{ marginTop: 20 }} />
 
 			<TextButton label="Don't have an account?" onPress={() => props.navigation.push("Signup")} buttonStyle={{ marginTop: 20 }}/>
 

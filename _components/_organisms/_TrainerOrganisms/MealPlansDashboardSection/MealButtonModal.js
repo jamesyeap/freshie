@@ -37,7 +37,6 @@ export const MealButtonModal = (props) => {
 				<View style={styles.modalView}>
 					<TextContainer>
 						{props.itemDetails && <HeaderMediumText>{props.itemDetails.title}</HeaderMediumText>}
-						{props.itemDetails && <SubHeaderText>{props.itemDetails.ingredients}</SubHeaderText>}
 					</TextContainer>
 
 					<ActionsContainer>

@@ -1,10 +1,10 @@
-import React, { useState, useEffect } from 'react';
+import React, { useState, useEffect, useCallback } from 'react';
 import { useDispatch } from 'react-redux';
 import { updateClientTargetCalories_API } from '../../../../_redux/actions/Trainer.actions';
 import styled from "styled-components";
 import Collapsible from 'react-native-collapsible';
 import { Ionicons } from '@expo/vector-icons';
-import { Dimensions, StyleSheet, View } from 'react-native';
+import { Dimensions, StyleSheet, View, ScrollView, RefreshControl } from 'react-native';
 
 import { MediumText } from '../../../_atoms/Text';
 import { TextInput } from '../../../_molecules/TextInput'
@@ -90,6 +90,7 @@ export default function ClientPage(props) {
 	const [loading, setLoading] = useState(true);
 	const [targetCalories, setTargetCalories] = useState(null)
 	const [propertyChanged, setPropertyChanged] = useState(false)
+	const [refreshing, setRefreshing] = useState(false)
 
 	const dispatch = useDispatch()
 
@@ -113,6 +114,10 @@ export default function ClientPage(props) {
 	useEffect(() => {
 		preload()
 	}, [propertyChanged]);
+
+	const onRefresh = () => {
+		setPropertyChanged(!propertyChanged)
+	}
 
 	const handleUpdateTargetCalories = async () => {
 		dispatch(updateClientTargetCalories_API(
@@ -147,69 +152,81 @@ export default function ClientPage(props) {
 			email={clientData.user.email}
 			/>
 
-			<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
-			<Collapsible collapsed={!showBiometrics}>
-				<InfoPanel 
-				infoOne={InfoOne}
-				infoTwo={InfoTwo}
-				infoThree={InfoThree}
-				infoFour={InfoFour}
-				/>
-			</Collapsible>
-
-			<SectionToggleButton onPress={() => setShowCaloricInformation(!showCaloricInformation)} IsToggled={showCaloricInformation} label="Caloric information"/>
-			<Collapsible collapsed={!showCaloricInformation}>
-				<InfoPanel
-				labelColor="#9A8EBA"
-				valueColor="#FFFFFF"
-				unitColor="#9A8EBA"
-				backgroundColor="#583AAB"
-
-				infoOne={InfoFive}
-				infoTwo={InfoSix}
-				infoThree={{
-					label: "Today's Calories",
-					value: clientData.calories.currentCalories,
-					unit: "kcal"
-				}}
-				infoFour={{
-					label: "Target Calories",
-					value: clientData.calories.dailyCalories,
-					unit: "kcal"
-				}}
-				/>
-			</Collapsible>
-
-
-			<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
-			<Collapsible collapsed={!showMealPlans}>
-				{!loading && 
-					<MealPlansSection 
-						data={mealPlansData} 
-						clientDetails={props.route.params.clientDetails.user} 
-						style={mealPlanContainerStyle} 
-						horizontal={true} 
-						navigation={props.navigation} 
+			<ScrollView 
+				contentContainerStyle={styles.collapsibleScrollViewContainer}
+				refreshControl={
+					<RefreshControl 
+						refreshing={refreshing}
+						onRefresh={onRefresh}
 					/>
 				}
-			</Collapsible>
-
-			<SectionToggleButton onPress={() => setShowEditInputs(!showEditInputs)} IsToggled={showEditInputs} label="Update client info"/>
-			<Collapsible collapsed={!showEditInputs}>
-				<View style={styles.updateClientInfoContainer}>
-					<TextInput 
-						label="Update target calories"
-						value={props.route.params.clientDetails.user}
-						onChangeText={setTargetCalories}
-						placeholder="500 kcal"
+			>
+				<SectionToggleButton onPress={() => setShowBiometrics(!showBiometrics)} IsToggled={showBiometrics} label="Biometric details" />
+				<Collapsible collapsed={!showBiometrics}>
+					<InfoPanel 
+					infoOne={InfoOne}
+					infoTwo={InfoTwo}
+					infoThree={InfoThree}
+					infoFour={InfoFour}
 					/>
+				</Collapsible>
 
-					<MediumButton 
-						label="Update"
-						onPress={handleUpdateTargetCalories}
+				<SectionToggleButton onPress={() => setShowCaloricInformation(!showCaloricInformation)} IsToggled={showCaloricInformation} label="Caloric information"/>
+				<Collapsible collapsed={!showCaloricInformation}>
+					<InfoPanel
+					labelColor="#9A8EBA"
+					valueColor="#FFFFFF"
+					unitColor="#9A8EBA"
+					backgroundColor="#583AAB"
+
+					infoOne={InfoFive}
+					infoTwo={InfoSix}
+					infoThree={{
+						label: "Today's Calories",
+						value: clientData.calories.currentCalories,
+						unit: "kcal"
+					}}
+					infoFour={{
+						label: "Target Calories",
+						value: clientData.calories.dailyCalories,
+						unit: "kcal"
+					}}
 					/>
-				</View>
-			</Collapsible>
+				</Collapsible>
+
+
+				<SectionToggleButton onPress={() => setShowMealPlans(!showMealPlans)} IsToggled={showMealPlans} label="Meal plans"/>
+				<Collapsible collapsed={!showMealPlans}>
+					{!loading && 
+						<MealPlansSection 
+							data={mealPlansData} 
+							clientDetails={props.route.params.clientDetails.user} 
+							style={mealPlanContainerStyle} 
+							horizontal={true} 
+							navigation={props.navigation} 
+						/>
+					}
+				</Collapsible>
+
+				<SectionToggleButton onPress={() => setShowEditInputs(!showEditInputs)} IsToggled={showEditInputs} label="Update client info"/>
+				<Collapsible collapsed={!showEditInputs}>
+					<View style={styles.updateClientInfoContainer}>
+						<TextInput 
+							label="Update target calories"
+							value={props.route.params.clientDetails.user}
+							onChangeText={setTargetCalories}
+							placeholder="500 kcal"
+							inputStyle={{ width: 300 }}
+						/>
+
+						<MediumButton 
+							label="Update"
+							onPress={handleUpdateTargetCalories}
+							buttonStyle={{ marginLeft: 5, width: 250, alignSelf: 'center' }}
+						/>
+					</View>
+				</Collapsible>
+			</ScrollView>
 
 
 		</Container>)
@@ -219,5 +236,10 @@ export default function ClientPage(props) {
 const styles = StyleSheet.create({
 	updateClientInfoContainer: {
 		width: 0.8 * width
+	},
+	collapsibleScrollViewContainer: {
+		flexDirection: 'column',
+		alignItems: 'center',
+		justifyContent: 'center',
 	}
 })

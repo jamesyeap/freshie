@@ -8,6 +8,7 @@ import { ButtonModal } from '../../../_molecules/ButtonModal';
 import { HeaderMediumText } from '../../../_atoms/Text';
 import { MediumButton } from '../../../_atoms/Button';
 import { deleteClientMealPlan_API } from '../../../../_redux/actions/Trainer.actions';
+import { deleteRecipe_API } from '../../../../_redux/actions/Recipes.actions';
 
 export default function MealPlanPage(props) {
 	const { id, title, meal } = props.route.params.mealPlanDetails;
@@ -15,40 +16,36 @@ export default function MealPlanPage(props) {
 	const [selectedFoodItemDetails, setSelectedFoodItemDetails] = useState(null);
 	const [modalVisible, setModalVisible] = useState(false);
 
+	const dispatch = useDispatch()
+
 	const clientUsername = props.route.params.clientDetails.username;
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
-	const handleConsume = () => {
-		console.log(selectedFoodItem);
-
-		const obj = { recipeID: Number(selectedFoodItem), mealType: determineMealType() }
-		addConsumedMeal_API(obj);
-		
-		props.navigation.navigate("Home");
+	const handleView = () => {
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem })
 	}
 
 	const handleEdit = () => {
 		// redirects the user to the "EditRecipe" page that is pre-filled with all the item's info
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItemDetails[0], type: "edit" });
+		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem, type: "edit" });
 	}
 
 	const handleDelete = () => {
-		dispatch(deleteRecipe_API(selectedFoodItem));
-		props.navigation.navigate("Home");
+		dispatch(deleteRecipe_API(selectedFoodItem.id));
 	}
 
 	const loadSelectedFoodItemDetails = (id) => {
 		setSelectedFoodItem(id);
+		setModalVisible(true)
 		const itemDetails = meal.filter(foodItem => foodItem.id === id);
 		setSelectedFoodItemDetails(itemDetails);
 	}
 
 	const handleUnassignMealPlan = () => {
 		const values = { mealPlanID: id, clientUsername: clientUsername }
-		console.log(values);
-		deleteClientMealPlan_API(values);
+		dispatch(deleteClientMealPlan_API(values));
 
-		props.navigation.push("Dashboard");
+		props.navigation.goBack();
 	}
 	/* ************************************************************ */
 
@@ -58,10 +55,10 @@ export default function MealPlanPage(props) {
 		<ButtonModal 
 		 modalVisible={modalVisible} 
 		 setModalVisible={setModalVisible} 
-		 handleConsume={handleConsume}
-		 handleEdit={handleEdit}
-		 handleDelete={handleDelete}
-		 variation="Custom_Client"
+		 handleViewFoodItem={handleView}
+		 handleEditFoodItem={handleEdit}
+		 handleDeleteFoodItem={handleDelete}
+		 variation='MealPlan_Trainer'
 		/>
 		
 		<HeaderMediumText style={{ textAlign: "left" }}>{title}</HeaderMediumText>
