@@ -94,7 +94,7 @@ export const Restaurant = ({ id, name, address, menuItems, index, animate, addIt
 			<MediumComponentContainer 
 				style={{ marginBottom: 20, backgroundColor: expand ? "white" : "#FFFBEB" }}
 				onPress={() => {
-					animate(location)
+					animate(location, false)
 				}}
 			>
 				<RestaurantTextContainer>

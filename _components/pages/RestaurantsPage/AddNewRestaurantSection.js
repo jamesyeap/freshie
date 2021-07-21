@@ -67,7 +67,7 @@ export default function AddNewRestaurantSection({
 				latitude: props.latitude,
 				longitudeDelta: 0.02,
 				latitudeDelta: 0.01
-			})
+			}, false)
 		}
 
 		const handlePress = () => {

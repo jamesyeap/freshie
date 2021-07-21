@@ -16,6 +16,7 @@ import { MenuItemButtonModal } from './MenuItemButtonModal';
 import { NewRestaurantButtonModal } from './NewRestaurantButtonModal';
 
 export default function RestaurantsPage(props) {
+    const initialUserLocation = useRef(null)
     const [userLocation, setUserLocation] = useState(new AnimatedRegion(null))
     const [location , setLocation] = useState(new AnimatedRegion(null))
     const [index, setIndex] = useState(1)
@@ -108,8 +109,14 @@ export default function RestaurantsPage(props) {
             setLocation(currentUserLocation)
             setUserLocation(currentUserLocation)
             dispatch(getRestaurants_API())
+
+            initialUserLocation.current = currentLocation
+
+            return true
         }
-        preload().then(setLoading(false))
+        if (preload()){
+          setLoading(false)
+        }
       }, []);
 
     // Runs a search query every time the user enters something into the search bar
@@ -153,7 +160,7 @@ export default function RestaurantsPage(props) {
             setIndex(1)
     }}
 
-    const snapPoints = useMemo(() => [-1, '18%', '75%'], []);
+    const snapPoints = useMemo(() => ['18%', '75%'], []);
     const handleSheetChanges = useCallback((index) => {
     }, []);  
 
@@ -238,19 +245,25 @@ export default function RestaurantsPage(props) {
         setShowNewRestaurantModal(false)
     }
 
-    const animateTo = async (region) => {
+    const animateTo = async (region, goToCurrent) => {
+      if (goToCurrent) {
+        let nowLocation = await Location.getLastKnownPositionAsync({});
+
+        const now = {
+          longitude: nowLocation.coords.longitude,
+          latitude: nowLocation.coords.latitude,
+          latitudeDelta: 0.02,
+          longitudeDelta: 0.01, 
+      }
+
+        currentLocation.timing({...now, duration: 1000, useNativeDriver: false}).start()
+      } else {
         currentLocation.timing({...region, duration: 1000, useNativeDriver: false}).start()
+      }
     }
 
-    const goToUser = async () => {
-        let currlocation = await Location.getCurrentPositionAsync({});
-        const now = {
-            longitude: currlocation.coords.longitude,
-            latitude: currlocation.coords.latitude,
-            latitudeDelta: 0.02,
-            longitudeDelta: 0.01, 
-        }
-        animateTo(now)
+    const goToUser = () => {
+        animateTo(null, true)
     }
     
     const toggleOverlay = () => {
