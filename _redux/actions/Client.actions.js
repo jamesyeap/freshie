@@ -44,6 +44,7 @@ export const getConsumedMeals_API = (arg) => {
                                         */
 
                                         let newMeal = {}
+                                        newMeal['id'] = element.id
                                         newMeal['title'] = element.meal
                                         newMeal['calories'] = element.calories
                                         consumedMealsArray.push(newMeal)

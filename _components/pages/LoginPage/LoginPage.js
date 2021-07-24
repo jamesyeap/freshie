@@ -12,14 +12,6 @@ import { loginAsync_API, acknowledge } from '../../../_redux/actions/Auth.action
 import { useSelector, useDispatch } from 'react-redux';
 import { Snackbar } from 'react-native-paper';
 
-const OptionsContainer = styled.View`
-	flexDirection: row;
-	justifyContent: space-between;
-	alignItems: center;
-	width: 300px;
-	margin: 12px;
-`;
-
 const LoginSchema = Yup.object().shape({
 	username: Yup.string()
 		   .required('Email is required!'),

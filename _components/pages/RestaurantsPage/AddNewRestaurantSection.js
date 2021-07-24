@@ -117,6 +117,7 @@ export default function AddNewRestaurantSection({
 										/>}
 									contentContainerStyle={styles.flatListContentContainer}
 									ListEmptyComponent={<EmptyScreen />}
+									keyExtractor={(item, index) => index.toString()}
 								/>
 							)
 					}

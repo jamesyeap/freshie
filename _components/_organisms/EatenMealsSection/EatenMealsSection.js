@@ -22,6 +22,8 @@ const EatenMealsSection = (props) => {
 	};
 	
 	const handleDelete = () => {
+		console.log(selectedFoodItem)
+		alert(selectedFoodItem.id)
 		dispatch(deleteConsumedMeal_API(selectedFoodItem.id))
 	}
 
@@ -47,7 +49,7 @@ const EatenMealsSection = (props) => {
 		 				     itemDetails={item} 
 						     setModalVisible={setModalVisible} 
 						     setSelectedFoodItem={handleSelectFoodItem} />}
-		 keyExtractor={(item) => item.id.toString()}
+		 keyExtractor={(item, index) => index.toString()}
 		 style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 		 contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 		 ListEmptyComponent={<EmptyComponent />}

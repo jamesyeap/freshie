@@ -73,7 +73,7 @@ export default function TrainerMealsSection (props) {
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
 	const handleConsume = () => {
-		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
+		const obj = { title: selectedFoodItem.title, calories: selectedFoodItem.calories, mealType: determineMealType() }
 		dispatch(addConsumedMeal_API(obj));
 		props.navigation.navigate("Home");
 	}

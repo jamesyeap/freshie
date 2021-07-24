@@ -1,5 +1,7 @@
-import axios from "axios";
-import { URL } from '../_constants';
+import axios from "axios"
+import { URL } from '../_constants'
+import { getConsumedMeals_API, getWeeklyConsumedMeals_API } from "./Client.actions"
+import getDateArgument from '../../_utilities/_helperFunctions/getDateArgument';
 
 /* ACTION-VERBS */
 export const ADD_RESTAURANT = 'ADD_RESTAURANT';
@@ -102,6 +104,34 @@ export const deleteMenuItem_API = (arg) => {
         } catch (e) {
             dispatch(error(e.message))
         }
+    }
+}
+
+// Adds a meal to the record for the day when the user eats something 
+export const consumeMenuItem_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = getState().auth;
+
+                    const response = await axios({
+                            method: 'post',
+                            url: `${URL}/api/${username}/add-consumed-meal/`,
+                            headers: {
+                                      "Authorization": `Token ${token}`
+                            },
+                            data: arg
+                    })
+
+                    dispatch(getConsumedMeals_API({ dateArgument: getDateArgument() }));
+                    dispatch(getWeeklyConsumedMeals_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    console.log(e)
+                    dispatch(error(e.message))
+            }
     }
 }
 

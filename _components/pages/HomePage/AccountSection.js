@@ -68,11 +68,12 @@ export default function AccountSection({ scrolling }) {
 				<ScrollView
 					horizontal
 					decelerationRate={0}
-					snapToInterval={width}
-					snapToAlignment="start"
+					snapToInterval={330}
+					disableIntervalMomentum
+					snapToAlignment="center"
 					contentContainerStyle={ styles.biographyScrollView }
 					showsHorizontalScrollIndicator={false}
-					style={{ marginLeft: 20}}
+					style={{ marginHorizontal: 20 }}
 				>
 					<InfoPanel 
 						labelColor="#60A5FA"
@@ -83,12 +84,12 @@ export default function AccountSection({ scrolling }) {
 
 						infoOne={{
 						label: "Height",
-						value: 180,
+						value: 170,
 						unit: "cm"
 						}}
 						infoTwo={{
 						label: "Age",
-						value: 22,
+						value: 23,
 						unit: "years old"
 						}}
 						infoThree={{
@@ -98,7 +99,7 @@ export default function AccountSection({ scrolling }) {
 						}}
 						infoFour={{
 						label: "Target Weight",
-						value: 60,
+						value: 65.94,
 						unit: "kg"
 						}}
 					/>
@@ -112,7 +113,7 @@ export default function AccountSection({ scrolling }) {
 
 						infoOne={{
 						label: "BMR",
-						value: 180,
+						value: 24.2,
 						}}
 						infoTwo={{
 						label: "Activity Level",

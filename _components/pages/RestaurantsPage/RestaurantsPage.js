@@ -7,7 +7,7 @@ import { Restaurant } from '../../_molecules/Restaurant';
 import { SearchBar, Overlay } from 'react-native-elements';
 import { IconButton } from '../../_atoms/Button';
 import { useDispatch, useSelector } from 'react-redux';
-import { getRestaurants_API, addRestaurant_API, addMenuItem_API, deleteMenuItem_API } from '../../../_redux/actions/Restaurants.actions';
+import { getRestaurants_API, addRestaurant_API, addMenuItem_API, consumeMenuItem_API, deleteMenuItem_API } from '../../../_redux/actions/Restaurants.actions';
 import { HeaderMediumText } from '../../_atoms/Text';
 import { TextInput } from '../../_molecules/TextInput';
 import AddNewRestaurantSection from './AddNewRestaurantSection';
@@ -15,6 +15,7 @@ import searchRestaurant from '../../../_utilities/_helperFunctions/searchNewRest
 import getRestaurantsAroundMe from '../../../_utilities/_helperFunctions/getRestaurantsAroundMe';
 import { MenuItemButtonModal } from './MenuItemButtonModal';
 import { NewRestaurantButtonModal } from './NewRestaurantButtonModal';
+import { determineMealType } from '../../../_utilities/_helperFunctions/determineMealType';
 
 export default function RestaurantsPage(props) {
     const initialUserLocation = useRef(null)
@@ -216,6 +217,14 @@ export default function RestaurantsPage(props) {
         setSelectedMenuItem(menuItemObj)
         setShowMenuItemButtonModal(true)
     }
+    
+    const handleConsumeMenuItem = () => {
+        dispatch(consumeMenuItem_API({
+          title: selectedMenuItem.name,
+          calories: selectedMenuItem.calories,
+          mealType: determineMealType()
+        }))
+    }
 
     const handleDeleteMenuItem = () => {
         const arg = {
@@ -275,13 +284,20 @@ export default function RestaurantsPage(props) {
         setVisible(!visible);
     };
 
-    const onViewRef = React.useRef(( {viewableItems})=> {
+    const onViewRef = React.useRef(({viewableItems, ...objs}) => {
+      if (viewableItems !== undefined) {
+        console.log("*********************************************")
+        console.log(viewableItems)
+        console.log("----------------------------------------------")
+        console.log(objs)
         const viewedItem = Object.getOwnPropertyDescriptors(viewableItems[0])
         setRestName({
             restaurantName: viewedItem.item.value.name,
             restaurantID: viewedItem.item.value.id
         })
+      }
     })
+
     const viewConfigRef = React.useRef({ viewAreaCoveragePercentThreshold: 50 })
 
     const MainBottomSheet = (
@@ -298,7 +314,7 @@ export default function RestaurantsPage(props) {
                   renderItem={({item}) => {
                     return <Restaurant  key={item.id.toString()} 
                                         location= {{longitude: item.longitude, latitude: item.latitude, latitudeDelta: 0.02, longitudeDelta: 0.01}} 
-                                        id= {item.id} 
+                                        id={item.id} 
                                         animate={animateTo}
                                         addItem={toggleOverlay}
                                         name={item.name} 
@@ -316,7 +332,7 @@ export default function RestaurantsPage(props) {
                   snapToAlignment={"center"} 
                   automaticallyAdjustContentInsets={false}
                   disableIntervalMomentum horizontal={true} 
-                  contentContainerStyle={{ flexDirection: 'row-reverse', alignSelf: 'flex-start', minWidth: "100%", minHeight: 250}}>
+                  contentContainerStyle={{ flexDirection: 'row', alignSelf: 'flex-start', minWidth: "100%", minHeight: 250}}>
         </FlatList>
     </BottomSheet>
     )
@@ -810,6 +826,7 @@ export default function RestaurantsPage(props) {
                 selectedMenuItem={selectedMenuItem}
                 modalVisible={showMenuItemButtonModal}
                 handleClose={handleCloseMenuItemModal}
+                handleConsume={handleConsumeMenuItem}
                 handleDelete={handleDeleteMenuItem}
             />
 

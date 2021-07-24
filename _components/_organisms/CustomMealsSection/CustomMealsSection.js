@@ -65,9 +65,7 @@ export default function CustomMealsSection(props) {
 	}
 
 	const handleConsume = () => {
-		console.log(selectedFoodItem);
-
-		const obj = { recipeID: selectedFoodItem.id, mealType: determineMealType() }
+		const obj = { title: selectedFoodItem.title, calories: selectedFoodItem.calories, mealType: determineMealType() }
 		dispatch(addConsumedMeal_API(obj));
 		
 		props.navigation.navigate("Home");

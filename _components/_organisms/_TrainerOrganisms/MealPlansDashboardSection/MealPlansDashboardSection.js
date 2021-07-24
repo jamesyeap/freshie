@@ -78,7 +78,7 @@ export const MealPlansDashboardSection = (props) => {
 	}
 
 	/* Add a food item to the meal plan template */
-	const handleAddFoodItem = async () => {
+	const handleAddFoodItem = () => {
 		dispatch(getRecipeList_API("search"));
 		props.navigation.push("Search", { mealPlan: selectedMealPlan, variation: "ChooseRecipe" })
 	}

@@ -36,7 +36,8 @@ export const MenuItemButtonModal = (props) => {
 			<View style={styles.centeredView}>
 				<View style={styles.modalView}>
 					<ActionsContainer>
-						<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={props.handleDelete} />
+						<SmallButton label="Consume" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "green" }} onPress={() => handleButtonPress(props.handleConsume)} />
+						<SmallButton label="Delete" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red" }} onPress={() => handleButtonPress(props.handleDelete)} />
 					</ActionsContainer>
 					<TextButton label="Close" onPress={props.handleClose} />
 				</View>
