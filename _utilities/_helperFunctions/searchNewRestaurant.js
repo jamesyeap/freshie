@@ -78,7 +78,7 @@ import axios from "axios";
 const MAP_URL = "https://nominatim.openstreetmap.org/search?"
 
 /* Set default limit to 20 restaurants */
-export default async function searchNewRestaurant(restaurantName, limit=20) {
+export default async function searchNewRestaurant(restaurantName, limit=50) {
     let cleanedRestaurantName = restaurantName.replace(/\s/g, '+') // replace space with "+"
     
     let searchURL = `${MAP_URL}q=${cleanedRestaurantName}&format=json&addressdetails=1&limit=${limit}&countrycodes=sg`

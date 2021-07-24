@@ -2,7 +2,6 @@ import React from 'react';
 import { Image } from 'react-native-ui-lib';
 import styled from 'styled-components';
 import { SemiBoldText } from '../_atoms/Text';
-import { RegularText } from '../_atoms/Text';
 import { IconButton } from 'react-native-paper';
 
 const ClientItemContainer = styled.TouchableOpacity`

@@ -41,7 +41,7 @@ export const EatenMealsButtonModal = (props) => {
 					</TextContainer>
 
 					<ActionsContainer>
-						<SmallButton label="Edit" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleEdit)} />
+						<SmallButton label="View" buttonStyle={{ width: 200, marginTop: 10  }} onPress={() => handleButtonPress(props.handleView)} />
 						<SmallButton label="Remove" buttonStyle={{ width: 200, marginTop: 10, backgroundColor: "red"  }} onPress={() => handleButtonPress(props.handleDelete)} />
 					</ActionsContainer>
 					<TextButton label="Close" onPress={props.handleClose} />

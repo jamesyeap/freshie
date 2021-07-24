@@ -34,11 +34,19 @@ export const getConsumedMeals_API = (arg) => {
 
                         /* De-structure the data received */
                         let consumedMealsArray = [];
+                        console.log(response.data)
                         if (response.data !== "") {
                                 response.data.forEach(element => {
+                                        /*
                                         let newMeal = element.meal;
                                         newMeal.id = element.id;
                                         consumedMealsArray.push(newMeal);
+                                        */
+
+                                        let newMeal = {}
+                                        newMeal['title'] = element.meal
+                                        newMeal['calories'] = element.calories
+                                        consumedMealsArray.push(newMeal)
                                 });
                         }
 

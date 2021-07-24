@@ -17,11 +17,10 @@ const EatenMealsSection = (props) => {
 	const dispatch = useDispatch();
 
 	/* ********** Functions for the ButtonModal pop-up ********** */ 
-	const handleEdit = () => {
-		// redirects the user to the "EditRecipe" page that is pre-filled with all the item's info
-		props.navigation.push("EditRecipe", { itemDetails: selectedFoodItem });
-	}
-
+	const handleView = () => {
+		props.navigation.push("Recipe", { itemDetails: selectedFoodItem, navigation: props.navigation })
+	};
+	
 	const handleDelete = () => {
 		dispatch(deleteConsumedMeal_API(selectedFoodItem.id))
 	}
@@ -36,7 +35,7 @@ const EatenMealsSection = (props) => {
 		<>
 		<EatenMealsButtonModal
 		modalVisible={modalVisible} 
-		handleEdit={handleEdit}
+		handleView={handleView}
 		handleDelete={handleDelete}
 		handleClose={() => setModalVisible(false)}
 		itemDetails={selectedFoodItem}

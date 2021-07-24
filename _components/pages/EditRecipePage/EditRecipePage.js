@@ -152,8 +152,9 @@ export default function EditRecipePage(props) {
             </ScrollView>
 
             <View style={{flexDirection: 'row', justifyContent: 'space-between' , alignItems: 'center', width:320}}>
-                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton>
+                {/* <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#E53E3E" iconName= "trash" onPress={handleDelete} ></IconButton> */}
                 <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={handleSave} ></IconButton>
+                <IconButton buttonStyle={styles.button} iconSize={19} buttonColor="#319795" iconName= "save" onPress={() => props.navigation.goBack()} ></IconButton>
             </View>
         </Container>)
     }

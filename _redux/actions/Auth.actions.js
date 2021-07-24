@@ -28,6 +28,7 @@ export const loginAsync_API = (arg) => {
             dispatch({ type: SAVE_USER, payload: response.data })
         } catch (e) {
             // alerts user to an error
+            alert("error here")
             dispatch(error(e.response.data.non_field_errors))
         }
     }
@@ -90,3 +91,15 @@ export const error = error => ({
 });
 
 
+/*
+N = 5
+    w1w1
+    w1w2
+    w1w3
+    w1w4
+    w1w5
+    
+    
+    ..
+    w1
+*/

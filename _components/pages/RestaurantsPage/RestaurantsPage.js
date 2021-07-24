@@ -12,6 +12,7 @@ import { HeaderMediumText } from '../../_atoms/Text';
 import { TextInput } from '../../_molecules/TextInput';
 import AddNewRestaurantSection from './AddNewRestaurantSection';
 import searchRestaurant from '../../../_utilities/_helperFunctions/searchNewRestaurant'
+import getRestaurantsAroundMe from '../../../_utilities/_helperFunctions/getRestaurantsAroundMe';
 import { MenuItemButtonModal } from './MenuItemButtonModal';
 import { NewRestaurantButtonModal } from './NewRestaurantButtonModal';
 
@@ -125,6 +126,10 @@ export default function RestaurantsPage(props) {
             setTouched(true)
             setFetchingData(true)
             const results = await searchRestaurant(searchQuery)
+
+            /* WORK IN PROGRESS - shows restaurants near me instead of me searching for a restaurant */
+            // let currlocation = await Location.getCurrentPositionAsync({})
+            // const results = await getRestaurantsAroundMe(currlocation.coords.longitude, currlocation.coords.latitude)
             setRestaurantsFound(results)
             setFetchingData(false)
         }

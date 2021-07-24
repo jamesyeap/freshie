@@ -14,6 +14,9 @@ import SearchPage from '../../_organisms/FoodPricer/SearchPage'
 import { BottomSheetModal, BottomSheetModalProvider } from '@gorhom/bottom-sheet'
 import { parseIngredients } from '../../../_utilities/_helperFunctions/parseIngredients';
 
+import { LogBox } from 'react-native'; // <- disable warning from React Navigation about "non-serializable values being passed as params in route"
+LogBox.ignoreLogs(['Non-serializable values were found in the navigation state.'])
+
 const SectionToggleButtonContainer = styled.TouchableOpacity`
 	flexDirection: row;
 	justifyContent: space-between;

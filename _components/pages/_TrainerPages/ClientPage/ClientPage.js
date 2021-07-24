@@ -1,5 +1,5 @@
 import React, { useState, useEffect, useCallback } from 'react';
-import { useDispatch } from 'react-redux';
+import { useSelector, useDispatch } from 'react-redux';
 import { updateClientTargetCalories_API } from '../../../../_redux/actions/Trainer.actions';
 import styled from "styled-components";
 import Collapsible from 'react-native-collapsible';
@@ -93,16 +93,18 @@ export default function ClientPage(props) {
 	const [refreshing, setRefreshing] = useState(false)
 
 	const dispatch = useDispatch()
+	
+	const { auth } = useSelector(state => state)
 
 	/* Fetches meal plans for the client */
 	const preload = async () => {
 		const fetchClientData = async () => {
-			const data = await getClientData_API(props.route.params.clientDetails.user.username)
+			const data = await getClientData_API(props.route.params.clientDetails.user.username, auth)
 			setClientData(data)
 		}
 		
 		const fetchMealsData = async () => {
-			const data = await getClientMealPlan_API(props.route.params.clientDetails.user.username)
+			const data = await getClientMealPlan_API(props.route.params.clientDetails.user.username, auth)
 			setMealPlansData(data) 
 		}
 

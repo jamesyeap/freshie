@@ -31,12 +31,18 @@ export const InputLabelText = styled(MediumText)`
     margin: 10px;
 `;
 
-export function Header() {
+export function Header(props) {
 	return (
 		<>
 		<View
 			style={styles.header}
 		>	
+            <IconButton
+                iconName="arrow-back-outline"
+                iconColor="black"
+                iconSize={25}
+                onPress={() => props.navigation.goBack()}
+            />
 			<View style={styles.headerText}>
 				<SemiBoldText style={{ fontSize: 20 }}>Add A Food Item!</SemiBoldText>
 			</View>
@@ -44,8 +50,6 @@ export function Header() {
 	</>
 	)
 }
-
-
 
 export default function AddFoodItemSection (props) {
     const [title, setTitle] = useState("")
@@ -194,7 +198,7 @@ export default function AddFoodItemSection (props) {
     } else {
         return (
             <ScrollView contentContainerStyle={ styles.container }>
-                <Header />
+                <Header navigation={props.navigation} />
                 <TouchableOpacity onPress={() => Alert.alert("Feature in progress! :P")} style={{ marginTop: 30, borderWidth:0 ,flex: 0.4, flexDirection: 'row', justifyContent: 'center'}}>
                     <Avatar containerStyle={{height: 120, width: 120}} rounded source={image}/>
                 </TouchableOpacity>
@@ -241,13 +245,14 @@ const styles = StyleSheet.create({
         height: 35,
     },
     header: {
-		flexDirection: 'column',
-		justifyContent: 'center',
-        alignItems: 'flex-start',
+		flexDirection: 'row',
+		justifyContent: 'flex-start',
+        alignItems: 'center',
 		height: 70,
         width: width,
 		backgroundColor: "#FDE68A",
 		zIndex: 1000,
+        paddingLeft: 10
 	}, 
 	headerText: {
 		flexDirection: "column",

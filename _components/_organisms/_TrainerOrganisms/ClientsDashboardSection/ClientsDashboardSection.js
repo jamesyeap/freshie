@@ -51,21 +51,16 @@ export function ClientsDashboardSection(props) {
 		handleDelete={handleDelete}
 		/>}
 
-		{/* ADD THESE BACK AFTER TESTING! */}
-		{/* renderItem={({ item }) => <ClientItem key={item.id.toString()} clientDetails={item} onPress={() => handleSelect(item)} />} */}
-		{/* keyExtractor={(item) => item.id.toString()} */}
-		
 		{	(props.data !== "You do not have any clients!") && 
 				(<FlatList
 				data={props.data}
-				renderItem={({ item }) => <ClientItem clientDetails={item} onPress={() => handleSelect(item)} />}
+				renderItem={({ item }) => <ClientItem key={item.id.toString()} clientDetails={item} onPress={() => handleSelect(item)} />}
+				keyExtractor={(item) => item.id.toString()}
 				style={{ backgroundColor: "#CCD7E0", width: 355, height: 740, borderRadius: 10 }}
 				contentContainerStyle={{ alignItems: "center", justifyContent: "center" }}
 				refreshControl={<RefreshControl refreshing={refreshing} onRefresh={handleRefresh} />}
 				/>)
 		}
-		
-
 		</>
 	)
 }

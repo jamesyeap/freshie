@@ -28,7 +28,7 @@ const FoodItemNameText = styled(SemiBoldText)`
 
 export const FoodItem = (props) => {
 
-	const { id, title, calories, ingredients, instructions } = props.itemDetails;
+	const { title, calories } = props.itemDetails;
 
 	return (
 		<FoodItemContainer margin={props.margin} onPress={() => props.setSelectedFoodItem(props.itemDetails)} >

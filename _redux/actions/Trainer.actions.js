@@ -2,7 +2,7 @@
 import axios from "axios";
 import { URL } from '../_constants';
 import { getMealPlans_API, getRecipeList_API } from "./Recipes.actions";
-import { store } from '../store/store'
+// import { store } from '../store/store'
 
 /* ACTION-VERBS */
 export const FETCH_CLIENTS = 'FETCH_CLIENTS'
@@ -228,48 +228,122 @@ export const acknowledge = () => ({
 
 /* OTHER FUNCTIONS THAT ARE NOT PART OF REDUX */
 // view -> client's data (GET)
-export async function getClientData_API(values) {
-                try {
-                        const { token, username } = store.getState().auth;
-                        console.log(token)
 
-                        const response = await axios({
-                                method: 'get',
-                                url: `${URL}/api/${username}/client/${values}/view/`,
-                                headers: {
-                                        "Authorization": `Token ${token}`
-                                }, 
-                        });
+export async function getClientData_API(values, auth) {
+        try {
+                const { token, username } = auth
+                console.log(token)
 
-                        console.log(response.data)
-                        return response.data;
-                } catch (e) {
-                        console.log(e.response.data)
-                        alert(e.response.data)
-                }
+                const response = await axios({
+                        method: 'get',
+                        url: `${URL}/api/${username}/client/${values}/view/`,
+                        headers: {
+                                "Authorization": `Token ${token}`
+                        }, 
+                });
+
+                console.log(response.data)
+                return response.data;
+        } catch (e) {
+                console.log(e.response.data)
+                alert(e.response.data)
+        }
 }
+
+// export const getClientData_API = (values) => {
+//         return async (getState, dispatch) => {
+//                 try {
+//                         const { token, username } = getState().auth;
+
+//                         const response = await axios({
+//                                 method: 'get',
+//                                 url: `${URL}/api/${username}/client/${values}/view/`,
+//                                 headers: {
+//                                         "Authorization": `Token ${token}`
+//                                 }, 
+//                         });
+
+//                         return response.data;
+//                 } catch (e) {
+//                         dispatch(error(e.message))
+//                 }
+//         }
+// }
 
 // Gets a list of meal-plans for a client 
-export async function getClientMealPlan_API(values) {
-                try {
-                        const { token, username } = store.getState().auth;
-                        console.log(token)
+export async function getClientMealPlan_API(values, auth) {
+        try {
+                const { token, username } = auth;
+                console.log(token)
 
-                        const response = await axios({
-                                method: 'get',
-                                url: `${URL}/api/${username}/client/${values}/meal-plans/`,
-                                headers: {
-                                        "Authorization": `Token ${token}`
-                                }, 
-                        });
+                const response = await axios({
+                        method: 'get',
+                        url: `${URL}/api/${username}/client/${values}/meal-plans/`,
+                        headers: {
+                                "Authorization": `Token ${token}`
+                        }, 
+                });
 
-                        console.log(response.data)
-                        return response.data;
-                } catch (e) {
-                        console.log(e.response.data)
-                        alert(e.response.data)
-                }
+                console.log(response.data)
+                return response.data;
+        } catch (e) {
+                console.log(e.response.data)
+                alert(e.response.data)
+        }
 }
 
+// export const getClientMealPlan_API = (values) => {
+//         return async (getState, dispatch) => {
+//                 try {
+//                         const { token, username } = getState().auth;
+
+//                         const response = await axios({
+//                                 method: 'get',
+//                                 url: `${URL}/api/${username}/client/${values}/meal-plans/`,
+//                                 headers: {
+//                                         "Authorization": `Token ${token}`
+//                                 }, 
+//                         });
+
+//                         return response.data;
+//                 } catch (e) {
+//                         dispatch(error(e.message))
+//                 }
+//         }
+// }
+
+/*
+
+export const addRecipeToMealPlan_API = (arg) => {
+    return async (dispatch, getState) => {
+            // lets user know that the request is loading
+            dispatch(loading())
+
+            try {
+                    const { username, token } = getState().auth;
+
+                    const response = await axios({
+                        method: 'post',
+                        url: `${URL}/api/${username}/mealplan/${arg.mealPlanID}/`,
+                        headers: {
+                                  "Authorization": `Token ${token}`
+                        },
+                        data: {
+                            title: arg.mealPlanTitle,
+                            meals: arg.recipeIDList
+                        }
+                        });
+
+                        dispatch(getRecipeList_API("custom"))
+                        dispatch(getMealPlans_API());
+            } catch (e) {
+                    // alerts user to an error	
+                    dispatch(error(e.message))
+            }
+    }
+}
+
+
+*/
 
 
