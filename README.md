@@ -1,7 +1,7 @@
 # Freshie
 A project made for NUS Orbital 2021
  
-## Level of Achievement
+## Proposed Level of Achievement
 Apollo 11
 
 ## Documentation and App Demo
