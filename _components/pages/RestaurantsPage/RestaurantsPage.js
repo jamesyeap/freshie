@@ -286,10 +286,6 @@ export default function RestaurantsPage(props) {
 
     const onViewRef = React.useRef(({viewableItems, ...objs}) => {
       if (viewableItems !== undefined) {
-        console.log("*********************************************")
-        console.log(viewableItems)
-        console.log("----------------------------------------------")
-        console.log(objs)
         const viewedItem = Object.getOwnPropertyDescriptors(viewableItems[0])
         setRestName({
             restaurantName: viewedItem.item.value.name,
