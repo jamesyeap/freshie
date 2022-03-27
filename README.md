@@ -6,4 +6,4 @@ Apollo 11
 
 ## Documentation
  - Read our documentation [here](https://freshieorbital.gitbook.io/team-fitbob/)
- - Our backend repository is a available [here](https://github.com/Ryan-L98/FRESHIE_API_DJANGO)
+ - Link to backend repo [here](https://github.com/Ryan-L98/FRESHIE_API_DJANGO)
